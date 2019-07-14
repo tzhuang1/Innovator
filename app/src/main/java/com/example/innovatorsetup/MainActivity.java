@@ -1,55 +1,65 @@
 package com.example.innovatorsetup;
 
-import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.os.Bundle;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
+
+/*
+TODO
+ - Implement Persisting data for activities/day & grade
+    - Store in local file for now (cache file)
+    - Store in database after login is implemented(?)
+ - Create new activity for activities/day
+    - Needed for activities/day screen:
+        - New activity
+        - New set of GUI
+ Useful links:
+ Switching between activities: https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
+ File storage overview: https://developer.android.com/guide/topics/data/data-storage
+ */
 
 public class MainActivity extends AppCompatActivity {
+    private final String[] gradeList = {"1st", "2nd", "3rd", "4th", "5th", "6th"};
+    private int gradeSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        gradeSelect = 0;
+
+        Button gradeSelectLeftBtn = findViewById(R.id.gradeSelectLeftBtn);
+        Button gradeSelectRightBtn = findViewById(R.id.gradeSelectRightBtn);
+
+        gradeSelectLeftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                TextView setupGradeDisplay = findViewById(R.id.setupGradeDisplayTxt);
+
+                gradeSelect--;
+                if(gradeSelect < 0) {
+                    gradeSelect = 0;
+                }
+                setupGradeDisplay.setText(gradeList[gradeSelect]);
             }
         });
-    }
+        gradeSelectRightBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView setupGradeDisplay = findViewById(R.id.setupGradeDisplayTxt);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+                gradeSelect++;
+                if(gradeSelect > 5) {
+                    gradeSelect = 5;
+                }
+                setupGradeDisplay.setText(gradeList[gradeSelect]);
+            }
+        });
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        Button gradeSelectNextBtn = findViewById(R.id.setupGradeNextBtn);
     }
 }
