@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">InnovatorSetup</string>
     <string name="setup_grade_select_text">What grade are you in?</string>
+    <string name="setup_activity_select_text">Pick a goal:</string>
 </resources>
