@@ -9,14 +9,16 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 /*
 TODO
+ - Finish implementing fragments for central interaction (Grade select & activity select)
+    - Switch out fragments when next is pressed
+    - Implement back button
  - Implement Persisting data for activities/day & grade
     - Store in local file for now (internal storage or SharedPreferences)
     - Store in database after login is implemented(?)
- - Debug activity select screen
-    - Carry over progress bar
-    - Smoother transition (maybe don't use another activity?)
  - Other tasks(unimportant)
     - Customize buttons
         - Better buttons than just + and -, may need to wait until full app is developed to ensure design stays consistent
@@ -24,70 +26,42 @@ TODO
  Useful links:
  File storage overview: https://developer.android.com/guide/topics/data/data-storage
  SharedPreferences: https://developer.android.com/training/data-storage/shared-preferences.html
+ Fragments:
+ - Fragments in java: https://abhiandroid.com/ui/fragment
+ - Buttons in fragments: https://stackoverflow.com/questions/18711433/button-listener-for-button-in-fragment-in-android
+ - Fragment communication: https://developer.android.com/training/basics/fragments/communicating.html
+ - Fragment general:
+    - https://developer.android.com/guide/components/fragments
+    - https://guides.codepath.com/android/creating-and-using-fragments
  */
 
-public class MainActivity extends AppCompatActivity {
-    private final String[] gradeList = {"1st", "2nd", "3rd", "4th", "5th", "6th"};
-    private int gradeSelect;
-
-    private int progress;
-
+public class MainActivity extends AppCompatActivity implements SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button gradeSelectLeftBtn = findViewById(R.id.gradeSelectLeftBtn);
-        Button gradeSelectRightBtn = findViewById(R.id.gradeSelectRightBtn);
-
         final ProgressBar setupProgressBar = findViewById(R.id.setupProgressBar);
+        final TextView setupTxt = findViewById(R.id.setupTxt);
 
-        gradeSelect = 0;
-        progress = 0;
-
-        setupProgressBar.setMax(2);
         setupProgressBar.setProgress(0);
-
-        gradeSelectLeftBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextView setupGradeDisplay = findViewById(R.id.setupGradeDisplayTxt);
-
-                gradeSelect = Math.max(--gradeSelect, 0);
-                setupGradeDisplay.setText(gradeList[gradeSelect]);
-            }
-        });
-        gradeSelectRightBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextView setupGradeDisplay = findViewById(R.id.setupGradeDisplayTxt);
-
-
-                gradeSelect = Math.min(++gradeSelect, gradeList.length - 1);
-                setupGradeDisplay.setText(gradeList[gradeSelect]);
-            }
-        });
 
         Button gradeSelectNextBtn = findViewById(R.id.setupGradeNextBtn);
         gradeSelectNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progress++;
-                setupProgressBar.setProgress(progress);
-
-                Intent activitySelectIntent = new Intent(view.getContext(), Main2Activity.class);
-                startActivity(activitySelectIntent);
-                setResult(RESULT_OK, activitySelectIntent);
-                finish();
+                setupProgressBar.setProgress(setupProgressBar.getProgress() + 1);
             }
         });
     }
 
-    public int getSetupProgress() {
-        return progress;
+    @Override
+    public void onGradeSelectFragmentInteraction(int defaultGrade) {
+
     }
 
-    public void setSetupProgress(int progress) {
-        this.progress = progress;
+    @Override
+    public void OnActivitySelectFragmentListener(int defaultActivityNum) {
+
     }
 }
