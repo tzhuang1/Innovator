@@ -70,10 +70,10 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\To
 		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:6:9-35
 	android:theme
 		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:11:9-40
-activity#com.example.innovatorsetup.MainActivity
+activity#com.example.innovatorTopicSelection.MainActivity
 ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:12:9-18:20
 	android:name
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:12:19-47
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:12:19-82
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:13:13-17:29
 action#android.intent.action.MAIN

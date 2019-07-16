@@ -1,4 +1,11 @@
 <resources>
+    <style name="ThemeColors">
+        <item name="android:color">#19A0FB</item>
+        <!--<item name="android:fontFamily">@font/Karla-Regular</item> requires min API 16; current is 15-->
+        
+
+    </style>
+
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
