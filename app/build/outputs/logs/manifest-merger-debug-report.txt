@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-21:12
+ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-23:12
 MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\039911e114d2afa3dafd17316bdace5f\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\2127c9e3eb8d0c32c2ae9ba383a625c8\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\f0eba89c93b1c6c6d5aedfa647a74ffe\AndroidManifest.xml:17:1-22:12
@@ -31,25 +31,27 @@ MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Tom\.gradle\c
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\d22ab0c91c7fec8a8445af35cd52fd78\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\bc6a07443e06854f28ba1262a66e56d1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\0add082c93021751795d6861a0f19182\AndroidManifest.xml:17:1-22:12
-INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-23:12
 	package
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:3:5-41
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:4:5-41
 		INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-21:12
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-23:12
 		INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
 		INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-21:12
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:1-23:12
 		INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:5:5-19:19
+ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:6:5-21:19
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\2127c9e3eb8d0c32c2ae9ba383a625c8\AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\2127c9e3eb8d0c32c2ae9ba383a625c8\AndroidManifest.xml:9:5-20
 MERGED from [androidx.core:core:1.0.1] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\dff60e7d4acc2e9e7676a3e9c853f064\AndroidManifest.xml:22:5-89
@@ -59,31 +61,33 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\To
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.0.1] C:\Users\Tom\.gradle\caches\transforms-2\files-2.1\dff60e7d4acc2e9e7676a3e9c853f064\AndroidManifest.xml:22:18-86
 	android:supportsRtl
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:10:9-35
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:11:9-35
 	android:label
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:8:9-41
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:9:9-41
+	tools:ignore
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:13:9-48
 	android:roundIcon
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:9:9-54
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:10:9-54
 	android:icon
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:7:9-43
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:8:9-43
 	android:allowBackup
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:6:9-35
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:7:9-35
 	android:theme
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:11:9-40
-activity#com.example.innovatorTopicSelection.MainActivity
-ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:12:9-18:20
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:12:9-40
+activity#com.example.innovatorTopicSelection.ProgressBarTestActivity
+ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:14:9-20:20
 	android:name
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:12:19-82
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:14:19-93
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:13:13-17:29
+ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:15:13-19:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:14:17-69
+ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:16:17-69
 	android:name
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:14:25-66
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:16:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:16:17-77
+ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:18:17-77
 	android:name
-		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:16:27-74
+		ADDED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml:18:27-74
 uses-sdk
 INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Tom\Documents\GitHub\Innovator\app\src\main\AndroidManifest.xml
