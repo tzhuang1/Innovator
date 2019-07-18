@@ -1,5 +1,6 @@
 package com.example.innovatorTopicSelection;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,6 +29,8 @@ public class ProgressBarTestActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 progress.setProgress(i);
                 progressText.setText(i+"% Mastered");
+                if(i > 63){progressText.setTextColor(Color.WHITE);}else{progressText.setTextColor(Color.BLACK);}
+
             }
 
             @Override
