@@ -13,9 +13,8 @@ import android.widget.TextView;
 
 /*
 TODO
- - Finish implementing fragments for central interaction (Grade select & activity select)
-    - Switch out fragments when next is pressed
-    - Implement back button
+ - Add OnClickListener to back button
+ - Store data from fragments in variables in MainActivity
  - Implement Persisting data for activities/day & grade
     - Store in local file for now (internal storage or SharedPreferences)
     - Store in database after login is implemented(?)
@@ -48,20 +47,17 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
 
         Button gradeSelectNextBtn = findViewById(R.id.setupGradeNextBtn);
 
-        final FragmentManager fragMan = getSupportFragmentManager();
-        final FragmentTransaction fragTran = fragMan.beginTransaction();
+        final FragmentTransaction fragTran1 = getSupportFragmentManager().beginTransaction();
 
         gradeSelect = 1;
         activitySelect = 1;
 
         if(findViewById(R.id.setupFragmentFrameLayout) != null) {
-            if(savedInstanceState != null) {
-                return;
-            }
+            SetupGradeSelectFragment gradeFragment = SetupGradeSelectFragment.newInstance(1);
+            gradeFragment.setArguments(getIntent().getExtras());
+            fragTran1.add(R.id.setupFragmentFrameLayout, gradeFragment);
+            fragTran1.commit();
         }
-        SetupGradeSelectFragment gradeFragment = SetupGradeSelectFragment.newInstance(1);
-        gradeFragment.setArguments(getIntent().getExtras());
-        fragTran.add(R.id.setupFragmentFrameLayout, gradeFragment);
 
         currSetupPage = 0;
 
@@ -69,19 +65,26 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
             @Override
             public void onClick(View view) {
 
+                FragmentManager fragMan = getSupportFragmentManager();
+                FragmentTransaction fragTran2 = fragMan.beginTransaction();
+
                 ProgressBar setupProgressBar = findViewById(R.id.setupProgressBar);
                 TextView setupTxt = findViewById(R.id.setupTxt);
+
                 currSetupPage++;
                 switch(currSetupPage) {
                     case 0:
-                        fragTran.replace(R.id.setupFragmentFrameLayout, SetupGradeSelectFragment.newInstance(gradeSelect));
+                        fragTran2.replace(R.id.setupFragmentFrameLayout, SetupGradeSelectFragment.newInstance(gradeSelect));
                         setupTxt.setText(getString(R.string.setup_grade_select_text));
-                        fragTran.commit();
+                        fragTran2.commit();
                         break;
                     case 1:
-                        fragTran.replace(R.id.setupFragmentFrameLayout, SetupActivitySelectFragment.newInstance(activitySelect));
+                        fragTran2.replace(R.id.setupFragmentFrameLayout, SetupActivitySelectFragment.newInstance(activitySelect));
                         setupTxt.setText(getString(R.string.setup_activity_select_text));
-                        fragTran.commit();
+                        fragTran2.commit();
+                        break;
+                    case 2:
+
                         break;
                 }
 
