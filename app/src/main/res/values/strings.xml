@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Angela_Innovator_V2</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name ="title_explore" >Explore</string>
+    <string name = "title_account">Account</string>
+    <string name = "title_settings">Settings</string>
+</resources>
