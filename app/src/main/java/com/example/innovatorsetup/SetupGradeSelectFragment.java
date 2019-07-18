@@ -26,8 +26,9 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_GRADE_DEFUALT_NUM = "defaultGradeNum";
+    private static final String ARG_GRADE_DEFAULT_NUM = "defaultGradeNum";
 
+    private int defaultGradeNum = 1;
     private int gradeSelect;
     private TextView setupGradeDisplay;
 
@@ -43,10 +44,10 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
      * @param defaultGradeNum Parameter 1.
      * @return A new instance of fragment SetupGradeSelectFragment.
      */
-    public static SetupGradeSelectFragment newInstance(String defaultGradeNum) {
+    public static SetupGradeSelectFragment newInstance(int defaultGradeNum) {
         SetupGradeSelectFragment fragment = new SetupGradeSelectFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_GRADE_DEFUALT_NUM, defaultGradeNum);
+        args.putInt(ARG_GRADE_DEFAULT_NUM, defaultGradeNum);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +56,7 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            gradeSelect = getArguments().getInt(ARG_GRADE_DEFUALT_NUM);
+            defaultGradeNum = getArguments().getInt(ARG_GRADE_DEFAULT_NUM);
         }
     }
 
@@ -66,11 +67,14 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
 
         view = inflater.inflate(R.layout.fragment_setup_grade_select, container, false);
 
+        gradeSelect = defaultGradeNum;
+
         Button gradeSelectLeftBtn = view.findViewById(R.id.gradeSelectLeftBtn);
         Button gradeSelectRightBtn = view.findViewById(R.id.gradeSelectRightBtn);
 
         setupGradeDisplay = view.findViewById(R.id.setupGradeDisplayTxt);
-        setupGradeDisplay.setText(gradeList[gradeSelect]);
+        System.out.println(gradeSelect);
+        setupGradeDisplay.setText(gradeList[gradeSelect-1]);
 
         gradeSelectLeftBtn.setOnClickListener(this);
         gradeSelectRightBtn.setOnClickListener(this);
@@ -105,14 +109,18 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.gradeSelectLeftBtn:
-                gradeSelect = Math.max(--gradeSelect, 0);
-                setupGradeDisplay.setText(gradeList[gradeSelect]);
+                gradeSelect = Math.max(--gradeSelect, 1);
+                setupGradeDisplay.setText(gradeList[gradeSelect-1]);
                 break;
             case R.id.gradeSelectRightBtn:
-                gradeSelect = Math.min(++gradeSelect, gradeList.length - 1);
-                setupGradeDisplay.setText(gradeList[gradeSelect]);
+                gradeSelect = Math.min(++gradeSelect, gradeList.length);
+                setupGradeDisplay.setText(gradeList[gradeSelect-1]);
                 break;
         }
+    }
+
+    public int getGradeSelect() {
+        return gradeSelect;
     }
 
     /**

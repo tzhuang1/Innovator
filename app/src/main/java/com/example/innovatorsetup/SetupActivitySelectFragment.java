@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -20,15 +21,18 @@ import android.widget.Button;
  * Use the {@link SetupActivitySelectFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SetupActivitySelectFragment extends Fragment {
+public class SetupActivitySelectFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_DEFAULT_ACTIVITY_NUM = "defaultActivityNum";
 
     // TODO: Rename and change types of parameters
-    private int defaultActivityNum;
+    private int defaultActivityNum = 1;
 
     private OnActivitySelectFragmentListener mListener;
+
+    private int activityNum;
+    private TextView setupActivityDisplay;
 
     public SetupActivitySelectFragment() {
         // Required empty public constructor
@@ -42,10 +46,10 @@ public class SetupActivitySelectFragment extends Fragment {
      * @return A new instance of fragment SetupActivitySelectFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SetupActivitySelectFragment newInstance(String defaultActivityNum) {
+    public static SetupActivitySelectFragment newInstance(int defaultActivityNum) {
         SetupActivitySelectFragment fragment = new SetupActivitySelectFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_DEFAULT_ACTIVITY_NUM, defaultActivityNum);
+        args.putInt(ARG_DEFAULT_ACTIVITY_NUM, defaultActivityNum);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,10 +67,39 @@ public class SetupActivitySelectFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setup_activity_select, container, false);
 
+        activityNum = defaultActivityNum;
+        setupActivityDisplay = view.findViewById(R.id.setupActivityDisplayTxt);
+
         Button activityUpBtn = view.findViewById(R.id.activitySelectUpBtn);
         Button activityDownBtn = view.findViewById(R.id.activitySelectDownBtn);
+        activityUpBtn.setOnClickListener(this);
+        activityDownBtn.setOnClickListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.activitySelectDownBtn:
+                activityNum = Math.max(--activityNum, 1);
+                if(activityNum == 1) {
+                    setupActivityDisplay.setText(activityNum + " activity/day");
+                }
+                else {
+                    setupActivityDisplay.setText(activityNum + " activities/day");
+                }
+                break;
+            case R.id.activitySelectUpBtn:
+                activityNum = Math.min(++activityNum, 10);
+                if(activityNum == 1) {
+                    setupActivityDisplay.setText(activityNum + " activity/day");
+                }
+                else {
+                    setupActivityDisplay.setText(activityNum + " activities/day");
+                }
+                break;
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -91,6 +124,10 @@ public class SetupActivitySelectFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public int getActivityNum() {
+        return activityNum;
     }
 
     /**

@@ -1,15 +1,15 @@
 package com.example.innovatorsetup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 /*
 TODO
@@ -36,21 +36,56 @@ TODO
  */
 
 public class MainActivity extends AppCompatActivity implements SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
+    int currSetupPage;
+
+    int gradeSelect;
+    int activitySelect;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ProgressBar setupProgressBar = findViewById(R.id.setupProgressBar);
-        final TextView setupTxt = findViewById(R.id.setupTxt);
-
-        setupProgressBar.setProgress(0);
-
         Button gradeSelectNextBtn = findViewById(R.id.setupGradeNextBtn);
+
+        final FragmentManager fragMan = getSupportFragmentManager();
+        final FragmentTransaction fragTran = fragMan.beginTransaction();
+
+        gradeSelect = 1;
+        activitySelect = 1;
+
+        if(findViewById(R.id.setupFragmentFrameLayout) != null) {
+            if(savedInstanceState != null) {
+                return;
+            }
+        }
+        SetupGradeSelectFragment gradeFragment = SetupGradeSelectFragment.newInstance(1);
+        gradeFragment.setArguments(getIntent().getExtras());
+        fragTran.add(R.id.setupFragmentFrameLayout, gradeFragment);
+
+        currSetupPage = 0;
+
         gradeSelectNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setupProgressBar.setProgress(setupProgressBar.getProgress() + 1);
+
+                ProgressBar setupProgressBar = findViewById(R.id.setupProgressBar);
+                TextView setupTxt = findViewById(R.id.setupTxt);
+                currSetupPage++;
+                switch(currSetupPage) {
+                    case 0:
+                        fragTran.replace(R.id.setupFragmentFrameLayout, SetupGradeSelectFragment.newInstance(gradeSelect));
+                        setupTxt.setText(getString(R.string.setup_grade_select_text));
+                        fragTran.commit();
+                        break;
+                    case 1:
+                        fragTran.replace(R.id.setupFragmentFrameLayout, SetupActivitySelectFragment.newInstance(activitySelect));
+                        setupTxt.setText(getString(R.string.setup_activity_select_text));
+                        fragTran.commit();
+                        break;
+                }
+
+                setupProgressBar.setProgress(currSetupPage);
             }
         });
     }
