@@ -102,6 +102,7 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener.onGradeSelectFragmentInteraction(getGradeSelect());
         mListener = null;
     }
 
@@ -123,6 +124,12 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
         return gradeSelect;
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        mListener.onGradeSelectFragmentInteraction(getGradeSelect());
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -135,5 +142,9 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
      */
     public interface onGradeSelectFragmentInteraction {
         void onGradeSelectFragmentInteraction(int defaultGrade);
+    }
+
+    public void onGradeSelectFragmentInteraction(onGradeSelectFragmentInteraction mListener){
+        this.mListener = mListener;
     }
 }

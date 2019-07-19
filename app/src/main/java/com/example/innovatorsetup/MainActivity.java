@@ -2,6 +2,7 @@ package com.example.innovatorsetup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -13,7 +14,7 @@ import android.widget.TextView;
 
 /*
 TODO
- - Add OnClickListener to back button
+ - not sure why initial screen is not the setUpGradetxt but straight to grade fragment??
  - Store data from fragments in variables in MainActivity
  - Implement Persisting data for activities/day & grade
     - Store in local file for now (internal storage or SharedPreferences)
@@ -32,6 +33,8 @@ TODO
  - Fragment general:
     - https://developer.android.com/guide/components/fragments
     - https://guides.codepath.com/android/creating-and-using-fragments
+ - Finished:
+    - Add OnClickListener to back button
  */
 
 public class MainActivity extends AppCompatActivity implements SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
@@ -46,8 +49,9 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
         setContentView(R.layout.activity_main);
 
         Button gradeSelectNextBtn = findViewById(R.id.setupGradeNextBtn);
-
+        Button backBtn = findViewById(R.id.backBtn);
         final FragmentTransaction fragTran1 = getSupportFragmentManager().beginTransaction();
+
 
         gradeSelect = 1;
         activitySelect = 1;
@@ -70,17 +74,21 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
 
                 ProgressBar setupProgressBar = findViewById(R.id.setupProgressBar);
                 TextView setupTxt = findViewById(R.id.setupTxt);
-
-                currSetupPage++;
+                //fragTran1.addToBackStack(null);
+                if(currSetupPage < 2)
+                    currSetupPage++;
                 switch(currSetupPage) {
                     case 0:
                         fragTran2.replace(R.id.setupFragmentFrameLayout, SetupGradeSelectFragment.newInstance(gradeSelect));
                         setupTxt.setText(getString(R.string.setup_grade_select_text));
+                        fragTran2.addToBackStack(null); //user can reverse transaction of replacing the setupFragmentFrameLayout
                         fragTran2.commit();
                         break;
                     case 1:
                         fragTran2.replace(R.id.setupFragmentFrameLayout, SetupActivitySelectFragment.newInstance(activitySelect));
                         setupTxt.setText(getString(R.string.setup_activity_select_text));
+                        //fragTran1.addToBackStack("grade-to-activity");
+                        fragTran2.addToBackStack(null);
                         fragTran2.commit();
                         break;
                     case 2:
@@ -91,15 +99,29 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
                 setupProgressBar.setProgress(currSetupPage);
             }
         });
+
+        backBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+            //getSupportFragmentManager().popBackStack("grade-to-activity", 0);
+
+                getSupportFragmentManager().popBackStack();
+                if(currSetupPage > 0)
+                currSetupPage--;
+            //onBackPressed();
+            }
+
+        });
     }
 
     @Override
     public void onGradeSelectFragmentInteraction(int defaultGrade) {
-
+        gradeSelect = defaultGrade;
     }
 
     @Override
     public void OnActivitySelectFragmentListener(int defaultActivityNum) {
-
+        activitySelect = defaultActivityNum;
     }
 }

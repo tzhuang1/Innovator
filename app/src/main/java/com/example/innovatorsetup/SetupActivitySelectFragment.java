@@ -123,11 +123,19 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener.OnActivitySelectFragmentListener(getActivityNum());
         mListener = null;
     }
 
     public int getActivityNum() {
         return activityNum;
+    }
+
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        mListener.OnActivitySelectFragmentListener(getActivityNum());
     }
 
     /**
@@ -143,5 +151,9 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
     public interface OnActivitySelectFragmentListener {
         // TODO: Update argument type and name
         void OnActivitySelectFragmentListener(int defaultActivityNum);
+    }
+
+    public void OnActivitySelectFragmentListener(OnActivitySelectFragmentListener mListener){
+        this.mListener = mListener;
     }
 }
