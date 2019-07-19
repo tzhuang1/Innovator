@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3">
+        app:layout_constraintVertical_bias="0.25">
 
         <Button
             android:id="@+id/backBtn"
@@ -83,13 +83,13 @@
         android:layout_marginBottom="8dp"
         android:text="@string/setup_grade_select_text"
         android:textColor="#19A0FB"
-        android:textSize="26sp"
+        android:textSize="28sp"
         app:fontFamily="@font/karla"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18" />
+        app:layout_constraintVertical_bias=".23" />
 
     <FrameLayout
         android:id="@+id/setupFragmentFrameLayout"

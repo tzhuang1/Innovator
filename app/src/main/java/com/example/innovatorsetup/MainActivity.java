@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,10 @@ TODO
  */
 
 public class MainActivity extends AppCompatActivity implements SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
+
+    ProgressBar setupProgressBar;
+    TextView setupTxt;
+
     int currSetupPage;
 
     int gradeSelect;
@@ -52,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
         Button backBtn = findViewById(R.id.backBtn);
         final FragmentTransaction fragTran1 = getSupportFragmentManager().beginTransaction();
 
+        setupProgressBar = findViewById(R.id.setupProgressBar);
+        setupProgressBar.getProgressDrawable().setColorFilter(Color.parseColor("#19A0FB"), android.graphics.PorterDuff.Mode.SRC_IN);
+        setupTxt = findViewById(R.id.setupTxt);
 
         gradeSelect = 1;
         activitySelect = 1;
@@ -72,11 +80,10 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
                 FragmentManager fragMan = getSupportFragmentManager();
                 FragmentTransaction fragTran2 = fragMan.beginTransaction();
 
-                ProgressBar setupProgressBar = findViewById(R.id.setupProgressBar);
-                TextView setupTxt = findViewById(R.id.setupTxt);
                 //fragTran1.addToBackStack(null);
-                if(currSetupPage < 2)
+                if(currSetupPage < 2) {
                     currSetupPage++;
+                }
                 switch(currSetupPage) {
                     case 0:
                         fragTran2.replace(R.id.setupFragmentFrameLayout, SetupGradeSelectFragment.newInstance(gradeSelect));
@@ -100,28 +107,42 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
             }
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener(){
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-            //getSupportFragmentManager().popBackStack("grade-to-activity", 0);
+            public void onClick(View view) {
+                //getSupportFragmentManager().popBackStack("grade-to-activity", 0);
 
                 getSupportFragmentManager().popBackStack();
-                if(currSetupPage > 0)
-                currSetupPage--;
-            //onBackPressed();
-            }
+                if(currSetupPage > 0) {
+                    currSetupPage--;
+                    setupProgressBar.setProgress(currSetupPage);
+                }
 
+                switch(currSetupPage) {
+                    case 0:
+                        setupTxt.setText(getString(R.string.setup_grade_select_text));
+                        break;
+                    case 1:
+                        setupTxt.setText(getString(R.string.setup_activity_select_text));
+                        break;
+                    case 2:
+
+                        break;
+                }
+
+                //onBackPressed();
+
+            }
         });
     }
 
     @Override
     public void onGradeSelectFragmentInteraction(int defaultGrade) {
-        gradeSelect = defaultGrade;
+
     }
 
     @Override
     public void OnActivitySelectFragmentListener(int defaultActivityNum) {
-        activitySelect = defaultActivityNum;
+
     }
 }
