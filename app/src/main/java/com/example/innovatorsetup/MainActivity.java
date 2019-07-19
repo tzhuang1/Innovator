@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,11 +38,17 @@ TODO
     - Add OnClickListener to back button
  */
 
-public class MainActivity extends AppCompatActivity implements SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
+public class MainActivity extends AppCompatActivity implements SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener  {
     int currSetupPage;
 
     int gradeSelect;
     int activitySelect;
+
+    static final String SETTINGS = "InitialSettings";
+    static final String GRADE = "SelectGrade";
+    static final String ACTIVITY = "SelectActivity";
+
+    SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
                         fragTran2.commit();
                         break;
                     case 2:
-
+                        storeSettings();
                         break;
                 }
 
@@ -104,17 +111,22 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
             @Override
             public void onClick(View view)
             {
-            //getSupportFragmentManager().popBackStack("grade-to-activity", 0);
-
                 getSupportFragmentManager().popBackStack();
                 if(currSetupPage > 0)
-                currSetupPage--;
-            //onBackPressed();
+                    currSetupPage--;
+
             }
 
         });
     }
 
+    public void storeSettings(){
+        settings = getSharedPreferences(SETTINGS, 0);
+        SharedPreferences.Editor edit = settings.edit();
+        edit.putInt(GRADE, gradeSelect);
+        edit.putInt(ACTIVITY, activitySelect);
+        edit.apply();
+    }
     @Override
     public void onGradeSelectFragmentInteraction(int defaultGrade) {
         gradeSelect = defaultGrade;
@@ -124,4 +136,9 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
     public void OnActivitySelectFragmentListener(int defaultActivityNum) {
         activitySelect = defaultActivityNum;
     }
+
+
+
+
 }
+
