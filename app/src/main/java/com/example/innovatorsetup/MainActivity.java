@@ -16,27 +16,14 @@ import android.widget.TextView;
 
 /*
 TODO
- - not sure why initial screen is not the setUpGradetxt but straight to grade fragment??
- - Store data from fragments in variables in MainActivity
- - Implement Persisting data for activities/day & grade
-    - Store in local file for now (internal storage or SharedPreferences)
-    - Store in database after login is implemented(?)
+ - Test if SharedPreferences actually works
  - Other tasks(unimportant)
     - Customize buttons
         - Better buttons than just + and -, may need to wait until full app is developed to ensure design stays consistent
-    - Animate screen change
- Useful links:
- File storage overview: https://developer.android.com/guide/topics/data/data-storage
- SharedPreferences: https://developer.android.com/training/data-storage/shared-preferences.html
- Fragments:
- - Fragments in java: https://abhiandroid.com/ui/fragment
- - Buttons in fragments: https://stackoverflow.com/questions/18711433/button-listener-for-button-in-fragment-in-android
- - Fragment communication: https://developer.android.com/training/basics/fragments/communicating.html
- - Fragment general:
-    - https://developer.android.com/guide/components/fragments
-    - https://guides.codepath.com/android/creating-and-using-fragments
- - Finished:
-    - Add OnClickListener to back button
+    - Animate screen/fragment change
+ Finished:
+  - Add OnClickListener to back button    
+  - Store data from fragments in variables in MainActivity
  */
 
 public class MainActivity extends AppCompatActivity implements SetupActivitySelectFragment.OnDataPass, SetupGradeSelectFragment.OnDataPass, SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
