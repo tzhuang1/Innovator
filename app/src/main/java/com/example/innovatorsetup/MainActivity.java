@@ -39,7 +39,7 @@ TODO
     - Add OnClickListener to back button
  */
 
-public class MainActivity extends AppCompatActivity implements SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
+public class MainActivity extends AppCompatActivity implements SetupActivitySelectFragment.OnDataPass, SetupGradeSelectFragment.OnDataPass, SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
 
     ProgressBar setupProgressBar;
     TextView setupTxt;
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button gradeSelectNextBtn = findViewById(R.id.setupGradeNextBtn);
+        final Button gradeSelectNextBtn = findViewById(R.id.setupGradeNextBtn);
         Button backBtn = findViewById(R.id.backBtn);
         final FragmentTransaction fragTran1 = getSupportFragmentManager().beginTransaction();
 
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
                         break;
                     case 2:
                         storeSettings();
+                        System.out.println(settings.getAll());
                         break;
                 }
 
@@ -158,5 +159,15 @@ public class MainActivity extends AppCompatActivity implements SetupGradeSelectF
     @Override
     public void OnActivitySelectFragmentListener(int defaultActivityNum) {
 
+    }
+
+    @Override
+    public void putGradeSelect(int gradeSelect) {
+        this.gradeSelect = gradeSelect;
+    }
+
+    @Override
+    public void putActivitySelect(int activitySelect) {
+        this.activitySelect = activitySelect;
     }
 }

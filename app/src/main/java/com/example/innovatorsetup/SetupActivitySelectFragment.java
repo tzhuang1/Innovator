@@ -30,6 +30,7 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
     private int defaultActivityNum = 1;
 
     private OnActivitySelectFragmentListener mListener;
+    private OnDataPass dataPasser;
 
     private int activityNum;
     private TextView setupActivityDisplay;
@@ -57,7 +58,7 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if(getArguments() != null) {
             defaultActivityNum = getArguments().getInt(ARG_DEFAULT_ACTIVITY_NUM);
         }
     }
@@ -85,8 +86,7 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
                 activityNum = Math.max(--activityNum, 1);
                 if(activityNum == 1) {
                     setupActivityDisplay.setText(activityNum + " activity/day");
-                }
-                else {
+                } else {
                     setupActivityDisplay.setText(activityNum + " activities/day");
                 }
                 break;
@@ -94,17 +94,17 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
                 activityNum = Math.min(++activityNum, 10);
                 if(activityNum == 1) {
                     setupActivityDisplay.setText(activityNum + " activity/day");
-                }
-                else {
+                } else {
                     setupActivityDisplay.setText(activityNum + " activities/day");
                 }
                 break;
         }
+        dataPasser.putActivitySelect(activityNum);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(int defaultActivityNum) {
-        if (mListener != null) {
+        if(mListener != null) {
             mListener.OnActivitySelectFragmentListener(defaultActivityNum);
         }
     }
@@ -112,8 +112,9 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnActivitySelectFragmentListener) {
+        if(context instanceof OnActivitySelectFragmentListener) {
             mListener = (OnActivitySelectFragmentListener) context;
+            dataPasser = (OnDataPass) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -123,19 +124,16 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener.OnActivitySelectFragmentListener(getActivityNum());
+        mListener.OnActivitySelectFragmentListener(activityNum);
         mListener = null;
+        dataPasser.putActivitySelect(activityNum);
+        dataPasser = null;
     }
-
-    public int getActivityNum() {
-        return activityNum;
-    }
-
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        mListener.OnActivitySelectFragmentListener(getActivityNum());
+        mListener.OnActivitySelectFragmentListener(activityNum);
     }
 
     /**
@@ -153,7 +151,16 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
         void OnActivitySelectFragmentListener(int defaultActivityNum);
     }
 
-    public void OnActivitySelectFragmentListener(OnActivitySelectFragmentListener mListener){
+    public interface OnDataPass {
+        void putActivitySelect(int activitySelect);
+    }
+
+    public void OnActivitySelectFragmentListener(OnActivitySelectFragmentListener mListener) {
         this.mListener = mListener;
     }
+
+    public void putActivitySelect(int activityNum) {
+        dataPasser.putActivitySelect(activityNum);
+    }
+
 }

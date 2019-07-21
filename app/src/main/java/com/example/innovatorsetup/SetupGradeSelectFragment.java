@@ -33,6 +33,7 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     private TextView setupGradeDisplay;
 
     private onGradeSelectFragmentInteraction mListener;
+    private OnDataPass dataPasser;
 
     public SetupGradeSelectFragment() {
         // Required empty public constructor
@@ -41,6 +42,7 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
+     *
      * @param defaultGradeNum Parameter 1.
      * @return A new instance of fragment SetupGradeSelectFragment.
      */
@@ -55,7 +57,7 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if(getArguments() != null) {
             defaultGradeNum = getArguments().getInt(ARG_GRADE_DEFAULT_NUM);
         }
     }
@@ -74,7 +76,7 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
 
         setupGradeDisplay = view.findViewById(R.id.setupGradeDisplayTxt);
         System.out.println(gradeSelect);
-        setupGradeDisplay.setText(gradeList[gradeSelect-1]);
+        setupGradeDisplay.setText(gradeList[gradeSelect - 1]);
 
         gradeSelectLeftBtn.setOnClickListener(this);
         gradeSelectRightBtn.setOnClickListener(this);
@@ -83,7 +85,7 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     }
 
     public void onButtonPressed(int defaultGradeNum) {
-        if (mListener != null) {
+        if(mListener != null) {
             mListener.onGradeSelectFragmentInteraction(defaultGradeNum);
         }
     }
@@ -91,8 +93,9 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof MainActivity) {
+        if(context instanceof MainActivity) {
             mListener = (onGradeSelectFragmentInteraction) context;
+            dataPasser = (OnDataPass) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -102,8 +105,10 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener.onGradeSelectFragmentInteraction(getGradeSelect());
+        mListener.onGradeSelectFragmentInteraction(gradeSelect);
         mListener = null;
+        dataPasser.putGradeSelect(gradeSelect);
+        dataPasser = null;
     }
 
     @Override
@@ -111,23 +116,19 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
         switch(view.getId()) {
             case R.id.gradeSelectLeftBtn:
                 gradeSelect = Math.max(--gradeSelect, 1);
-                setupGradeDisplay.setText(gradeList[gradeSelect-1]);
-                break;
+                setupGradeDisplay.setText(gradeList[gradeSelect - 1]);
             case R.id.gradeSelectRightBtn:
                 gradeSelect = Math.min(++gradeSelect, gradeList.length);
-                setupGradeDisplay.setText(gradeList[gradeSelect-1]);
+                setupGradeDisplay.setText(gradeList[gradeSelect - 1]);
                 break;
         }
-    }
-
-    public int getGradeSelect() {
-        return gradeSelect;
+        dataPasser.putGradeSelect(gradeSelect);
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        mListener.onGradeSelectFragmentInteraction(getGradeSelect());
+        mListener.onGradeSelectFragmentInteraction(gradeSelect);
     }
 
     /**
@@ -144,7 +145,14 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
         void onGradeSelectFragmentInteraction(int defaultGrade);
     }
 
-    public void onGradeSelectFragmentInteraction(onGradeSelectFragmentInteraction mListener){
+    public interface OnDataPass {
+        void putGradeSelect(int gradeSelect);
+    }
+
+    public void onGradeSelectFragmentInteraction(onGradeSelectFragmentInteraction mListener) {
         this.mListener = mListener;
+    }
+    public void putGradeSelectToMain() {
+        dataPasser.putGradeSelect(gradeSelect);
     }
 }
