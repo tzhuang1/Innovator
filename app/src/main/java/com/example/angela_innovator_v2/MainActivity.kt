@@ -1,12 +1,16 @@
 package com.example.angela_innovator_v2
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.innovatorsetup.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Fragment() {
 
     //private lateinit var textMessage: TextView
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -34,15 +38,20 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.activity_bottom_bar, container, false);
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val navView: BottomNavigationView = view.findViewById(R.id.nav_view)
 
         //textMessage = findViewById(R.id.)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        //val fm : FragmentManager = getFragmentManager();
         supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment() ).commit()
-        }
+        super.onViewCreated(view, savedInstanceState)
     }
+}
+
 
 
