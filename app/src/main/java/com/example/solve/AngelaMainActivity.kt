@@ -44,7 +44,7 @@ class AngelaMainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.angela_activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         //textMessage = findViewById(R.id.)
@@ -52,5 +52,3 @@ class AngelaMainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment() ).commit()
         }
     }
-
-
