@@ -9,7 +9,7 @@ import android.widget.SeekBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.innovatorsetup.R;
+import com.example.angela_innovator_v2.R;
 
 public class ProgressBarTestActivity extends AppCompatActivity {
     ProgressBar progress;

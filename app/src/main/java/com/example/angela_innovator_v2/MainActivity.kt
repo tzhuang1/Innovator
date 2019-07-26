@@ -4,9 +4,7 @@ import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
-import com.example.innovatorTopicSelection.TopicSelectActivity
 import com.example.innovatorTopicSelection.TopicSelectFragment
-import com.example.innovatorsetup.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,10 +13,12 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_home -> { //HOME
                 //textMessage.setText(R.string.title_home)
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, HomeFragment() ).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> { //EXPLORE
                 //textMessage.setText(R.string.title_explore)
+                //supportFragmentManager.beginTransaction().replace(R.id.fragment_container, ExploreFragment() ).commit()
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, TopicSelectFragment() ).commit()
                 return@OnNavigationItemSelectedListener true
             }
@@ -46,5 +46,3 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(R.id.fragment_container, TopicSelectFragment() ).commit() //HomeFragment
         }
     }
-
-

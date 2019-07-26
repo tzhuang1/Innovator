@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.innovatorsetup.R;
+import com.example.angela_innovator_v2.R;
 
 public class TopicSelectActivity extends FragmentActivity {
     //Activity has 2 fragments: the top one (topic select) and the bottom bar.
