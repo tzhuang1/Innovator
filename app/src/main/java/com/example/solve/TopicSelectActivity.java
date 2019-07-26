@@ -1,15 +1,13 @@
-package com.example.innovatorTopicSelection;
+package com.example.solve;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.angela_innovator_v2.R;
+import com.example.solve.R;
 
 public class TopicSelectActivity extends FragmentActivity {
     //Activity has 2 fragments: the top one (topic select) and the bottom bar.

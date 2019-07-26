@@ -7,12 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:name="com.example.innovatorTopicSelection.TopicSelectFragment"
+        android:name="com.example.solve.TopicSelectFragment"
         android:id="@+id/topic_select_fragment_activity"/>
     <fragment
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:name="com.example.angela_innovator_v2.MainActivity"
+        android:name="com.example.solve.AngelaMainActivity"
         android:id="@+id/bottom_bar_fragment_activity" />
 
 

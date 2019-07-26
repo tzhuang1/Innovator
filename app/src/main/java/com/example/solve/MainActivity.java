@@ -1,8 +1,6 @@
-package com.example.innovatorsetup;
+package com.example.solve;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,7 +21,7 @@ TODO
     - Animate screen/fragment change
  Finished:
   - Add OnClickListener to back button    
-  - Store data from fragments in variables in MainActivity
+  - Store data from fragments in variables in AngelaMainActivity
  */
 
 public class MainActivity extends AppCompatActivity implements SetupActivitySelectFragment.OnDataPass, SetupGradeSelectFragment.OnDataPass, SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
