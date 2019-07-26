@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_home -> { //HOME
                 //textMessage.setText(R.string.title_home)
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, HomeFragment() ).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> { //EXPLORE
