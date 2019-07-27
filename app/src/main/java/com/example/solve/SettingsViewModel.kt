@@ -1,6 +1,6 @@
-package com.example.angela_innovator_v2
+package com.example.solve
 
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel
 
 class SettingsViewModel : ViewModel() {
     // TODO: Implement the ViewModel

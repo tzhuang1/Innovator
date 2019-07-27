@@ -1,4 +1,4 @@
-package com.example.angela_innovator_v2
+package com.example.solve
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.solve.ExploreViewModel
+import com.example.solve.R
 
 
 class ExploreFragment : Fragment() {

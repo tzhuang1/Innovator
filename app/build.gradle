@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
+    buildToolsVersion "29.0.1"
     defaultConfig {
-        applicationId "com.example.angela_innovator_v2"
+        applicationId "com.example.innovatorsetup"
         minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
@@ -37,4 +36,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+repositories {
+    mavenCentral()
 }

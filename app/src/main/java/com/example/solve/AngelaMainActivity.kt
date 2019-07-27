@@ -1,12 +1,16 @@
-package com.example.angela_innovator_v2
+package com.example.solve
 
 import android.os.Bundle
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.TextView
-import com.example.innovatorTopicSelection.TopicSelectFragment
+import com.example.solve.AccountFragment
+import com.example.solve.HomeFragment
+import com.example.solve.SettingsFragment
+import com.example.solve.R
+import com.example.solve.TopicSelectFragment
 
-class MainActivity : AppCompatActivity() {
+class AngelaMainActivity : AppCompatActivity() {
 
     //private lateinit var textMessage: TextView
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -19,7 +23,9 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_dashboard -> { //EXPLORE
                 //textMessage.setText(R.string.title_explore)
                 //supportFragmentManager.beginTransaction().replace(R.id.fragment_container, ExploreFragment() ).commit()
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, TopicSelectFragment() ).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+                    TopicSelectFragment()
+                ).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> { //SETTINGS
@@ -38,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.angela_activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         //textMessage = findViewById(R.id.)
@@ -46,5 +52,3 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment() ).commit()
         }
     }
-
-

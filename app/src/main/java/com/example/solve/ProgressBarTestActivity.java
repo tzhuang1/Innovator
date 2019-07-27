@@ -1,4 +1,4 @@
-package com.example.innovatorTopicSelection;
+package com.example.solve;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.SeekBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.angela_innovator_v2.R;
+import com.example.solve.R;
 
 public class ProgressBarTestActivity extends AppCompatActivity {
     ProgressBar progress;
