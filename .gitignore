@@ -76,3 +76,6 @@ fastlane/readme.md
 /build
 /captures
 .externalNativeBuild
+.idea/misc.xml
+.idea/modules.xml
+app/app.iml
