@@ -21,10 +21,10 @@ TODO
     - Animate screen/fragment change
  Finished:
   - Add OnClickListener to back button    
-  - Store data from fragments in variables in AngelaMainActivity
+  - Store data from fragments in variables in MainActivity
  */
 
-public class MainActivity extends AppCompatActivity implements SetupActivitySelectFragment.OnDataPass, SetupGradeSelectFragment.OnDataPass, SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
+public class SetupMainActivity extends AppCompatActivity implements SetupActivitySelectFragment.OnDataPass, SetupGradeSelectFragment.OnDataPass, SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
 
     ProgressBar setupProgressBar;
     TextView setupTxt;

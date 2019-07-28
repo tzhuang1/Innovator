@@ -10,7 +10,7 @@ import com.example.solve.SettingsFragment
 import com.example.solve.R
 import com.example.solve.TopicSelectFragment
 
-class AngelaMainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     //private lateinit var textMessage: TextView
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

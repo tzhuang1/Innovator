@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import com.example.solve.R;
 
 
 /**
@@ -94,7 +93,7 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof AngelaMainActivity) {
+        if(context instanceof MainActivity) {
             mListener = (onGradeSelectFragmentInteraction) context;
             dataPasser = (OnDataPass) context;
         } else {
