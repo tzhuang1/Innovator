@@ -4,11 +4,6 @@ import android.os.Bundle
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.solve.AccountFragment
-import com.example.solve.HomeFragment
-import com.example.solve.SettingsFragment
-import com.example.solve.R
-import com.example.solve.TopicSelectFragment
 
 class MainActivity : AppCompatActivity() {
 
