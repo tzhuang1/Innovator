@@ -93,7 +93,7 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof MainActivity) {
+        if(context instanceof QuestionMainActivity) {
             mListener = (onGradeSelectFragmentInteraction) context;
             dataPasser = (OnDataPass) context;
         } else {

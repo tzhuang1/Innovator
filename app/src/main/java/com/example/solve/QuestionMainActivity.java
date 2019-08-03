@@ -1,4 +1,4 @@
-package com.example.questions;
+package com.example.solve;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -10,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -18,7 +17,7 @@ import java.util.List;
 
 import info.hoang8f.widget.FButton;
 
-public class MainActivity extends AppCompatActivity {
+public class QuestionMainActivity extends AppCompatActivity {
 
     FButton buttonA, buttonB, buttonC, buttonD;
     TextView question;
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.question_activity_main);
 
         //Initializing variables
         buttonA = (FButton) findViewById(R.id.buttonA);
@@ -159,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
     //This dialog is show to the user after he ans correct
     public void correctDialog() {
-        final Dialog dialogCorrect = new Dialog(MainActivity.this);
+        final Dialog dialogCorrect = new Dialog(QuestionMainActivity.this);
         dialogCorrect.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (dialogCorrect.getWindow() != null) {
             ColorDrawable colorDrawable = new ColorDrawable(Color.TRANSPARENT);

@@ -1,4 +1,4 @@
-package com.example.questions;
+package com.example.solve;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.example.questions;
+package com.example.solve;
 import android.app.Activity;
 
 public class Questions extends Activity {

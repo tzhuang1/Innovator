@@ -12,7 +12,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:name="com.example.solve.MainActivity"
+        android:name="com.example.solve.QuestionMainActivity"
         android:id="@+id/bottom_bar_fragment_activity" />
 
 

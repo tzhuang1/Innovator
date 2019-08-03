@@ -21,7 +21,7 @@ TODO
     - Animate screen/fragment change
  Finished:
   - Add OnClickListener to back button    
-  - Store data from fragments in variables in MainActivity
+  - Store data from fragments in variables in QuestionMainActivity
  */
 
 public class SetupMainActivity extends AppCompatActivity implements SetupActivitySelectFragment.OnDataPass, SetupGradeSelectFragment.OnDataPass, SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
