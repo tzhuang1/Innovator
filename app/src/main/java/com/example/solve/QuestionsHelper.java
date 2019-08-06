@@ -35,7 +35,7 @@ class QuestionsHelper extends SQLiteOpenHelper {
     //Answer
     private static final String ANSWER = "ANSWER";
     //Explanation
-    private static final String EXPLANATION = "ANSWER";
+    private static final String EXPLANATION = "EXPLANATION";
     //So basically we are now creating table with first column-id , sec column-question , third column -option A, fourth column -option B , Fifth column -option C , sixth column -option D , seventh column - answer(i.e ans of  question), eighth column - explanation
     private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ( " + UID + " INTEGER PRIMARY KEY AUTOINCREMENT , " + QUESTION + " VARCHAR(255), " + OPTA + " VARCHAR(255), " + OPTB + " VARCHAR(255), " + OPTC + " VARCHAR(255), " + OPTD + " VARCHAR(255), " + ANSWER + " VARCHAR(255), " + EXPLANATION + " VARCHAR(255));";
     //Drop table query
