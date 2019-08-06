@@ -1,5 +1,6 @@
 package com.example.solve;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class TopicSelectFragment extends Fragment {
     //---------topic storage--------------
     private String[] topicTitles;
     private Image[] topicImages;
+    private Questions questions;
     //private ????[] topicLinks; //how do we communicate the topic to the practice view?
 
 
@@ -68,8 +70,12 @@ public class TopicSelectFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Intent intent = new Intent();
-
+                //Intent intent = new Intent(getActivity(), Questions.class);
+                //getActivity().startActivity(intent);
                 //Transition to another activity, bla bla bla
+                Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
+                startActivity(intent);
+
             }
         });
         leftButton.setOnClickListener(new View.OnClickListener() {

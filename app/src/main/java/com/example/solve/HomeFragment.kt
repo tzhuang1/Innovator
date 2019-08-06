@@ -13,6 +13,7 @@ class HomeFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Get the custom view for this fragment layout
         val view = inflater.inflate(R.layout.fragment_home,container,false)
+
         //setContentView(view);
 
 //        // Get the text view widget reference from custom layout
