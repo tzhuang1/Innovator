@@ -15,7 +15,7 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SetupActivitySelectFragment.OnActivitySelectFragmentListener} interface
+ * {@link SetupActivitySelectFragment.OnDataPass} interface
  * to handle interaction events.
  * Use the {@link SetupActivitySelectFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -28,7 +28,6 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
     // TODO: Rename and change types of parameters
     private int defaultActivityNum = 1;
 
-    private OnActivitySelectFragmentListener mListener;
     private OnDataPass dataPasser;
 
     private int activityNum;
@@ -101,18 +100,10 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
         dataPasser.putActivitySelect(activityNum);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(int defaultActivityNum) {
-        if(mListener != null) {
-            mListener.OnActivitySelectFragmentListener(defaultActivityNum);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof OnActivitySelectFragmentListener) {
-            mListener = (OnActivitySelectFragmentListener) context;
+        if(context instanceof SetupMainActivity) {
             dataPasser = (OnDataPass) context;
         } else {
             throw new RuntimeException(context.toString()
@@ -123,8 +114,6 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener.OnActivitySelectFragmentListener(activityNum);
-        mListener = null;
         dataPasser.putActivitySelect(activityNum);
         dataPasser = null;
     }
@@ -132,7 +121,6 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
     @Override
     public void onPause() {
         super.onPause();
-        mListener.OnActivitySelectFragmentListener(activityNum);
     }
 
     /**
@@ -145,17 +133,8 @@ public class SetupActivitySelectFragment extends Fragment implements View.OnClic
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnActivitySelectFragmentListener {
-        // TODO: Update argument type and name
-        void OnActivitySelectFragmentListener(int defaultActivityNum);
-    }
-
     public interface OnDataPass {
         void putActivitySelect(int activitySelect);
-    }
-
-    public void OnActivitySelectFragmentListener(OnActivitySelectFragmentListener mListener) {
-        this.mListener = mListener;
     }
 
     public void putActivitySelect(int activityNum) {

@@ -15,7 +15,7 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SetupGradeSelectFragment.onGradeSelectFragmentInteraction} interface
+ * {@link SetupGradeSelectFragment.OnDataPass} interface
  * to handle interaction events.
  * Use the {@link SetupGradeSelectFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -32,7 +32,6 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     private int gradeSelect;
     private TextView setupGradeDisplay;
 
-    private onGradeSelectFragmentInteraction mListener;
     private OnDataPass dataPasser;
 
     public SetupGradeSelectFragment() {
@@ -84,17 +83,10 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
         return view;
     }
 
-    public void onButtonPressed(int defaultGradeNum) {
-        if(mListener != null) {
-            mListener.onGradeSelectFragmentInteraction(defaultGradeNum);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof QuestionMainActivity) {
-            mListener = (onGradeSelectFragmentInteraction) context;
+        if(context instanceof SetupMainActivity) {
             dataPasser = (OnDataPass) context;
         } else {
             throw new RuntimeException(context.toString()
@@ -105,8 +97,6 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener.onGradeSelectFragmentInteraction(gradeSelect);
-        mListener = null;
         dataPasser.putGradeSelect(gradeSelect);
         dataPasser = null;
     }
@@ -128,7 +118,6 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     @Override
     public void onPause() {
         super.onPause();
-        mListener.onGradeSelectFragmentInteraction(gradeSelect);
     }
 
     /**
@@ -141,17 +130,10 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface onGradeSelectFragmentInteraction {
-        void onGradeSelectFragmentInteraction(int defaultGrade);
-    }
-
     public interface OnDataPass {
         void putGradeSelect(int gradeSelect);
     }
 
-    public void onGradeSelectFragmentInteraction(onGradeSelectFragmentInteraction mListener) {
-        this.mListener = mListener;
-    }
     public void putGradeSelectToMain() {
         dataPasser.putGradeSelect(gradeSelect);
     }

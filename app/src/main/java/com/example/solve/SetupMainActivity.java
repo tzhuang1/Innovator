@@ -1,5 +1,6 @@
 package com.example.solve;
 
+import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,36 +15,53 @@ import android.widget.TextView;
 
 /*
 TODO
- - Test if SharedPreferences actually works
  - Other tasks(unimportant)
     - Customize buttons
         - Better buttons than just + and -, may need to wait until full app is developed to ensure design stays consistent
     - Animate screen/fragment change
- Finished:
-  - Add OnClickListener to back button    
-  - Store data from fragments in variables in QuestionMainActivity
  */
 
-public class SetupMainActivity extends AppCompatActivity implements SetupActivitySelectFragment.OnDataPass, SetupGradeSelectFragment.OnDataPass, SetupGradeSelectFragment.onGradeSelectFragmentInteraction, SetupActivitySelectFragment.OnActivitySelectFragmentListener {
+public class SetupMainActivity extends AppCompatActivity implements SetupActivitySelectFragment.OnDataPass, SetupGradeSelectFragment.OnDataPass {
+
+    public static final String SHARED_PREFERENCES_FILE = "com.example.solve.preferenceFile";
+
+    private final AppCompatActivity me = this;
 
     ProgressBar setupProgressBar;
     TextView setupTxt;
+
+    boolean showSetup = true;
 
     int currSetupPage;
 
     int gradeSelect;
     int activitySelect;
 
-    static final String SETTINGS = "InitialSettings";
+    SharedPreferences settings;
+
     static final String GRADE = "SelectGrade";
     static final String ACTIVITY = "SelectActivity";
-
-    SharedPreferences settings;
+    static final String SHOW_SETUP = "ShowSetup";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        settings = getSharedPreferences(SHARED_PREFERENCES_FILE, 0);
+
+        if (settings.getBoolean(SHOW_SETUP, true)) {
+            showSetup = true;
+        } else {
+            showSetup = false;
+        }
+
+        if (!showSetup) {
+            Intent mainMenuIntent = new Intent(me, MainMenuActivity.class);
+            startActivity(mainMenuIntent);
+            finish();
+        }
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.setup_activity_main);
 
         final Button gradeSelectNextBtn = findViewById(R.id.setupGradeNextBtn);
         Button backBtn = findViewById(R.id.backBtn);
@@ -56,7 +74,7 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         gradeSelect = 1;
         activitySelect = 1;
 
-        if(findViewById(R.id.setupFragmentFrameLayout) != null) {
+        if (findViewById(R.id.setupFragmentFrameLayout) != null) {
             SetupGradeSelectFragment gradeFragment = SetupGradeSelectFragment.newInstance(1);
             gradeFragment.setArguments(getIntent().getExtras());
             fragTran1.add(R.id.setupFragmentFrameLayout, gradeFragment);
@@ -73,9 +91,9 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
                 FragmentTransaction fragTran2 = fragMan.beginTransaction();
 
                 //fragTran1.addToBackStack(null);
-                if(currSetupPage < 2)
+                if (currSetupPage < 2)
                     currSetupPage++;
-                switch(currSetupPage) {
+                switch (currSetupPage) {
                     case 0:
                         fragTran2.replace(R.id.setupFragmentFrameLayout, SetupGradeSelectFragment.newInstance(gradeSelect));
                         setupTxt.setText(getString(R.string.setup_grade_select_text));
@@ -91,7 +109,15 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
                         break;
                     case 2:
                         storeSettings();
+                        setSetupFinished();
+                        /*
+                        TODO
+                         Remove println when done, used for debug
+                         */
                         System.out.println(settings.getAll());
+                        Intent mainMenuIntent = new Intent(me, MainMenuActivity.class);
+                        startActivity(mainMenuIntent);
+                        finish();
                         break;
                 }
 
@@ -99,18 +125,18 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
             }
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener(){
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //getSupportFragmentManager().popBackStack("grade-to-activity", 0);
 
                 getSupportFragmentManager().popBackStack();
-                if(currSetupPage > 0) {
+                if (currSetupPage > 0) {
                     currSetupPage--;
                     setupProgressBar.setProgress(currSetupPage);
                 }
 
-                switch(currSetupPage) {
+                switch (currSetupPage) {
                     case 0:
                         setupTxt.setText(getString(R.string.setup_grade_select_text));
                         break;
@@ -128,22 +154,23 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         });
     }
 
-    public void storeSettings(){
-        settings = getSharedPreferences(SETTINGS, 0);
+    @Override
+    public void onPause() {
+        super.onPause();
+        storeSettings();
+    }
+
+    public void setSetupFinished() {
+        SharedPreferences.Editor edit = settings.edit();
+        edit.putBoolean(SHOW_SETUP, false);
+        edit.apply();
+    }
+
+    public void storeSettings() {
         SharedPreferences.Editor edit = settings.edit();
         edit.putInt(GRADE, gradeSelect);
         edit.putInt(ACTIVITY, activitySelect);
         edit.apply();
-    }
-
-    @Override
-    public void onGradeSelectFragmentInteraction(int defaultGrade) {
-
-    }
-
-    @Override
-    public void OnActivitySelectFragmentListener(int defaultActivityNum) {
-
     }
 
     @Override
