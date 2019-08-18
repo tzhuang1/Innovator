@@ -121,7 +121,8 @@ public class QuestionMainActivity extends AppCompatActivity {
             } else {
 
             }
-        } else {
+        } else { // in place of PlayAgain activity to be implemented later? test to pull up incorrect dialog
+            incorrectDialog();
             //Incorrect dialogue
         }
     }
@@ -137,6 +138,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
             }
         } else {
+            incorrectDialog();
             //Incorrect dialogue
         }
     }
@@ -152,6 +154,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
             }
         } else {
+            incorrectDialog();
             //IncorrectDialogue
         }
     }
@@ -193,6 +196,68 @@ public class QuestionMainActivity extends AppCompatActivity {
                 updateQueueAndOptions();
                 //reset the color of buttons back to white
                 resetColor();
+                //Enable button - remember we had disable them when user ans was correct in there particular button methods
+                enableButton();
+            }
+        });
+    }
+
+    public void incorrectDialog() {
+        final Dialog dialogIncorrect = new Dialog(QuestionMainActivity.this);
+        dialogIncorrect.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (dialogIncorrect.getWindow() != null) {
+            ColorDrawable colorDrawable = new ColorDrawable(Color.TRANSPARENT);
+            dialogIncorrect.getWindow().setBackgroundDrawable(colorDrawable);
+        }
+        dialogIncorrect.setContentView(R.layout.dialog_incorrect);
+        dialogIncorrect.setCancelable(false);
+        dialogIncorrect.show();
+
+        //Since the dialog is show to user just pause the timer in background
+        onPause();
+
+
+        TextView correctText = (TextView) dialogIncorrect.findViewById(R.id.incorrectText);
+        FButton buttonNext = (FButton) dialogIncorrect.findViewById(R.id.dialogNext);
+        FButton buttonTryAgain = (FButton) dialogIncorrect.findViewById(R.id.dialogTryAgain);
+
+        //Setting type faces
+        correctText.setTypeface(tb);
+        buttonNext.setTypeface(tb);
+        buttonTryAgain.setTypeface(tb);
+
+        //OnCLick listener to go next que
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //This will dismiss the dialog
+                dialogIncorrect.dismiss();
+                //it will increment the question number
+                qid++;
+                //get the que and 4 option and store in the currentQuestion
+                currentQuestion = list.get(qid);
+                //Now this method will set the new que and 4 options
+                updateQueueAndOptions();
+                //reset the color of buttons back to white
+                resetColor();
+                //Enable button - remember we had disable them when user ans was correct in there particular button methods
+                enableButton();
+            }
+        });
+
+        buttonTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //This will dismiss the dialog
+                dialogIncorrect.dismiss();
+                //it will increment the question number
+                //qid++;
+                //get the que and 4 option and store in the currentQuestion
+                //currentQuestion = list.get(qid);
+                //Now this method will set the new que and 4 options
+                //updateQueueAndOptions();
+                //reset the color of buttons back to white
+                //resetColor();
                 //Enable button - remember we had disable them when user ans was correct in there particular button methods
                 enableButton();
             }

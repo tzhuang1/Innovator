@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/layout_bg"
@@ -16,12 +16,12 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/correctText"
+            android:id="@+id/incorrectText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/correct"
-            android:textColor="@color/green"
+            android:text="@string/incorrect"
+            android:textColor="@color/red"
             android:textSize="30sp"
             fbutton:fontFamily="@font/karla" />
     </LinearLayout>
@@ -29,13 +29,50 @@
 
         android:layout_width="match_parent"
         android:layout_height="50dp"></View>
-    <info.hoang8f.widget.FButton
-        android:id="@+id/dialogNext"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:textColor="@color/white"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:padding="5dp">
+        <TextView
+                android:id="@+id/explanationLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/explanation_label"
+                android:textColor="@color/green"
+                android:textSize="24sp"
+                fbutton:fontFamily="@font/karla"
+                android:layout_weight="1"/>
+        <EditText
+                android:id="@+id/explanationText"
+                android:layout_width="345dp"
+                android:layout_height="103dp"
+                android:inputType="textMultiLine"
+                android:gravity="start|top"
+                android:ems="10"
+                android:layout_weight="1"
+                android:importantForAutofill="no" tools:textSize="18sp"
+                android:text=""/>
+    </LinearLayout>
     <View
-        android:layout_width="match_parent"
-        android:layout_height="50dp"></View>
+            android:layout_width="match_parent"
+            android:layout_height="50dp"></View>
+    <info.hoang8f.widget.FButton
+            android:id="@+id/dialogTryAgain"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/try_again"
+            android:textColor="@color/white"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"></View>
+    <info.hoang8f.widget.FButton
+            android:id="@+id/dialogNext"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            android:textColor="@color/white"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"></View>
 </LinearLayout>
