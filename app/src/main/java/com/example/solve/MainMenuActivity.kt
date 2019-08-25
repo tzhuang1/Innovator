@@ -4,6 +4,12 @@ import android.os.Bundle
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import info.hoang8f.widget.FButton
+
+import android.content.Intent
+import android.view.View
+import android.widget.Button
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainMenuActivity : AppCompatActivity() {
 
@@ -42,9 +48,9 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.angela_activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
         //textMessage = findViewById(R.id.)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment()).commit()
     }
+
 }

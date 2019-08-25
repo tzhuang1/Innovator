@@ -10,8 +10,9 @@ public class Questions extends Activity {
     private String optd;
     private String answer;
     private String explanation;
+    private String category;
 
-    public Questions(String q, String oa, String ob, String oc, String od, String ans, String ex) {
+    public Questions(String q, String oa, String ob, String oc, String od, String ans, String ex, String ca) {
 
         question = q;
         opta = oa;
@@ -20,6 +21,7 @@ public class Questions extends Activity {
         optd = od;
         answer = ans;
         explanation = ex;
+        category = ca;
     }
 
     public Questions() {
@@ -30,7 +32,8 @@ public class Questions extends Activity {
         optc = "";
         optd = "";
         answer = "";
-        explanation="";
+        explanation = "";
+        category = "";
     }
 
     public String getQuestion() {
@@ -57,9 +60,9 @@ public class Questions extends Activity {
         return answer;
     }
 
-    public String getExplanation() {
-        return explanation;
-    }
+    public String getExplanation() { return explanation; }
+
+    public String getCategory() { return category; }
 
     public void setId(int i) {
         id = i;
@@ -91,5 +94,9 @@ public class Questions extends Activity {
 
     public void setExplanation(String ex) {
         explanation = ex;
+    }
+
+    public void setCategory(String ca) {
+        category = ca;
     }
 }

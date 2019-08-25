@@ -27,12 +27,12 @@
     </LinearLayout>
     <View
 
-        android:layout_width="match_parent"
-        android:layout_height="50dp"></View>
+            android:layout_width="match_parent"
+            android:layout_height="25dp"></View>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="5dp">
+            android:layout_height="wrap_content">
         <TextView
                 android:id="@+id/explanationLabel"
                 android:layout_width="match_parent"
@@ -43,26 +43,13 @@
                 android:textSize="24sp"
                 fbutton:fontFamily="@font/karla"
                 android:layout_weight="1"/>
-        <EditText
-                android:id="@+id/explanationText"
-                android:layout_width="345dp"
-                android:layout_height="103dp"
-                android:inputType="textMultiLine"
-                android:gravity="start|top"
-                android:ems="10"
-                android:layout_weight="1"
-                android:importantForAutofill="no" tools:textSize="18sp"
-                android:text=""/>
     </LinearLayout>
-    <View
+    <TextView
+            android:text="@string/explanation_text"
+            android:scrollbars="vertical"
+            android:textSize="18sp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"></View>
-    <info.hoang8f.widget.FButton
-            android:id="@+id/dialogTryAgain"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="@string/try_again"
-            android:textColor="@color/white"/>
+            android:layout_height="wrap_content" android:id="@+id/explanationText"/>
     <View
             android:layout_width="match_parent"
             android:layout_height="50dp"></View>

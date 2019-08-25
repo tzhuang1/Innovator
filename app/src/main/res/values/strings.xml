@@ -16,6 +16,7 @@
     <string name="incorrect">Incorrect</string>
     <string name="try_again">Try Again</string>
     <string name="explanation_label">Explanation</string>
+    <string name="explanation_text">Explanation Text</string>
     <string name="timeup">Time Up</string>
     <string name="play_game">Play Game</string>
     <string name="quit">Quit</string>

@@ -1,5 +1,6 @@
 package com.example.solve;
 
+import android.text.method.ScrollingMovementMethod;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -107,7 +108,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         }
         //User ans is wrong then just navigate him to the PlayAgain activity
         else {
-            //Incorrect dialogue
+            incorrectDialog();
         }
     }
 
@@ -123,7 +124,6 @@ public class QuestionMainActivity extends AppCompatActivity {
             }
         } else { // in place of PlayAgain activity to be implemented later? test to pull up incorrect dialog
             incorrectDialog();
-            //Incorrect dialogue
         }
     }
 
@@ -139,7 +139,6 @@ public class QuestionMainActivity extends AppCompatActivity {
             }
         } else {
             incorrectDialog();
-            //Incorrect dialogue
         }
     }
 
@@ -155,7 +154,6 @@ public class QuestionMainActivity extends AppCompatActivity {
             }
         } else {
             incorrectDialog();
-            //IncorrectDialogue
         }
     }
 
@@ -217,14 +215,19 @@ public class QuestionMainActivity extends AppCompatActivity {
         onPause();
 
 
-        TextView correctText = (TextView) dialogIncorrect.findViewById(R.id.incorrectText);
+        TextView incorrectText = (TextView) dialogIncorrect.findViewById(R.id.incorrectText);
+        TextView incorrect_label = (TextView) dialogIncorrect.findViewById(R.id.explanationLabel);
+        TextView incorrect_explanation = (TextView) dialogIncorrect.findViewById(R.id.explanationText);
         FButton buttonNext = (FButton) dialogIncorrect.findViewById(R.id.dialogNext);
-        FButton buttonTryAgain = (FButton) dialogIncorrect.findViewById(R.id.dialogTryAgain);
 
         //Setting type faces
-        correctText.setTypeface(tb);
+        incorrectText.setTypeface(tb);
+        incorrect_explanation.setTypeface(tb);
+        incorrect_explanation.setMovementMethod(new ScrollingMovementMethod());
+        incorrect_label.setTypeface(tb);
         buttonNext.setTypeface(tb);
-        buttonTryAgain.setTypeface(tb);
+
+        incorrect_explanation.setText(currentQuestion.getExplanation());
 
         //OnCLick listener to go next que
         buttonNext.setOnClickListener(new View.OnClickListener() {
@@ -245,23 +248,6 @@ public class QuestionMainActivity extends AppCompatActivity {
             }
         });
 
-        buttonTryAgain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //This will dismiss the dialog
-                dialogIncorrect.dismiss();
-                //it will increment the question number
-                //qid++;
-                //get the que and 4 option and store in the currentQuestion
-                //currentQuestion = list.get(qid);
-                //Now this method will set the new que and 4 options
-                //updateQueueAndOptions();
-                //reset the color of buttons back to white
-                //resetColor();
-                //Enable button - remember we had disable them when user ans was correct in there particular button methods
-                enableButton();
-            }
-        });
     }
 
 

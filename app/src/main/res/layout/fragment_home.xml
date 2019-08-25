@@ -12,7 +12,7 @@
     <Button
             android:text="Daily Challenge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button3" android:layout_alignParentStart="true"
+            android:layout_height="wrap_content" android:id="@+id/dailyChallengeButton" android:layout_alignParentStart="true"
             android:layout_marginStart="133dp" android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true" android:layout_marginTop="424dp" android:layout_marginLeft="133dp"/>
     <Button
