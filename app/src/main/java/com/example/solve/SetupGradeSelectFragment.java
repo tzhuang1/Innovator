@@ -105,10 +105,11 @@ public class SetupGradeSelectFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.gradeSelectLeftBtn:
-                gradeSelect = Math.max(--gradeSelect, 1);
+                gradeSelect = Math.max(gradeSelect - 1, 1);
                 setupGradeDisplay.setText(gradeList[gradeSelect - 1]);
+                break;
             case R.id.gradeSelectRightBtn:
-                gradeSelect = Math.min(++gradeSelect, gradeList.length);
+                gradeSelect = Math.min(gradeSelect + 1, gradeList.length);
                 setupGradeDisplay.setText(gradeList[gradeSelect - 1]);
                 break;
         }
