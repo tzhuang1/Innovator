@@ -5,10 +5,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".AccountFragment">
+    <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     <TextView
+            android:id="@+id/currentUser"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Account View"/>
+            android:text="Account View" />
+
 
 </FrameLayout>
