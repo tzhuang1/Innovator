@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.List;
 
 
 public class TopicSelectFragment extends Fragment {
@@ -25,12 +26,11 @@ public class TopicSelectFragment extends Fragment {
     private int topicIdx; //current topic index
 
     //---------topic storage--------------
-    private String[] topicTitles;
-    private Image[] topicImages;
+
     private Questions questions;
     //private ????[] topicLinks; //how do we communicate the topic to the practice view?
 
-
+    private List<Topic> topicList;
     //------------------------------UI elements-------------------------------
     //-------ImageViews & Buttons----------
     private ImageButton leftButton, rightButton;
