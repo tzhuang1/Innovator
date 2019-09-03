@@ -51,6 +51,7 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         if (settings.getBoolean(SHOW_SETUP, true)) {
             showSetup = true;
         } else {
+            // Set to showSetup = true to test setup
             showSetup = false;
         }
 
