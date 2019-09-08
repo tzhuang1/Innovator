@@ -1,5 +1,6 @@
 package com.example.solve;
 
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 
 import java.util.List;
@@ -7,13 +8,13 @@ import java.util.List;
 public class Topic {
     private String title;
     private int masteryPct;
-    private Image titleImg;
+    private int imageDrawable;
     private List<Questions> questions;
 
-    public Topic(String title, Image titleImg, List<Questions> questionsList) {
+    public Topic(String title, int imageDrawable, List<Questions> questionsList) {
         this.title = title;
         this.masteryPct = 0;
-        this.titleImg = titleImg;
+        this.imageDrawable = imageDrawable;
         this.questions = questionsList;
     }
 
@@ -33,12 +34,12 @@ public class Topic {
         this.masteryPct = masteryPct;
     }
 
-    public Image getTitleImg() {
-        return titleImg;
+    public int getImageDrawable() {
+        return imageDrawable;
     }
 
-    public void setTitleImg(Image titleImg) {
-        this.titleImg = titleImg;
+    public void setImageDrawable(int imageDrawable) {
+        this.imageDrawable = imageDrawable;
     }
 
     public List<Questions> getQuestions() {

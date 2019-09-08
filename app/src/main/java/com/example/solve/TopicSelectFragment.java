@@ -13,10 +13,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,13 +26,13 @@ public class TopicSelectFragment extends Fragment {
 
     //-------------------------------variables--------------------------------
     private int topicIdx; //current topic index
-
+    private List<Topic> topicList;
     //---------topic storage--------------
 
     private Questions questions;
     //private ????[] topicLinks; //how do we communicate the topic to the practice view?
 
-    private List<Topic> topicList;
+
     //------------------------------UI elements-------------------------------
     //-------ImageViews & Buttons----------
     private ImageButton leftButton, rightButton;
@@ -50,7 +52,8 @@ public class TopicSelectFragment extends Fragment {
     }
 
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        generateTestTopicList();
+        topicIdx = 0;
         //------------------------------find views---------------------------
         leftButton = view.findViewById(R.id.topic_left_ImageButton);
         rightButton = view.findViewById(R.id.topic_right_ImageButton);
@@ -73,21 +76,21 @@ public class TopicSelectFragment extends Fragment {
                 //Intent intent = new Intent(getActivity(), Questions.class);
                 //getActivity().startActivity(intent);
                 //Transition to another activity, bla bla bla
-                Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
+                //startActivity(intent);
 
             }
         });
         leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //scroll left (check if there is no more)
+                updateTopicView(--topicIdx);
             }
         });
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //scroll right (check if there is no more)
+                updateTopicView(++topicIdx);
             }
         });
 
@@ -97,6 +100,7 @@ public class TopicSelectFragment extends Fragment {
         //this is triggered soon after OCV above.
         //any view setup here (view lookups, view listener attach)
         super.onViewCreated(view, savedInstanceState);
+        updateTopicView(topicIdx);
     }
 
     private void setProgressBarText(int percent){
@@ -107,5 +111,43 @@ public class TopicSelectFragment extends Fragment {
 
     private void updateTopicView(int position){
         //set the ImageViews, practice title, etc.
+        Topic topic = topicList.get(position);
+        setProgressBarText(topic.getMasteryPct());
+        current.setImageResource(topic.getImageDrawable());
+        practiceTitle.setText(topic.getTitle());
+
+        if(position == 0){//left is blank
+            leftButton.setVisibility(View.GONE);
+            left.setVisibility(View.GONE);
+        }else{
+            leftButton.setVisibility(View.VISIBLE);
+            left.setVisibility(View.VISIBLE);
+            left.setImageResource(topicList.get(position - 1).getImageDrawable());
+        }
+
+        if(position == topicList.size()-1){//right is blank
+            rightButton.setVisibility(View.GONE);
+            right.setVisibility(View.GONE);
+        }else{//left and right available
+            rightButton.setVisibility(View.VISIBLE);
+            right.setVisibility(View.VISIBLE);
+            right.setImageResource(topicList.get((position + 1)).getImageDrawable());
+        }
+    }
+
+    private void generateTestTopicList(){//initiates 4 examples for debugging only
+        topicList = new ArrayList<Topic>(4);
+        Topic tmpTopic = new Topic("Topic one title", R.drawable.ic_topic_test_one, null);
+        tmpTopic.setMasteryPct(10);
+        topicList.add(tmpTopic);
+        tmpTopic = new Topic("Topic two title", R.drawable.ic_topic_test_two, null);
+        tmpTopic.setMasteryPct(20);
+        topicList.add(tmpTopic);
+        tmpTopic = new Topic("Topic three title", R.drawable.ic_topic_test_three, null);
+        tmpTopic.setMasteryPct(30);
+        topicList.add(tmpTopic);
+        tmpTopic = new Topic("Topic four title", R.drawable.ic_topic_test_four, null);
+        tmpTopic.setMasteryPct(40);
+        topicList.add(tmpTopic);
     }
 }
