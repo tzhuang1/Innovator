@@ -13,6 +13,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +31,8 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     Questions currentQuestion;
     QuestionsHelper questionsHelper;
+
+    private FirebaseAuth firebaseAuth;
 
     List<Questions> list;
     int qid = 0;
@@ -65,6 +72,16 @@ public class QuestionMainActivity extends AppCompatActivity {
 
         //This will return us a list of data type TriviaQuestion
         list = questionsHelper.getAllOfTheQuestions();
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("TQuiz");
+
+        myRef.push().setValue(list);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
 
         //Now we gonna shuffle the elements of the list so that we will get questions randomly
         Collections.shuffle(list);
