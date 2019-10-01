@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
@@ -67,7 +68,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonD.setTypeface(tb);
         resetColor();
 
-        //------------------------------------------------------------------SQLite stuff (local)
+        /*------------------------------------------------------------------SQLite stuff (local)
 
         //Our database helper class
         questionsHelper = new QuestionsHelper(this);
@@ -82,46 +83,28 @@ public class QuestionMainActivity extends AppCompatActivity {
         }
         //This will return us a questionsList of data type TriviaQuestion
         //questionsList = questionsHelper.getAllOfTheQuestions();
-
+        */
         //------------------------------------------------------------------Firebase stuff (cloud)
-        //firebaseAuth = FirebaseAuth.getInstance();
-        //FirebaseUser user = firebaseAuth.getCurrentUser(); //TODO: what's this for? not used
-
-        // Write a message to the database
-
-
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //myRef = database.getReference("TQuiz");
-        //myRef.push().setValue(questionsList);
-
         getFirebaseQuestionsList();
-
-        //------------------------------------------------------------------Add questions
-
-        //Now we gonna shuffle the elements of the questionsList so that we will get questions randomly
-
-
     }
 
-    private void getFirebaseQuestionsList(){//TODO: this does not retrieve data immediately
+    private void getFirebaseQuestionsList(){
 
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("SampleQs");
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Questions>> type = new GenericTypeIndicator<List<Questions>>() {};
-                questionsList = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
+                questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Questions>>() {});
                 Log.i("FB getList", "Firebase data fetched");
-                Collections.shuffle(questionsList); //TODO: have to wait after questionsList is updated
-
-                //currentQuestion will hold the que, 4 option and ans for particular id
-                currentQuestion = questionsList.get(qid);
+                Collections.shuffle(questionsList);
+                currentQuestion = questionsList.get(qid);//currentQuestion will hold the que, 4 option and ans for particular id
                 loadingScreen.setVisibility(View.GONE);
                 updateQueueAndOptions();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                //TODO: handle network outage
                 Log.e("FB getList", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
             }
         });
