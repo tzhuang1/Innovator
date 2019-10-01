@@ -35,6 +35,7 @@ import info.hoang8f.widget.FButton;
 public class QuestionMainActivity extends AppCompatActivity {
 
     FButton buttonA, buttonB, buttonC, buttonD;
+    View loadingScreen;
     TextView question;
     Typeface tb;
 
@@ -54,6 +55,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonB = (FButton) findViewById(R.id.buttonB);
         buttonC = (FButton) findViewById(R.id.buttonC);
         buttonD = (FButton) findViewById(R.id.buttonD);
+        loadingScreen = findViewById(R.id.loading_screen);
         question = (TextView) findViewById(R.id.question);
         tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
@@ -114,7 +116,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
                 //currentQuestion will hold the que, 4 option and ans for particular id
                 currentQuestion = questionsList.get(qid);
-
+                loadingScreen.setVisibility(View.GONE);
                 updateQueueAndOptions();
             }
 
