@@ -40,6 +40,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     Typeface tb;
 
     Questions currentQuestion;
+    UserData currentUser;
     QuestionsHelper questionsHelper;
 
     List<Questions> questionsList;
@@ -96,6 +97,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
         getFirebaseQuestionsList();
 
+
         //------------------------------------------------------------------Add questions
 
         //Now we gonna shuffle the elements of the questionsList so that we will get questions randomly
@@ -118,6 +120,24 @@ public class QuestionMainActivity extends AppCompatActivity {
                 currentQuestion = questionsList.get(qid);
                 loadingScreen.setVisibility(View.GONE);
                 updateQueueAndOptions();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FB getList", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
+            }
+        });
+    }
+
+    private void getFirebaseUserData(){
+
+        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
+        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<UserData> type = new GenericTypeIndicator<UserData>() {};
+                currentUser = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
+                Log.i("Get User Data", "Firebase data fetched");
             }
 
             @Override
