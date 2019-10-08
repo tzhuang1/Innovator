@@ -1,5 +1,6 @@
 package com.example.solve;
 
+import android.content.Intent;
 import android.text.method.ScrollingMovementMethod;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         //------------------------------------------------------------------view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity_main);
+        Intent intent = getIntent();
+        String topic = intent.getStringExtra("TOPIC");//If no intent, string is empty (no try/catch needed)
+        //Toast.makeText(this,topic, Toast.LENGTH_LONG ).show();
         //Initializing variables
         buttonA = (FButton) findViewById(R.id.buttonA);
         buttonB = (FButton) findViewById(R.id.buttonB);
@@ -69,27 +73,12 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonD.setTypeface(tb);
         resetColor();
 
-        /*------------------------------------------------------------------SQLite stuff (local)
-
-        //Our database helper class
-        questionsHelper = new QuestionsHelper(this);
-        //Make db writable
-        questionsHelper.getWritableDatabase();
-
-        //Checks if the question options are already added in the table or not
-        //If they are not added, getAllOfTheQuestions() will return a questionsList of size zero
-        if (questionsHelper.getAllOfTheQuestions().size() == 0) {
-            //If not added then add the ques,options in table
-            questionsHelper.allQuestion();
-        }
-        //This will return us a questionsList of data type TriviaQuestion
-        //questionsList = questionsHelper.getAllOfTheQuestions();
-        */
         //------------------------------------------------------------------Firebase stuff (cloud)
-        getFirebaseQuestionsList();
+        getFirebaseQuestionsList(topic);
     }
 
-    private void getFirebaseQuestionsList(){
+    private void getFirebaseQuestionsList(String topic){//TODO: find path relative to topic (switch statement)
+
 
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("SampleQs");
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
