@@ -1,5 +1,6 @@
 package com.example.solve;
 
+import android.content.Intent;
 import android.text.method.ScrollingMovementMethod;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
@@ -40,6 +42,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     Typeface tb;
 
     Questions currentQuestion;
+    UserData currentUser;
     QuestionsHelper questionsHelper;
 
     List<Questions> questionsList;
@@ -50,6 +53,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         //------------------------------------------------------------------view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity_main);
+        Intent intent = getIntent();
+        String topic = intent.getStringExtra("TOPIC");//If no intent, string is empty (no try/catch needed)
+        //Toast.makeText(this,topic, Toast.LENGTH_LONG ).show();
         //Initializing variables
         buttonA = (FButton) findViewById(R.id.buttonA);
         buttonB = (FButton) findViewById(R.id.buttonB);
@@ -67,50 +73,18 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonD.setTypeface(tb);
         resetColor();
 
-        //------------------------------------------------------------------SQLite stuff (local)
-
-        //Our database helper class
-        questionsHelper = new QuestionsHelper(this);
-        //Make db writable
-        questionsHelper.getWritableDatabase();
-
-        //Checks if the question options are already added in the table or not
-        //If they are not added, getAllOfTheQuestions() will return a questionsList of size zero
-        if (questionsHelper.getAllOfTheQuestions().size() == 0) {
-            //If not added then add the ques,options in table
-            questionsHelper.allQuestion();
-        }
-        //This will return us a questionsList of data type TriviaQuestion
-        //questionsList = questionsHelper.getAllOfTheQuestions();
-
         //------------------------------------------------------------------Firebase stuff (cloud)
-        //firebaseAuth = FirebaseAuth.getInstance();
-        //FirebaseUser user = firebaseAuth.getCurrentUser(); //TODO: what's this for? not used
-
-        // Write a message to the database
-
-
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //myRef = database.getReference("TQuiz");
-        //myRef.push().setValue(questionsList);
-
-        getFirebaseQuestionsList();
-
-        //------------------------------------------------------------------Add questions
-
-        //Now we gonna shuffle the elements of the questionsList so that we will get questions randomly
-
-
+        getFirebaseQuestionsList(topic);
     }
 
-    private void getFirebaseQuestionsList(){//TODO: this does not retrieve data immediately
+    private void getFirebaseQuestionsList(String topic){//TODO: find path relative to topic (switch statement)
+
 
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("SampleQs");
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Questions>> type = new GenericTypeIndicator<List<Questions>>() {};
-                questionsList = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
+                questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Questions>>() {});
                 Log.i("FB getList", "Firebase data fetched");
                 Collections.shuffle(questionsList); //TODO: have to wait after questionsList is updated
 
@@ -118,6 +92,25 @@ public class QuestionMainActivity extends AppCompatActivity {
                 currentQuestion = questionsList.get(qid);
                 updateQueueAndOptions();
                 loadingScreen.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //TODO: handle network outage
+                Log.e("FB getList", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
+            }
+        });
+    }
+
+    private void getFirebaseUserData(){
+
+        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
+        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<UserData> type = new GenericTypeIndicator<UserData>() {};
+                currentUser = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
+                Log.i("Get User Data", "Firebase data fetched");
             }
 
             @Override
@@ -325,4 +318,3 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonD.setEnabled(true);
     }
 }
-

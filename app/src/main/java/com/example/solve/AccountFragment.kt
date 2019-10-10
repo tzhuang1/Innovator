@@ -1,5 +1,7 @@
 package com.example.solve
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,6 +17,7 @@ import com.google.android.gms.common.api.Scope
 import com.google.android.gms.common.SignInButton
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -134,10 +137,41 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
         }
     }
 
+
     private fun updateUI ( account: GoogleSignInAccount?) {
         // TODO: Use the ViewModel
+        if(account == null )
+        {
+            // Initialize a new instance of
+            val builder = AlertDialog.Builder(getActivity())
+
+            // Set the alert dialog title
+            builder.setTitle("Login failed")
+
+            // Display a message on alert dialog
+            builder.setMessage("Google sign-in failed")
+
+            // Set a positive button and its click listener on alert dialog
+            builder.setPositiveButton("OK"){dialog, which ->
+
+
+            }
+
+            // Finally, make the alert dialog using builder
+            val dialog: AlertDialog = builder.create()
+
+            // Display the alert dialog on app interface
+            dialog.show()
+
+            return;
+
+
+        }
         var currentUserLabel = this.viewOfLayout.findViewById(R.id.currentUser) as TextView
-        currentUserLabel.setText(account!!.displayName)
+        currentUserLabel.setText("You are signed in as: " + account!!.displayName)
+        val sign_in_button = viewOfLayout.findViewById<SignInButton>(R.id.sign_in_button)
+        sign_in_button.visibility = View.INVISIBLE
+
 
     }
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
