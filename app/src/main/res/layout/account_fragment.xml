@@ -5,16 +5,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".AccountFragment">
-    <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
-    <TextView
-            android:id="@+id/currentUser"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Account View" />
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+        <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <TextView
+                android:id="@+id/currentUser"
+                android:layout_width="173dp"
+                android:layout_height="72dp"
+                android:text="Account View" />
+
+    </LinearLayout>
 
 
 </FrameLayout>
