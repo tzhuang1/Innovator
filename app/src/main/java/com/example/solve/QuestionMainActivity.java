@@ -116,8 +116,8 @@ public class QuestionMainActivity extends AppCompatActivity {
 
                 //currentQuestion will hold the que, 4 option and ans for particular id
                 currentQuestion = questionsList.get(qid);
-                loadingScreen.setVisibility(View.GONE);
                 updateQueueAndOptions();
+                loadingScreen.setVisibility(View.GONE);
             }
 
             @Override
