@@ -1,7 +1,10 @@
 package com.example.solve;
 import android.app.Activity;
 
-public class Questions extends Activity {
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
+public class Questions{
     private int id;
     private String question;
     private String opta;

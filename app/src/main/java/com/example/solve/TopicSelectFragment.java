@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -72,13 +81,10 @@ public class TopicSelectFragment extends Fragment {
         startPracticeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent();
-                //Intent intent = new Intent(getActivity(), Questions.class);
-                //getActivity().startActivity(intent);
                 //Transition to another activity, bla bla bla
-                //Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
-                //startActivity(intent);
-
+                Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
+                intent.putExtra("TOPIC", practiceTitle.getText());
+                startActivity(intent);
             }
         });
         leftButton.setOnClickListener(new View.OnClickListener() {
@@ -150,4 +156,6 @@ public class TopicSelectFragment extends Fragment {
         tmpTopic.setMasteryPct(40);
         topicList.add(tmpTopic);
     }
+
+
 }

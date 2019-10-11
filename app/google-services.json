@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "313186435301",
+    "firebase_url": "https://innovator-solve.firebaseio.com",
+    "project_id": "innovator-solve",
+    "storage_bucket": "innovator-solve.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313186435301:android:44fc7a118890fade",
+        "android_client_info": {
+          "package_name": "com.example.innovatorsetup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313186435301-v0njtg4igpojp6601kp5jkrhv6d0fj52.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.innovatorsetup",
+            "certificate_hash": "2d2e847c0a65911be412206471caddeba69893bf"
+          }
+        },
+        {
+          "client_id": "313186435301-jvm72ollf0v5llpnnllq8cldkbadc28o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.innovatorsetup",
+            "certificate_hash": "0f45ffcc63b853c438702fc0c8a09d23f2c53495"
+          }
+        },
+        {
+          "client_id": "313186435301-96lkhgk2q5l46u032brmra5c070hu14h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr5eKI0G5q_JtWS7a5ZUs4JjX14lHIWQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313186435301-96lkhgk2q5l46u032brmra5c070hu14h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

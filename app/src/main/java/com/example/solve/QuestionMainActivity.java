@@ -1,6 +1,9 @@
 package com.example.solve;
 
+import android.content.Intent;
 import android.text.method.ScrollingMovementMethod;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -9,10 +12,23 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,25 +37,31 @@ import info.hoang8f.widget.FButton;
 public class QuestionMainActivity extends AppCompatActivity {
 
     FButton buttonA, buttonB, buttonC, buttonD;
+    View loadingScreen;
     TextView question;
     Typeface tb;
 
     Questions currentQuestion;
+    UserData currentUser;
     QuestionsHelper questionsHelper;
 
-    List<Questions> list;
+    List<Questions> questionsList;
     int qid = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //------------------------------------------------------------------view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity_main);
-
+        Intent intent = getIntent();
+        String topic = intent.getStringExtra("TOPIC");//If no intent, string is empty (no try/catch needed)
+        //Toast.makeText(this,topic, Toast.LENGTH_LONG ).show();
         //Initializing variables
         buttonA = (FButton) findViewById(R.id.buttonA);
         buttonB = (FButton) findViewById(R.id.buttonB);
         buttonC = (FButton) findViewById(R.id.buttonC);
         buttonD = (FButton) findViewById(R.id.buttonD);
+        loadingScreen = findViewById(R.id.loading_screen);
         question = (TextView) findViewById(R.id.question);
         tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
@@ -49,31 +71,53 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonB.setTypeface(tb);
         buttonC.setTypeface(tb);
         buttonD.setTypeface(tb);
-
         resetColor();
-        //Our database helper class
-        questionsHelper = new QuestionsHelper(this);
-        //Make db writable
-        questionsHelper.getWritableDatabase();
 
-        //Checks if the question options are already added in the table or not
-        //If they are not added, getAllOfTheQuestions() will return a list of size zero
-        if (questionsHelper.getAllOfTheQuestions().size() == 0) {
-            //If not added then add the ques,options in table
-            questionsHelper.allQuestion();
-        }
+        //------------------------------------------------------------------Firebase stuff (cloud)
+        getFirebaseQuestionsList(topic);
+    }
 
-        //This will return us a list of data type TriviaQuestion
-        list = questionsHelper.getAllOfTheQuestions();
+    private void getFirebaseQuestionsList(String topic){//TODO: find path relative to topic (switch statement)
 
-        //Now we gonna shuffle the elements of the list so that we will get questions randomly
-        Collections.shuffle(list);
 
-        //currentQuestion will hold the que, 4 option and ans for particular id
-        currentQuestion = list.get(qid);
+        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("SampleQs");
+        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Questions>>() {});
+                Log.i("FB getList", "Firebase data fetched");
+                Collections.shuffle(questionsList); //TODO: have to wait after questionsList is updated
 
-        updateQueueAndOptions();
+                //currentQuestion will hold the que, 4 option and ans for particular id
+                currentQuestion = questionsList.get(qid);
+                updateQueueAndOptions();
+                loadingScreen.setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //TODO: handle network outage
+                Log.e("FB getList", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
+            }
+        });
+    }
+
+    private void getFirebaseUserData(){
+
+        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
+        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<UserData> type = new GenericTypeIndicator<UserData>() {};
+                currentUser = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
+                Log.i("Get User Data", "Firebase data fetched");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FB getList", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
+            }
+        });
     }
 
     public void updateQueueAndOptions() {
@@ -92,7 +136,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         if (currentQuestion.getOptA().equals(currentQuestion.getAnswer())) {
             buttonA.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             //Check if user has not exceeds the que limit
-            if (qid < list.size() - 1) {
+            if (qid < questionsList.size() - 1) {
 
                 //Now disable all the option button since user ans is correct so
                 //user won't be able to press another option button after pressing one button
@@ -116,7 +160,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     public void buttonB(View view) {
         if (currentQuestion.getOptB().equals(currentQuestion.getAnswer())) {
             buttonB.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
-            if (qid < list.size() - 1) {
+            if (qid < questionsList.size() - 1) {
                 disableButton();
                 correctDialog();
             } else {
@@ -131,7 +175,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     public void buttonC(View view) {
         if (currentQuestion.getOptC().equals(currentQuestion.getAnswer())) {
             buttonC.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
-            if (qid < list.size() - 1) {
+            if (qid < questionsList.size() - 1) {
                 disableButton();
                 correctDialog();
             } else {
@@ -146,7 +190,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     public void buttonD(View view) {
         if (currentQuestion.getOptD().equals(currentQuestion.getAnswer())) {
             buttonD.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
-            if (qid < list.size() - 1) {
+            if (qid < questionsList.size() - 1) {
                 disableButton();
                 correctDialog();
             } else {
@@ -189,7 +233,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                 //it will increment the question number
                 qid++;
                 //get the que and 4 option and store in the currentQuestion
-                currentQuestion = list.get(qid);
+                currentQuestion = questionsList.get(qid);
                 //Now this method will set the new que and 4 options
                 updateQueueAndOptions();
                 //reset the color of buttons back to white
@@ -238,7 +282,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                 //it will increment the question number
                 qid++;
                 //get the que and 4 option and store in the currentQuestion
-                currentQuestion = list.get(qid);
+                currentQuestion = questionsList.get(qid);
                 //Now this method will set the new que and 4 options
                 updateQueueAndOptions();
                 //reset the color of buttons back to white
@@ -249,7 +293,6 @@ public class QuestionMainActivity extends AppCompatActivity {
         });
 
     }
-
 
     //This method will make button color white again since our one button color was turned green
     public void resetColor() {
@@ -275,4 +318,3 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonD.setEnabled(true);
     }
 }
-
