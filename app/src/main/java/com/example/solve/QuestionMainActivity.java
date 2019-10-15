@@ -133,7 +133,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     //Onclick listener for first button
     public void buttonA(View view) {
         //compare the option with the ans if yes then make button color green
-        if (currentQuestion.getOptA().equals(currentQuestion.getAnswer())) {
+        if (currentQuestion.getAnswer().equalsIgnoreCase("Option A") ) {
             buttonA.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             //Check if user has not exceeds the que limit
             if (qid < questionsList.size() - 1) {
@@ -158,7 +158,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     //Onclick listener for sec button
     public void buttonB(View view) {
-        if (currentQuestion.getOptB().equals(currentQuestion.getAnswer())) {
+        if (currentQuestion.getAnswer().equalsIgnoreCase("Option B")) {
             buttonB.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             if (qid < questionsList.size() - 1) {
                 disableButton();
@@ -173,7 +173,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     //Onclick listener for third button
     public void buttonC(View view) {
-        if (currentQuestion.getOptC().equals(currentQuestion.getAnswer())) {
+        if (currentQuestion.getAnswer().equalsIgnoreCase("Option C") ) {
             buttonC.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             if (qid < questionsList.size() - 1) {
                 disableButton();
@@ -188,7 +188,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     //Onclick listener for fourth button
     public void buttonD(View view) {
-        if (currentQuestion.getOptD().equals(currentQuestion.getAnswer())) {
+        if (currentQuestion.getAnswer().equalsIgnoreCase("Option D")) {
             buttonD.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             if (qid < questionsList.size() - 1) {
                 disableButton();
