@@ -1,14 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="50dp"
+            android:gravity="center"
+            android:text="Home"
+            android:textColor="@color/grey"
+            android:textSize="50dp"
+            fbutton:fontFamily="@font/karla" />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/dailyChallengeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:onClick="buttonA"
+            android:text="Daily Challenge"
+            android:textColor="@color/white"
+            fbutton:buttonColor="@color/blue"></info.hoang8f.widget.FButton>
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/pastProblemsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:onClick="buttonB"
+            android:text="Past Problems"
+            android:textColor="@color/white"
+            fbutton:buttonColor="@color/blue"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+<!--
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
     <TextView
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:text = "Home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:text="Home"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
     <Button
             android:text="Daily Challenge"
             android:layout_width="wrap_content"
@@ -23,4 +77,4 @@
             android:layout_alignParentBottom="true" android:id="@+id/button4" android:layout_marginBottom="137dp"
             android:layout_marginRight="136dp"/>
 
-</RelativeLayout>
+</RelativeLayout> -->
