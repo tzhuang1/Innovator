@@ -8,6 +8,83 @@
     android:orientation="vertical"
     tools:context=".SettingsFragment">
 
+    <TableLayout
+        android:id="@+id/settingsInputTableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".15">
+
+        <TableRow
+            android:id="@+id/gradeSettingsTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/gradeSettingsTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Grade: "
+                android:textSize="16sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp" />
+
+            <EditText
+                android:id="@+id/gradeSettingsNumInput"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:padding="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/activitiesPerDaySettingsTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/activitiesPerDaySettingsTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Activities Per Day:"
+                android:textSize="16sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp" />
+
+            <EditText
+                android:id="@+id/activitiesPerDayNumInput"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:padding="10dp" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/settingsSaveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        app:layout_constraintBottom_toTopOf="@+id/aboutUsCardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsInputTableLayout" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/aboutUsCardView"
         android:layout_width="match_parent"
@@ -16,7 +93,8 @@
         app:contentPadding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchFrameLayout">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsInputTableLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,132 +107,24 @@
                 android:layout_height="wrap_content"
                 android:text="About Us"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/aboutUsParagraphTxtView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.1" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/aboutUsParagraphTxtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BranchOut! Innovator is a program where participants use their skills in programming, curriculum design, and marketing to build a mobile application."
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/branchout_innovator_is_a_program_where_participants_use_their_skills_in_programming_curriculum_design_and_marketing_to_build_a_mobile_application"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/aboutUsTxtView" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <LinearLayout
-        android:id="@+id/switchFrameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".15">
-
-        <LinearLayout
-            android:id="@+id/dummySettings1Layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/dummySettings1TxtView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test Settings 1"
-                android:textSize="16sp"
-                tools:layout_conversion_absoluteHeight="22dp"
-                tools:layout_conversion_absoluteWidth="109dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="2dp" />
-
-            <Switch
-                android:id="@+id/dummySettings1Switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:checked="true"
-                android:gravity="center"
-                tools:layout_conversion_absoluteHeight="27dp"
-                tools:layout_conversion_absoluteWidth="50dp"
-                tools:layout_editor_absoluteX="109dp"
-                tools:layout_editor_absoluteY="0dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/dummySettings2Layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/dummySettings2TxtView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test Settings 2"
-                android:textSize="16sp"
-                tools:layout_conversion_absoluteHeight="22dp"
-                tools:layout_conversion_absoluteWidth="109dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="2dp" />
-
-            <Switch
-                android:id="@+id/dummySettings2Switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:checked="true"
-                android:gravity="center"
-                tools:layout_conversion_absoluteHeight="27dp"
-                tools:layout_conversion_absoluteWidth="50dp"
-                tools:layout_editor_absoluteX="109dp"
-                tools:layout_editor_absoluteY="0dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/dummySettings3Layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/dummySettings3TxtView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test Settings 3"
-                android:textSize="16sp"
-                tools:layout_conversion_absoluteHeight="22dp"
-                tools:layout_conversion_absoluteWidth="109dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="2dp" />
-
-            <Switch
-                android:id="@+id/dummySettings3Switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:checked="true"
-                android:gravity="center"
-                tools:layout_conversion_absoluteHeight="27dp"
-                tools:layout_conversion_absoluteWidth="50dp"
-                tools:layout_editor_absoluteX="109dp"
-                tools:layout_editor_absoluteY="0dp" />
-        </LinearLayout>
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
