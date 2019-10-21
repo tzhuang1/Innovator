@@ -10,6 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/loading_screen"
+            android:visibility="gone"
             android:background="@color/blue"
             android:orientation="vertical">
 
@@ -35,7 +36,6 @@
 
         <LinearLayout
             android:id="@+id/question_pic_layout"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -51,6 +51,7 @@
                 fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
                 fbutton:layout_constraintTop_toTopOf="parent"
                 fbutton:layout_constraintLeft_toLeftOf="parent"
+                android:src="@drawable/ic_topic_test_one"
                 android:layout_weight="0.5"/>
 
             <TextView
@@ -77,6 +78,7 @@
 
         <TextView
             android:id="@+id/question_text"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_margin="20dp"

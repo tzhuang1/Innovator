@@ -65,6 +65,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonC = (FButton) findViewById(R.id.buttonC);
         buttonD = (FButton) findViewById(R.id.buttonD);
         loadingScreen = findViewById(R.id.loading_screen);
+        loadingScreen.setVisibility(View.VISIBLE);
         question = (TextView) findViewById(R.id.question_text);
 
         questionPicLayout = findViewById(R.id.question_pic_layout);
@@ -74,6 +75,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
         //Setting typefaces for textview and buttons
+        questionPicText.setTypeface(tb);
         question.setTypeface(tb);
         buttonA.setTypeface(tb);
         buttonB.setTypeface(tb);
@@ -86,8 +88,6 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     private void getFirebaseQuestionsList(String topic){//TODO: find path relative to topic (switch statement)
-
-
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("SampleQs");
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
