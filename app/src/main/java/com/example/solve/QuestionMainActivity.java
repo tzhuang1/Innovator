@@ -1,10 +1,13 @@
 package com.example.solve;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.text.method.ScrollingMovementMethod;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.DrawableUtils;
 import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
@@ -15,20 +18,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,6 +39,10 @@ public class QuestionMainActivity extends AppCompatActivity {
     View loadingScreen;
     TextView question;
     Typeface tb;
+
+    View questionPicLayout;
+    TextView questionPicText;
+    ImageView questionPic;
 
     Questions currentQuestion;
     UserData currentUser;
@@ -62,7 +65,12 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonC = (FButton) findViewById(R.id.buttonC);
         buttonD = (FButton) findViewById(R.id.buttonD);
         loadingScreen = findViewById(R.id.loading_screen);
-        question = (TextView) findViewById(R.id.question);
+        question = (TextView) findViewById(R.id.question_text);
+
+        questionPicLayout = findViewById(R.id.question_pic_layout);
+        questionPicText = findViewById(R.id.question_pic_text);
+        questionPic = findViewById(R.id.question_picture);
+
         tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
         //Setting typefaces for textview and buttons
@@ -121,9 +129,18 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     public void updateQueueAndOptions() {
-
+        if(currentQuestion.hasPic()){//question has text and picture
+            question.setVisibility(View.GONE);
+            questionPicLayout.setVisibility(View.VISIBLE);
+            questionPicText.setText(currentQuestion.getQuestion());
+            //questionPic.setImageBitmap(BitmapFactory.decodeFile("TODO: put file path here (how?) "));
+        }else{//question only has text
+            question.setText(currentQuestion.getQuestion());
+            questionPicLayout.setVisibility(View.GONE);
+        }
         //This method will setText for que and options
-        question.setText(currentQuestion.getQuestion());
+
+
         buttonA.setText(currentQuestion.getOptA());
         buttonB.setText(currentQuestion.getOptB());
         buttonC.setText(currentQuestion.getOptC());

@@ -26,25 +26,70 @@
                 android:textSize="30sp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="13dp"
         android:layout_weight=".5"
         android:background="@color/white"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/question_pic_layout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/question_picture"
+                fbutton:layout_constraintBottom_toBottomOf="parent"
+                fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
+                fbutton:layout_constraintTop_toTopOf="parent"
+                fbutton:layout_constraintLeft_toLeftOf="parent"
+                android:layout_weight="0.5"/>
+
+            <TextView
+                android:id="@+id/question_pic_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Question with picture"
+                android:textColor="@color/grey"
+                android:textSize="25sp"
+                android:scrollHorizontally="false"
+                android:layout_weight="0.5"
+                fbutton:fontFamily="@font/karla"
+                fbutton:layout_constraintBottom_toBottomOf="parent"
+                fbutton:layout_constraintRight_toRightOf="parent"
+                fbutton:layout_constraintTop_toTopOf="parent"
+                fbutton:layout_constraintLeft_toRightOf="@id/question_picture"/>
+        </LinearLayout>
+
+
         <TextView
-            android:id="@+id/question"
+            android:id="@+id/question_text"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_margin="20dp"
             android:gravity="center"
             android:text="@string/question"
             android:textColor="@color/grey"
-            android:textSize="25dp"
-            fbutton:fontFamily="@font/karla" />
+            android:textSize="25sp"
+            fbutton:fontFamily="@font/karla"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <LinearLayout
@@ -63,7 +108,7 @@
             android:onClick="buttonA"
             android:text=""
             android:textColor="@color/grey"
-            fbutton:buttonColor="@color/white"></info.hoang8f.widget.FButton>
+            fbutton:buttonColor="@color/white"/>
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonB"

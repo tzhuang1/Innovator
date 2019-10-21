@@ -1,5 +1,6 @@
 package com.example.solve;
 import android.app.Activity;
+import android.media.Image;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -15,6 +16,11 @@ public class Questions{
     private String explanation;
     private String category;
 
+    private boolean hasPic;
+    private Image questionPic;
+
+
+
     public Questions(String q, String oa, String ob, String oc, String od, String ans, String ex, String ca) {
 
         question = q;
@@ -25,6 +31,21 @@ public class Questions{
         answer = ans;
         explanation = ex;
         category = ca;
+        hasPic = false;
+        questionPic = null;
+    }
+
+    public Questions(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, Image questionPic) {
+        this.question = question;
+        this.opta = opta;
+        this.optb = optb;
+        this.optc = optc;
+        this.optd = optd;
+        this.answer = answer;
+        this.explanation = explanation;
+        this.category = category;
+        this.questionPic = questionPic;
+        this.hasPic = true;
     }
 
     public Questions() {
@@ -37,6 +58,20 @@ public class Questions{
         answer = "";
         explanation = "";
         category = "";
+        hasPic = false;
+    }
+
+    public boolean hasPic() {
+        return hasPic;
+    }
+
+
+    public Image getQuestionPic() {
+        return questionPic;
+    }
+
+    public void setQuestionPic(Image questionPic) {
+        this.questionPic = questionPic;
     }
 
     public String getQuestion() {
