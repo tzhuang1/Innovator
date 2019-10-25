@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.DrawableUtils;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -249,14 +250,60 @@ public class QuestionMainActivity extends AppCompatActivity {
                 dialogCorrect.dismiss();
                 //it will increment the question number
                 qid++;
-                //get the que and 4 option and store in the currentQuestion
-                currentQuestion = questionsList.get(qid);
-                //Now this method will set the new que and 4 options
-                updateQueueAndOptions();
-                //reset the color of buttons back to white
-                resetColor();
-                //Enable button - remember we had disable them when user ans was correct in there particular button methods
-                enableButton();
+                if(qid >= questionsList.size())
+                {
+                    congratsDialog();
+                }
+                else
+                {
+                    //get the que and 4 option and store in the currentQuestion
+                    currentQuestion = questionsList.get(qid);
+                    //Now this method will set the new que and 4 options
+                    updateQueueAndOptions();
+                    //reset the color of buttons back to white
+                    resetColor();
+                    //Enable button - remember we had disable them when user ans was correct in there particular button methods
+                    enableButton();
+                }
+
+            }
+        });
+    }
+
+    public void congratsDialog() {
+        final Dialog dialogComplete = new Dialog(QuestionMainActivity.this);
+        dialogComplete.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (dialogComplete.getWindow() != null) {
+            ColorDrawable colorDrawable = new ColorDrawable(Color.TRANSPARENT);
+            dialogComplete.getWindow().setBackgroundDrawable(colorDrawable);
+        }
+        dialogComplete.setContentView(R.layout.dialog_completion);
+        dialogComplete.setCancelable(false);
+        dialogComplete.show();
+
+        //Since the dialog is show to user just pause the timer in background
+        onPause();
+
+
+        TextView correctText = (TextView) dialogComplete.findViewById(R.id.congratsText);
+        FButton buttonHome = (FButton) dialogComplete.findViewById(R.id.dialogNext);
+
+        //Setting type faces
+        correctText.setTypeface(tb);
+        buttonHome.setTypeface(tb);
+
+        //OnCLick listener to go next que
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //This will dismiss the dialog
+                dialogComplete.dismiss();
+                //go home
+                HomeFragment homeFragment = new HomeFragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, homeFragment);
+                ft.commit();
+
             }
         });
     }
@@ -299,13 +346,22 @@ public class QuestionMainActivity extends AppCompatActivity {
                 //it will increment the question number
                 qid++;
                 //get the que and 4 option and store in the currentQuestion
-                currentQuestion = questionsList.get(qid);
-                //Now this method will set the new que and 4 options
-                updateQueueAndOptions();
-                //reset the color of buttons back to white
-                resetColor();
-                //Enable button - remember we had disable them when user ans was correct in there particular button methods
-                enableButton();
+                if(qid >= questionsList.size())
+                {
+                    congratsDialog();
+
+                }
+                else
+                {
+                    currentQuestion = questionsList.get(qid);
+                    //Now this method will set the new que and 4 options
+                    updateQueueAndOptions();
+                    //reset the color of buttons back to white
+                    resetColor();
+                    //Enable button - remember we had disable them when user ans was correct in there particular button methods
+                    enableButton();
+                }
+
             }
         });
 
