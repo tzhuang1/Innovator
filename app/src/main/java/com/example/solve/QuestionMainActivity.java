@@ -137,6 +137,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //questionPic.setImageBitmap(BitmapFactory.decodeFile("TODO: put file path here (how?) "));
         }else{//question only has text
             question.setText(currentQuestion.getQuestion());
+            question.setVisibility(View.VISIBLE);
             questionPicLayout.setVisibility(View.GONE);
         }
         //This method will setText for que and options
