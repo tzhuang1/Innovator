@@ -3,6 +3,7 @@ package com.example.solve;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.text.method.ScrollingMovementMethod;
 
 import androidx.annotation.NonNull;
@@ -21,18 +22,25 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Collections;
 import java.util.List;
 
 import info.hoang8f.widget.FButton;
+
+import static android.view.View.GONE;
 
 public class QuestionMainActivity extends AppCompatActivity {
 
@@ -52,6 +60,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     List<Questions> questionsList;
     int qid = 0;
 
+    String G4Q1URL = "gs://innovator-solve.appspot.com/Number_NumberSense/G4_Q1.png";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //------------------------------------------------------------------view
@@ -86,6 +95,21 @@ public class QuestionMainActivity extends AppCompatActivity {
 
         //------------------------------------------------------------------Firebase stuff (cloud)
         getFirebaseQuestionsList(topic);
+        testLoadFirebaseStorageImg();
+
+    }
+
+
+    private void testLoadFirebaseStorageImg(){
+        StorageReference storage = FirebaseStorage.getInstance().getReference();
+        StorageReference imageRef = storage.child("Number_NumberSense").child("G4Q1.png");
+        questionPicLayout.setVisibility(View.VISIBLE);
+        questionPic.setVisibility(View.VISIBLE);
+        GlideApp.with(this).load(imageRef).dontAnimate().fitCenter().into(questionPic);
+        Log.d("Glide image loading","Done loading image");
+
+
+        question.setVisibility(View.GONE);
     }
 
     private void getFirebaseQuestionsList(String topic){//TODO: find path relative to topic (switch statement)
@@ -95,12 +119,11 @@ public class QuestionMainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Questions>>() {});
                 Log.i("FB getList", "Firebase data fetched");
-                Collections.shuffle(questionsList); //TODO: have to wait after questionsList is updated
-
+                Collections.shuffle(questionsList);
                 //currentQuestion will hold the que, 4 option and ans for particular id
                 currentQuestion = questionsList.get(qid);
                 updateQueueAndOptions();
-                loadingScreen.setVisibility(View.GONE);
+                loadingScreen.setVisibility(GONE);
             }
 
             @Override
@@ -131,14 +154,14 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     public void updateQueueAndOptions() {
         if(currentQuestion.hasPic()){//question has text and picture
-            question.setVisibility(View.GONE);
+            question.setVisibility(GONE);
             questionPicLayout.setVisibility(View.VISIBLE);
             questionPicText.setText(currentQuestion.getQuestion());
             //questionPic.setImageBitmap(BitmapFactory.decodeFile("TODO: put file path here (how?) "));
         }else{//question only has text
             question.setText(currentQuestion.getQuestion());
             question.setVisibility(View.VISIBLE);
-            questionPicLayout.setVisibility(View.GONE);
+            questionPicLayout.setVisibility(GONE);
         }
         //This method will setText for que and options
 

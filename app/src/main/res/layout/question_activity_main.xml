@@ -51,7 +51,6 @@
                 fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
                 fbutton:layout_constraintTop_toTopOf="parent"
                 fbutton:layout_constraintLeft_toLeftOf="parent"
-                android:src="@drawable/ic_topic_test_one"
                 android:layout_weight="0.5"/>
 
             <TextView
