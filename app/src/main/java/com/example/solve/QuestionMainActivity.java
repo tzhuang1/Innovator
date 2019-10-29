@@ -24,8 +24,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,7 +63,6 @@ public class QuestionMainActivity extends AppCompatActivity {
     List<Questions> questionsList;
     int qid = 0;
 
-    String G4Q1URL = "gs://innovator-solve.appspot.com/Number_NumberSense/G4_Q1.png";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //------------------------------------------------------------------view
@@ -103,9 +105,22 @@ public class QuestionMainActivity extends AppCompatActivity {
     private void testLoadFirebaseStorageImg(){
         StorageReference storage = FirebaseStorage.getInstance().getReference();
         StorageReference imageRef = storage.child("Number_NumberSense").child("G4Q1.png");
-        questionPicLayout.setVisibility(View.VISIBLE);
-        questionPic.setVisibility(View.VISIBLE);
-        GlideApp.with(this).load(imageRef).dontAnimate().fitCenter().into(questionPic);
+        imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful())
+                {
+                    Glide.with(QuestionMainActivity.this)
+                            .load(task.getResult())
+                            .into(questionPic);
+                }
+                else {
+                    Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //GlideApp.with(this).load(G4Q1URL).dontAnimate().fitCenter().into(questionPic);
+        //Why you no display
         Log.d("Glide image loading","Done loading image");
 
 
@@ -153,16 +168,17 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     public void updateQueueAndOptions() {
-        if(currentQuestion.hasPic()){//question has text and picture
+        //if(currentQuestion.hasPic()){//question has text and picture
             question.setVisibility(GONE);
             questionPicLayout.setVisibility(View.VISIBLE);
             questionPicText.setText(currentQuestion.getQuestion());
+            /*
             //questionPic.setImageBitmap(BitmapFactory.decodeFile("TODO: put file path here (how?) "));
         }else{//question only has text
             question.setText(currentQuestion.getQuestion());
             question.setVisibility(View.VISIBLE);
             questionPicLayout.setVisibility(GONE);
-        }
+        }*/
         //This method will setText for que and options
 
 
