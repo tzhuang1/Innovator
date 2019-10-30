@@ -16,13 +16,10 @@ public class Questions{
     private String explanation;
     private String category;
 
-    private boolean hasPic;
-    private Image questionPic;
-
+    private int picNumber;
 
 
     public Questions(String q, String oa, String ob, String oc, String od, String ans, String ex, String ca) {
-
         question = q;
         opta = oa;
         optb = ob;
@@ -31,11 +28,10 @@ public class Questions{
         answer = ans;
         explanation = ex;
         category = ca;
-        hasPic = false;
-        questionPic = null;
+        picNumber = -1;
     }
 
-    public Questions(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, Image questionPic) {
+    public Questions(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber) {
         this.question = question;
         this.opta = opta;
         this.optb = optb;
@@ -44,8 +40,7 @@ public class Questions{
         this.answer = answer;
         this.explanation = explanation;
         this.category = category;
-        this.questionPic = questionPic;
-        this.hasPic = true;
+        this.picNumber = picNumber;
     }
 
     public Questions() {
@@ -58,21 +53,13 @@ public class Questions{
         answer = "";
         explanation = "";
         category = "";
-        hasPic = false;
+        picNumber = -1;
     }
 
-    public boolean hasPic() {
-        return hasPic;
+    public int getPicNumber() {
+        return picNumber;
     }
 
-
-    public Image getQuestionPic() {
-        return questionPic;
-    }
-
-    public void setQuestionPic(Image questionPic) {
-        this.questionPic = questionPic;
-    }
 
     public String getQuestion() {
         return question;

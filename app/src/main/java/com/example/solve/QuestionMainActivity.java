@@ -97,42 +97,19 @@ public class QuestionMainActivity extends AppCompatActivity {
 
         //------------------------------------------------------------------Firebase stuff (cloud)
         getFirebaseQuestionsList(topic);
-        testLoadFirebaseStorageImg();
 
     }
 
 
-    private void testLoadFirebaseStorageImg(){
-        StorageReference storage = FirebaseStorage.getInstance().getReference();
-        StorageReference imageRef = storage.child("Number_NumberSense").child("G4Q1.png");
-        imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if(task.isSuccessful())
-                {
-                    Glide.with(QuestionMainActivity.this)
-                            .load(task.getResult())
-                            .into(questionPic);
-                }
-                else {
-                    Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        //GlideApp.with(this).load(G4Q1URL).dontAnimate().fitCenter().into(questionPic);
-        //Why you no display
-        Log.d("Glide image loading","Done loading image");
 
 
-        question.setVisibility(View.GONE);
-    }
 
     private void getFirebaseQuestionsList(String topic){//TODO: find path relative to topic (switch statement)
-        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("SampleQs");
+        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("Questions").child("Number_Number_Sense");
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Questions>>() {});
+                questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Questions>>() {});//stops here Failed to convert value of type java.lang.Long to String
                 Log.i("FB getList", "Firebase data fetched");
                 Collections.shuffle(questionsList);
                 //currentQuestion will hold the que, 4 option and ans for particular id
@@ -168,20 +145,34 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     public void updateQueueAndOptions() {
-        //if(currentQuestion.hasPic()){//question has text and picture
+        if(currentQuestion.getPicNumber() != -1){//question has text and picture
             question.setVisibility(GONE);
             questionPicLayout.setVisibility(View.VISIBLE);
             questionPicText.setText(currentQuestion.getQuestion());
-            /*
-            //questionPic.setImageBitmap(BitmapFactory.decodeFile("TODO: put file path here (how?) "));
+            StorageReference storage = FirebaseStorage.getInstance().getReference();
+            StorageReference imageRef = storage.child("Number_NumberSense").child("number_sense_q"+currentQuestion.getPicNumber()+".PNG");
+            imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful())
+                    {
+                        Glide.with(QuestionMainActivity.this)
+                                .load(task.getResult())
+                                .into(questionPic);
+                    }
+                    else {
+                        Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            Log.d("Glide image loading","Done loading image");
+
         }else{//question only has text
             question.setText(currentQuestion.getQuestion());
             question.setVisibility(View.VISIBLE);
             questionPicLayout.setVisibility(GONE);
-        }*/
+        }
         //This method will setText for que and options
-
-
         buttonA.setText(currentQuestion.getOptA());
         buttonB.setText(currentQuestion.getOptB());
         buttonC.setText(currentQuestion.getOptC());
