@@ -95,13 +95,8 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonD.setTypeface(tb);
         resetColor();
 
-        //------------------------------------------------------------------Firebase stuff (cloud)
         getFirebaseQuestionsList(topic);
-
     }
-
-
-
 
 
     private void getFirebaseQuestionsList(String topic){//TODO: find path relative to topic (switch statement)
@@ -126,8 +121,8 @@ public class QuestionMainActivity extends AppCompatActivity {
         });
     }
 
+    //Change this?
     private void getFirebaseUserData(){
-
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
@@ -139,7 +134,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FB getList", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
+                Log.e("FB getUserData", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
             }
         });
     }
