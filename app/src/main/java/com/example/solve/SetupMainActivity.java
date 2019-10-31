@@ -13,6 +13,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /*
 TODO
  - Other tasks(unimportant)
@@ -32,11 +36,10 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
 
     boolean showSetup = true;
 
-    int currSetupPage;
+    int currSetupPage, gradeSelect, activitySelect;
 
-    int gradeSelect;
-    int activitySelect;
 
+    FirebaseAuth auth;
     SharedPreferences settings;
 
     static final String GRADE = "SelectGrade";
@@ -46,7 +49,8 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        settings = getSharedPreferences(SHARED_PREFERENCES_FILE, 0);
+        settings = getSharedPreferences(SHARED_PREFERENCES_FILE, 0);//keep for testing?
+
 
         if (settings.getBoolean(SHOW_SETUP, true)) {
             showSetup = true;
@@ -153,6 +157,9 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
 
             }
         });
+
+        auth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -174,8 +181,26 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         edit.apply();
     }
 
+    private void storeUserDataToFirebase(){
+        String uid = auth.getUid();
+        assert uid != null;
+        DatabaseReference UserDataRef = FirebaseDatabase.getInstance().getReference().child("UserData").child(uid);
+        UserDataRef.setValue(new int[]{gradeSelect, activitySelect});
+
+    }
+
+    /*
+    private int[] getUserDataFromFirebase(){
+        String uid = auth.getUid();
+        assert uid != null;
+        DatabaseReference UserDataRef = FirebaseDatabase.getInstance().getReference().child("UserData").child(uid);
+
+    }
+
+     */
+
     @Override
-    public void putGradeSelect(int gradeSelect) {
+    public void putGradeSelect(int gradeSelect) {//set
         this.gradeSelect = gradeSelect;
     }
 
