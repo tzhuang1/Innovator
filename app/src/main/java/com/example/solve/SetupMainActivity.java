@@ -1,8 +1,6 @@
 package com.example.solve;
 
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,22 +8,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 /*
 TODO
@@ -44,11 +30,13 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
     ProgressBar setupProgressBar;
     TextView setupTxt;
 
-    boolean showSetup;
-    int currSetupPage, gradeSelect, activitySelect;
+    boolean showSetup = true;
 
+    int currSetupPage;
 
-    FirebaseAuth auth;
+    int gradeSelect;
+    int activitySelect;
+
     SharedPreferences settings;
 
     static final String GRADE = "SelectGrade";
@@ -57,9 +45,15 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        auth = FirebaseAuth.getInstance();
-        getUserDataFromFirebase();//have this set showSetup to true if there's no user data found
-        //deleting the entry from database enables us to test setup
+
+        settings = getSharedPreferences(SHARED_PREFERENCES_FILE, 0);
+
+        if (settings.getBoolean(SHOW_SETUP, true)) {
+            showSetup = true;
+        } else {
+            // Set to showSetup = true to test setup
+            showSetup = false;
+        }
 
         if (!showSetup) {
             Intent mainMenuIntent = new Intent(me, MainMenuActivity.class);
@@ -115,7 +109,7 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
                         fragTran2.commit();
                         break;
                     case 2:
-                        storeUserDataToFirebase();
+                        storeSettings();
                         setSetupFinished();
                         /*
                         TODO
@@ -159,15 +153,12 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
 
             }
         });
-
-
-
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        storeUserDataToFirebase();
+        storeSettings();
     }
 
     public void setSetupFinished() {
@@ -176,47 +167,15 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         edit.apply();
     }
 
-    private void storeUserDataToFirebase(){
-        String uid = auth.getUid();
-        assert uid != null;
-        DatabaseReference UserDataRef = FirebaseDatabase.getInstance().getReference().child("UserData").child(uid);
-        ArrayList<Integer> data = new ArrayList<Integer>(2);
-        data.set(0, activitySelect);
-        data.set(1, gradeSelect);
-        UserDataRef.setValue(data);
+    public void storeSettings() {
+        SharedPreferences.Editor edit = settings.edit();
+        edit.putInt(GRADE, gradeSelect);
+        edit.putInt(ACTIVITY, activitySelect);
+        edit.apply();
     }
-
-
-    private void getUserDataFromFirebase(){
-        FirebaseUser currentUser = auth.getCurrentUser();
-        String uid = currentUser.getUid();
-        assert uid != null;
-        DatabaseReference UserDataRef = FirebaseDatabase.getInstance().getReference().child("UserData").child(uid);
-        UserDataRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()){
-                    showSetup = true;
-                    return;
-                }
-                showSetup = false;
-                ArrayList<Integer> result = dataSnapshot.getValue(new GenericTypeIndicator<ArrayList<Integer>>() {});
-                if (result != null) {
-                    activitySelect = result.get(0);
-                    gradeSelect = result.get(1);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FireBase getUserData","Failed");
-            }
-        });
-    }
-
 
     @Override
-    public void putGradeSelect(int gradeSelect) {//set
+    public void putGradeSelect(int gradeSelect) {
         this.gradeSelect = gradeSelect;
     }
 
