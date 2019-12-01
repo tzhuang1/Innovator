@@ -25,4 +25,5 @@
     <string name="next">Continue</string>
     <string name="cancel">✖</string>
     <string name="branchout_innovator_is_a_program_where_participants_use_their_skills_in_programming_curriculum_design_and_marketing_to_build_a_mobile_application">BranchOut! Innovator is a program where participants use their skills in programming, curriculum design, and marketing to build a mobile application.</string>
+    <string name="sign_In_Google">Please Sign-In to Google</string>
 </resources>

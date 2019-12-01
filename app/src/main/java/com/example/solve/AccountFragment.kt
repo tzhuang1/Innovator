@@ -62,6 +62,11 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
 
     private lateinit var viewModel: AccountViewModel
 
+    fun newInstance(defaultGradeNum: Int): AccountFragment {
+        val fragment = AccountFragment()
+        return fragment
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -55,11 +55,15 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
             showSetup = false;
         }
 
+        //showSetup = true; //uncomment to test setup screen
+
         if (!showSetup) {
             Intent mainMenuIntent = new Intent(me, MainMenuActivity.class);
             startActivity(mainMenuIntent);
             finish();
         }
+
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setup_activity_main);
@@ -76,9 +80,11 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         activitySelect = 1;
 
         if (findViewById(R.id.setupFragmentFrameLayout) != null) {
-            SetupGradeSelectFragment gradeFragment = SetupGradeSelectFragment.newInstance(1);
-            gradeFragment.setArguments(getIntent().getExtras());
-            fragTran1.add(R.id.setupFragmentFrameLayout, gradeFragment);
+//            SetupGradeSelectFragment gradeFragment = SetupGradeSelectFragment.newInstance(1);
+//            gradeFragment.setArguments(getIntent().getExtras());
+//            fragTran1.add(R.id.setupFragmentFrameLayout, gradeFragment);
+//            fragTran1.commit();
+            fragTran1.add(R.id.setupFragmentFrameLayout, new AccountFragment());
             fragTran1.commit();
         }
 
@@ -92,23 +98,29 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
                 FragmentTransaction fragTran2 = fragMan.beginTransaction();
 
                 //fragTran1.addToBackStack(null);
-                if (currSetupPage < 2)
+                if (currSetupPage < 3)
                     currSetupPage++;
                 switch (currSetupPage) {
                     case 0:
+                        fragTran2.replace(R.id.setupFragmentFrameLayout, new AccountFragment());
+                        setupTxt.setText(getString(R.string.sign_In_Google));
+                        fragTran2.addToBackStack(null); //user can reverse transaction of replacing the setupFragmentFrameLayout
+                        fragTran2.commit();
+                        break;
+                    case 1:
                         fragTran2.replace(R.id.setupFragmentFrameLayout, SetupGradeSelectFragment.newInstance(gradeSelect));
                         setupTxt.setText(getString(R.string.setup_grade_select_text));
                         fragTran2.addToBackStack(null); //user can reverse transaction of replacing the setupFragmentFrameLayout
                         fragTran2.commit();
                         break;
-                    case 1:
+                    case 2:
                         fragTran2.replace(R.id.setupFragmentFrameLayout, SetupActivitySelectFragment.newInstance(activitySelect));
                         setupTxt.setText(getString(R.string.setup_activity_select_text));
                         //fragTran1.addToBackStack("grade-to-activity");
                         fragTran2.addToBackStack(null);
                         fragTran2.commit();
                         break;
-                    case 2:
+                    case 3:
                         storeSettings();
                         setSetupFinished();
                         /*
@@ -139,12 +151,15 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
 
                 switch (currSetupPage) {
                     case 0:
-                        setupTxt.setText(getString(R.string.setup_grade_select_text));
+                        setupTxt.setText("Sign in To Google");
                         break;
                     case 1:
-                        setupTxt.setText(getString(R.string.setup_activity_select_text));
+                        setupTxt.setText(getString(R.string.setup_grade_select_text));
                         break;
                     case 2:
+                        setupTxt.setText(getString(R.string.setup_activity_select_text));
+                        break;
+                    case 3:
 
                         break;
                 }
