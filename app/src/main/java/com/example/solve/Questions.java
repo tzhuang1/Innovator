@@ -89,6 +89,8 @@ public class Questions{
 
     public String getCategory() { return category; }
 
+    public int getId() { return id; }
+
     public void setId(int i) {
         id = i;
     }

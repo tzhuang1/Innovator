@@ -39,6 +39,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import info.hoang8f.widget.FButton;
@@ -61,6 +62,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     QuestionsHelper questionsHelper;
 
     List<Questions> questionsList;
+    List<AnsweredQuestionData> answeredQuestionList;
     int qid = 0;
 
     @Override
@@ -96,8 +98,41 @@ public class QuestionMainActivity extends AppCompatActivity {
         resetColor();
 
         getFirebaseQuestionsList(topic);
+        if(currentUser != null)
+            getPerUserFirebaseQuestionsList(currentUser.getId());
     }
 
+    private void getPerUserFirebaseQuestionsList(String userID){//TODO: find path relative to topic (switch statement)
+        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Questions_History").child(userID);
+
+        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                answeredQuestionList = dataSnapshot.getValue(new GenericTypeIndicator<List<AnsweredQuestionData>>() {});//stops here Failed to convert value of type java.lang.Long to String
+                Log.i("get user data", "Firebase data fetched");
+                //currentQuestion will hold the que, 4 option and ans for particular id
+                loadingScreen.setVisibility(GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //TODO: handle network outage
+                Log.e("FB getList", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
+            }
+        });
+    }
+
+    private void savePerUserFirebaseQuestionsList()
+    {
+        //get current userID, if userID is empty, then don't save anything
+        if(currentUser != null && currentUser.getId() != null) {
+            DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Questions_History").child(currentUser.getId());
+            if(qListRef != null)
+            {
+                qListRef.setValue(answeredQuestionList);
+            }
+        }
+    }
 
     private void getFirebaseQuestionsList(String topic){//TODO: find path relative to topic (switch statement)
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("Questions").child("Number_Number_Sense");
@@ -174,9 +209,35 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonD.setText(currentQuestion.getOptD());
     }
 
+    private void saveHistory(int questionID, String answerChosen, Questions currentQuestion) {
+        if(answeredQuestionList != null)
+        {
+            Iterator<AnsweredQuestionData> iterator = answeredQuestionList.iterator();
+            AnsweredQuestionData currentAnsweredQuestion = null;
+            while (iterator.hasNext()) {
+                AnsweredQuestionData question = iterator.next();
+                if (question.getQuestion().getId() == questionID) {
+                    currentAnsweredQuestion = question;
+                    break;
+                }
+            }
+            if(currentAnsweredQuestion == null)
+            {
+                currentAnsweredQuestion = new AnsweredQuestionData(currentQuestion, answerChosen);
+                answeredQuestionList.add(currentAnsweredQuestion);
+            }
+            else {
+                currentAnsweredQuestion.setAnswer(answerChosen);
+            }
+            savePerUserFirebaseQuestionsList();
+
+        }
+    }
+
     //Onclick listener for first button
     public void buttonA(View view) {
         //compare the option with the ans if yes then make button color green
+        saveHistory(qid, "Option A", currentQuestion);
         if (currentQuestion.getAnswer().equalsIgnoreCase("Option A") ) {
             buttonA.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             //Check if user has not exceeds the que limit
@@ -202,9 +263,11 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     //Onclick listener for sec button
     public void buttonB(View view) {
+        saveHistory(qid, "Option B", currentQuestion);
         if (currentQuestion.getAnswer().equalsIgnoreCase("Option B")) {
             buttonB.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             if (qid < questionsList.size() - 1) {
+
                 disableButton();
                 correctDialog();
             } else {
@@ -215,8 +278,10 @@ public class QuestionMainActivity extends AppCompatActivity {
         }
     }
 
+
     //Onclick listener for third button
     public void buttonC(View view) {
+        saveHistory(qid, "Option C", currentQuestion);
         if (currentQuestion.getAnswer().equalsIgnoreCase("Option C") ) {
             buttonC.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             if (qid < questionsList.size() - 1) {
@@ -232,6 +297,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     //Onclick listener for fourth button
     public void buttonD(View view) {
+        saveHistory(qid, "Option D", currentQuestion);
         if (currentQuestion.getAnswer().equalsIgnoreCase("Option D")) {
             buttonD.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             if (qid < questionsList.size() - 1) {

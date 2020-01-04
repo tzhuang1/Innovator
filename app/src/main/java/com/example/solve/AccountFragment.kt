@@ -25,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.plus.Plus
+import com.example.solve.UserData
 
 
 class AccountFragment : GoogleApiClient.ConnectionCallbacks,
@@ -176,7 +177,8 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
         currentUserLabel.setText("You are signed in as: " + account!!.displayName)
         val sign_in_button = viewOfLayout.findViewById<SignInButton>(R.id.sign_in_button)
         sign_in_button.visibility = View.INVISIBLE
-
+        var userData = UserData(account!!.id,account!!.email,account!!.displayName)
+        InnovatorApplication.setUser(userData)
 
     }
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
