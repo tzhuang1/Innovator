@@ -139,6 +139,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Questions>>() {});//stops here Failed to convert value of type java.lang.Long to String
                 Log.i("FB getList", "Firebase data fetched");
                 Collections.shuffle(questionsList);
@@ -146,6 +147,8 @@ public class QuestionMainActivity extends AppCompatActivity {
                 currentQuestion = questionsList.get(qid);
                 updateQueueAndOptions();
                 loadingScreen.setVisibility(GONE);
+
+
             }
 
             @Override

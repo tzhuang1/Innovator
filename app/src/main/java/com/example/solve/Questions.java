@@ -15,6 +15,7 @@ public class Questions{
     private String answer;
     private String explanation;
     private String category;
+    private int exPicNumber;
 
     private int picNumber;
 
@@ -29,9 +30,10 @@ public class Questions{
         explanation = ex;
         category = ca;
         picNumber = -1;
+        exPicNumber = -1;
     }
 
-    public Questions(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber) {
+    public Questions(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber) {
         this.question = question;
         this.opta = opta;
         this.optb = optb;
@@ -41,6 +43,7 @@ public class Questions{
         this.explanation = explanation;
         this.category = category;
         this.picNumber = picNumber;
+        this.exPicNumber = exPicNumber;
     }
 
     public Questions() {
@@ -54,11 +57,15 @@ public class Questions{
         explanation = "";
         category = "";
         picNumber = -1;
+        exPicNumber = -1;
+
     }
 
     public int getPicNumber() {
         return picNumber;
     }
+
+    public int getExPicNumber() {return exPicNumber;}
 
 
     public String getQuestion() {
@@ -125,5 +132,9 @@ public class Questions{
 
     public void setCategory(String ca) {
         category = ca;
+    }
+
+    public void setExPicNumber(int expic) {
+        exPicNumber = expic;
     }
 }
