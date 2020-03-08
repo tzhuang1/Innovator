@@ -1,0 +1,36 @@
+{
+  "Grade_5": [
+    null,
+    {
+      "category": "Number and Number Sense",
+      "questionPicNumber": 0,
+      "question": "Which list of numbers is ordered from least to greatest?",
+      "optA": "0.8, 3/5, 7/10",
+      "optB": "7/10, 3/5, 0.8",
+      "optC": "3/5, 7/10, 0.8",
+      "optD": "0.8, 7/10, 3/5",
+      "answer": "c",
+      "optAPicNumber": null,
+      "optBPicNumber": null,
+      "optCPicNumber": null,
+      "optDPicNumber": null,
+      "explanation": "To compare fractions and decimals, we must convert all of them to the same form. Since we already have two fractions, we can just convert 0.8 to a fraction. 0.8 can be written as 8/10, and this is the form we want in since we need a common denominator in order to compare fractions. 3/5 can be written as 6/10 if the numerator and denominator are multiplied by 2. Now we have 8/10, 6/10, and 7,10. From here we see that 6/10 is the smallest, followed by 7/10, and lastly, 8,10. Therefore, the correct answer is C.",
+      "explanationPicNumber": null
+    }, {
+      "category": "Number and Number Sense",
+      "questionPicNumber": null,
+      "question": "Which fraction is equivalent to to 0.75?",
+      "optA": "3/4",
+      "optB": "4/5",
+      "optC": "7/10",
+      "optD": "7/5",
+      "answer": "a",
+      "optAPicNumber": null,
+      "optBPicNumber": null,
+      "optCPicNumber": null,
+      "optDPicNumber": null,
+      "explanation": "0.75 can be represented as 75/100. Simplifying the fraction by dividing by 25 on the top and bottom, 75/100 turns into 3/4. So, the correct answer is A.",
+      "explanationPicNumber": null
+    }
+  ]
+}

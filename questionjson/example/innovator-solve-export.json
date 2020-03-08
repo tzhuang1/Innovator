@@ -1,0 +1,351 @@
+{
+  "Questions": {
+    "Grade_3": [null, {
+      "answer": "Option B",
+      "category": "Computation and Estimation",
+      "explanation": "There are 3 pens each with 7 sheep. Multiplying the amount of sheep with the amount of pens is the applicable equation.",
+      "optA": "3 + 7 =_",
+      "optB": "3 x 7 =_",
+      "optC": "7 / 3 =_",
+      "optD": "21 - 7 =_",
+      "picNumber": 1,
+      "question": "Which number sentence best represents these sheep?"
+    }, {
+      "answer": "Option D",
+      "category": "Number and Number Sense",
+      "explanation": "The amount of shaded triangles in set G is 4 and the amount of shaded triangles in set H is 7. Both sets have 13 triangles in total. The fraction of shaded triangles of set G is 4/13 and the fraction of triangles in set H is 7/13. 7/13 is more than 4/13, therefore, d) is the correct answer.",
+      "optA": "4/13 > 7/13",
+      "optB": "9/13 < 6/13",
+      "optC": "9/13 > 6/13",
+      "optD": "4/13 < 7/13",
+      "picNumber": 2,
+      "question": "Which fraction correctly compares the fraction of shaded triangles in set G to the fraction of shaded circles in set H?"
+    }, {
+      "answer": "Option C",
+      "category": "Number and Number Sense",
+      "explanation": "Each large cub represents a thousand. Each square contains represents a hundred and each long strip of cubes represents tens. The small cubes by themselves are ones. 1. There are 3 thousand, 2 hundred, 8 tens, and 3 ones, it would, in total amount to 3,283.",
+      "optA": "383",
+      "optB": "2,283",
+      "optC": "3,283",
+      "optD": "363",
+      "picNumber": 3,
+      "question": "The place value blocks shown represent a number. What number do the blocks show?"
+    }, {
+      "answer": "Option A",
+      "category": "Rounding",
+      "explanation": "Rounding is changing the number to the digit place that is closest. In order to round 1,562 to the nearest thousand, you must round it up because the number is closer to 2,000 than 1,000.",
+      "optA": "2,000",
+      "optB": "1,000",
+      "optC": "1,500",
+      "optD": "3,000",
+      "picNumber": -1,
+      "question": "Round 1,562 to the nearest thousand."
+    }, {
+      "answer": "Option A",
+      "category": "Number and Number Sense",
+      "explanation": "The amount of filled cups in tray E is 9 and the amount of filled cups in set F is 3. Both sets have 10 cups in total. The fraction of filled cups of set E is 9/10 and the fraction of triangles in set F is 3/10. 9/10 is more than 3/10, therefore, a) is the correct answer.",
+      "optA": "9/10 > 3/10",
+      "optB": "1/10 < 7/10",
+      "optC": "9/10 < 3/10",
+      "optD": "1/10> 7/10",
+      "picNumber": 5,
+      "question": "Compare tray E to tray F. Which statement correctly compares the fraction of filled water cups in tray E and tray F?"
+    }, {
+      "answer": "Option A",
+      "category": "Number and Number Sense",
+      "explanation": "",
+      "optA": "Sixty four thousand, nine hundred three",
+      "optB": "Six thousand, four hundred nine hundred three",
+      "optC": "Sixty four thousand, ninety three",
+      "optD": "Sixty four, ninety three",
+      "picNumber": -1,
+      "question": "What is 64,903 in word form?"
+    }, {
+      "answer": "Option D",
+      "category": "Number and Number Sense",
+      "explanation": "Each fully shaded shape is 1 and the non fully shaded shape is ¾ shaded three of the four boxes are filled. If you add those numbers together you would get 4 ¾",
+      "optA": "13/16",
+      "optB": "3/16",
+      "optC": "3 ¼",
+      "optD": "4 ¾",
+      "picNumber": 7,
+      "question": "What number does the model below represent?"
+    }, {
+      "answer": "Option C",
+      "category": "Number and Number Sense",
+      "explanation": "Because the equation above is multiplication, the answer to this question must have division. 8 divided by 4 is 2 making c) the correct answer.",
+      "optA": "4 x 8 =__",
+      "optB": "2 \u00F7 4 =__",
+      "optC": "8 \u00F7 4 =__",
+      "optD": "8 + 4 =__",
+      "picNumber": 8,
+      "question": "Which problem can this equation help solve?"
+    }, {
+      "answer": "Option B",
+      "category": "Number and Number Sense",
+      "explanation": "a) is incorrect because that sign means greater than. c) is incorrect because 998 is not equal to 1,132. d) is incorrect because it is not an inequality symbol. Therefore the correct answer is b) because it is the less than symbol and 998 is less than 1,132.",
+      "optA": ">",
+      "optB": "<",
+      "optC": "=",
+      "optD": "^",
+      "picNumber": 9,
+      "question": "What symbol would make this equation true?"
+    }, {
+      "answer": "Option C",
+      "category": "Number and Number Sense",
+      "explanation": "a) is not the correct answer because it is the greater than symbol and 64 is not greater than 64. b) is incorrect because 64 is not less than 64. d) is not the correct answer because the symbol means less than or equal to. The symbol in c) means equal to, 64 and 64 are equal therefore c) is the correct answer.",
+      "optA": ">",
+      "optB": "<",
+      "optC": "=",
+      "optD": "^",
+      "picNumber": 10,
+      "question": "What symbol would make this equation true?"
+    }, {
+      "answer": "Option B",
+      "category": "Computation and Estimation",
+      "explanation": "In order to solve this equation it is important to look at it backward. If 48 divided by something is 8 then what is the missing number? So if you divide 48 by 8, the missing number should be the answer because if 48 divided by 8 is the missing number, the opposite should also be true. ",
+      "optA": 8,
+      "optB": 6,
+      "optC": 3,
+      "optD": 5,
+      "picNumber": -1,
+      "question": "In which set is exactly 5/7 of the shapes squares?"
+    }, {
+      "answer": "Option C",
+      "category": "Computation and Estimation",
+      "explanation": "The equation to this problem is 245 - 166 + 78 =__ It must be done in order, 245 - 166 = 79 Then 79 + 78 = 157. ",
+      "optA": 147,
+      "optB": 64,
+      "optC": 157,
+      "optD": 54,
+      "picNumber": -1,
+      "question": "Carla owns a fruit store. In the morning she had 245 apples, during the day she sold 166 of them, afterward she received a shipment of 78 apples to start the new day. How many apples does she have now?"
+    }, {
+      "answer": "Option B",
+      "category": "Computation and Estimation",
+      "explanation": "In order to solve this equation it is important to look at it backward. If 48 divided by something is 8 then what is the missing number? So if you divide 48 by 8, the missing number should be the answer because if 48 divided by 8 is the missing number, the opposite should also be true. ",
+      "optA": "4/3",
+      "optB": "4/11",
+      "optC": "3/11",
+      "optD": "7/11",
+      "picNumber": 2,
+      "question": "What is the sum of the two fractions?"
+    }, {
+      "answer": "Option B",
+      "category": "Computation and Estimation",
+      "explanation": "There are 3 pens each with 7 sheep. Multiplying the amount of sheep with the amount of pens is the applicable equation.",
+      "optA": "3 + 7 = __",
+      "optB": "3 x 7 = __",
+      "optC": "7 \u00F7 3 = __",
+      "optD": "21 - 7 = __",
+      "picNumber": 3,
+      "question": "Which number sentence best represents these sheep?"
+    }, {
+      "answer": "Option C",
+      "category": "Computation and Estimation",
+      "explanation": "The equation to this problem is 245 - 166 + 78 =__ It must be done in order, 245 - 166 = 79 Then 79 + 78 = 157",
+      "optA": "147",
+      "optB": "64",
+      "optC": "157",
+      "optD": "54",
+      "picNumber": -1,
+      "question": "Carla owns a fruit store. In the morning she had 245 apples, during the day she sold 166 of them, afterward she received a shipment of 78 apples to start the new day. How many apples does she have now?"
+    }, {
+      "answer": "Option A",
+      "category": "Computation and Estimation",
+      "explanation": "When adding fractions, the denominator does not change; only the numerator changes. Therefore if you add the two numerators 4 + 5 = 9. And the denominator is 9 also so it would be 9/9. Anything over itself is 1.",
+      "optA": "1",
+      "optB": "12/9",
+      "optC": "2/5",
+      "optD": "1/4",
+      "picNumber": 5,
+      "question": "What is the answer?"
+    }, {
+      "answer": "Option B",
+      "category": "Computation and Estimation",
+      "explanation": "When adding and subtracting fractions, if the denominator is the same for both numbers the denominator does not change because the denominator represents the number of parts of the whole there is. The numerator on the other hand changes.",
+      "optA": "2/5",
+      "optB": "1/5",
+      "optC": "1",
+      "optD": "4/5",
+      "picNumber": -1,
+      "question": "What is the difference of these fractions?"
+    }, {
+      "answer": "Option B",
+      "category": "Computation and Estimation",
+      "explanation": "In order to solve, it is important to borrow the one when the number above it is smaller than the number subtracting it.",
+      "optA": "1,275",
+      "optB": "1,375",
+      "optC": "425",
+      "optD": "225",
+      "picNumber": -1,
+      "question": "1,564 - 189 = __"
+    }, {
+      "answer": "Option C",
+      "category": "Computation and Estimation",
+      "explanation": "The arc starts at 14. Then it stops at 28. All that is needed to find out is what you need add to 14 to get 28. 28 - 14 = 14. Therefore 14 + 14 = 28.",
+      "optA": "4 x 7 = 28",
+      "optB": "28 - 21 = 7",
+      "optC": "14 + 14 = 28",
+      "optD": "7 + 4 = 11",
+      "picNumber": 9,
+      "question": "Which equation is best represented with this number line?"
+    }, {
+      "answer": "Option D",
+      "category": "Computation and Estimation",
+      "explanation": "3 x 6 is equivalent to 18, 4 x 8 is equivalent to 32, 12 x 4 is equivalent to 48, and 4 x 9 is equivalent to 36.",
+      "optA": "3 x 6 = __",
+      "optB": "4 x 8 = __",
+      "optC": "12 x 4 = __",
+      "optD": "4 x 9 = __",
+      "picNumber": -1,
+      "question": "Which of the following is equal to 36."
+    }, {
+      "answer": "Option A",
+      "category": "Computation and Estimation",
+      "explanation": "",
+      "optA": "874",
+      "optB": "990",
+      "optC": "886",
+      "optD": "986",
+      "picNumber": -1,
+      "question": "932 - 58 = __"
+    }, {
+      "answer": "Option C",
+      "category": "Computation and Estimation",
+      "explanation": "",
+      "optA": "89",
+      "optB": "93",
+      "optC": "190",
+      "optD": "92",
+      "picNumber": -1,
+      "question": "John is playing cards. If he started with 45 cards, then gained 145 after a bad play and then finally losing 78 how many cards does he have at the end of the game?"
+    }, {
+      "answer": "Option B",
+      "category": "Computation and Estimation",
+      "explanation": "",
+      "optA": "6 x 4 = __",
+      "optB": "16 x 4 = __",
+      "optC": "12 x 6 = __",
+      "optD": "8 x 6 = __",
+      "picNumber": -1,
+      "question": "Select the number sentence that is equal to 64."
+    }, {
+      "answer": "Option A",
+      "category": "Computation and Estimation",
+      "explanation": "If you subtract 1,600 by 789 the answer is 811.",
+      "optA": "711",
+      "optB": "811",
+      "optC": "1,099",
+      "optD": "889",
+      "picNumber": 14,
+      "question": "Solve the equation below:"
+    }, {
+      "answer": "Option A",
+      "category": "Computation and Estimation",
+      "explanation": "When multiplying fraction with the same denominator, it is only necessary to add the numerator. Keeping the denominator the same is important. Adding the numerators together would be 7 and keeping the denominator the same would be 8. Therefore the answer is ⅞.",
+      "optA": "1/2",
+      "optB": "6/8",
+      "optC": "9/8",
+      "optD": "7/8",
+      "picNumber": 15,
+      "question": "What is the sum of these two fractions?"
+    }, {
+      "answer": "Option C",
+      "category": "Measurement and Geometry",
+      "explanation": "Explanation",
+      "optA": "30 seconds",
+      "optB": "60 seconds",
+      "optC": "1,800 seconds",
+      "optD": "6,600 seconds",
+      "picNumber": -1,
+      "question": "Nina owns a bakery. She baked muffins for half an hour. How many seconds did she bake the muffins for?"
+    }, {
+      "answer": "Option C",
+      "category": "Measurement and Geometry",
+      "explanation": "All the shapes that make up the figure are triangles. All triangles have 3 sides.",
+      "optA": "Kite",
+      "optB": "Rhombus",
+      "optC": "Triangle",
+      "optD": "Paralellogram",
+      "picNumber": 2,
+      "question": "Nathan cut out papers and arranged them into the figure below, what shapes did he cut out?"
+    }, {
+      "answer": "Option C",
+      "category": "Measurement and Geometry",
+      "explanation": "Explanation",
+      "optA": "2 cm",
+      "optB": "2 in",
+      "optC": "2 ft",
+      "optD": "2 m",
+      "picNumber": -1,
+      "question": "A chair, in order to be comfortably sat on by an ordinary human being cannot be 2 centimeters nor inches; the height of an eraser could be that height. 2 meters could be the height of a door."
+    }, {
+      "answer": "Option A",
+      "category": "Measurement and Geometry",
+      "explanation": "The long hand points in between the 10 and 11 meaning it is the 10th hour. The minute hand points right after the 6 meaning it is around the 31 minute. Therefore, the time is approximately 10:31.",
+      "optA": "10:31",
+      "optB": "6:53",
+      "optC": "6:06",
+      "optD": "10:10",
+      "picNumber": 4,
+      "question": "What is the approximate time shown on this clock?"
+    }, {
+      "answer": "Option B",
+      "category": "Measurement and Geometry",
+      "explanation": "Each 10 is split in half by a hash mark marking it by the five. The red rests right on the hash mark between the 20 and 30. When split in half, it is 25.",
+      "optA": "20",
+      "optB": "25",
+      "optC": "30",
+      "optD": "32",
+      "picNumber": 5,
+      "question": "A thermometer shows the temperature outside. How many degrees is it outside?"
+    }, {
+      "answer": "Option A",
+      "category": "Measurement and Geometry",
+      "explanation": "Explanation",
+      "optA": "10:15",
+      "optB": "10:45",
+      "optC": "2:45",
+      "optD": "2:15",
+      "picNumber": 7,
+      "question": "Angie left the train station at the time shown below. If the time took 4 hours to arrive at the destination, at what time did Angie get off the train?"
+    }, {
+      "answer": "Option A",
+      "category": "Measurement and Geometry",
+      "explanation": "Explanation",
+      "optA": "optA",
+      "optB": "optB",
+      "optC": "optC",
+      "optD": "optD",
+      "picNumber": -1,
+      "question": "Question"
+    }, {
+      "answer": "Option A",
+      "category": "Measurement and Geometry",
+      "explanation": "Explanation",
+      "optA": "optA",
+      "optB": "optB",
+      "optC": "optC",
+      "optD": "optD",
+      "picNumber": -1,
+      "question": "Question"
+    }, {
+      "answer": "Option A",
+      "category": "Measurement and Geometry",
+      "explanation": "Explanation",
+      "optA": "optA",
+      "optB": "optB",
+      "optC": "optC",
+      "optD": "optD",
+      "picNumber": -1,
+      "question": "Question"
+    }],
+
+    "Grade_4": [0]
+  },
+  "UserData": [{
+    "activity": 0,
+    "grade": 0
+  }]
+}
