@@ -99,11 +99,11 @@ public class QuestionMainActivity extends AppCompatActivity {
 
         getFirebaseQuestionsList(topic);
         if(currentUser != null)
-            getPerUserFirebaseQuestionsList(currentUser.getId());
+            getPerUserFirebaseQuestionsList(currentUser.getId());//not reached
     }
 
     private void getPerUserFirebaseQuestionsList(String userID){//TODO: find path relative to topic (switch statement)
-        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Questions_History").child(userID);
+        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Questions_History").child(userID);//that goes nowhere!
 
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
@@ -178,7 +178,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     public void updateQueueAndOptions() {
-        if(currentQuestion.getPicNumber() != -1){//question has text and picture
+        if(currentQuestion.getPicNumber() != -1){//question has text and picture: current question is null
             question.setVisibility(GONE);
             questionPicLayout.setVisibility(View.VISIBLE);
             questionPicText.setText(currentQuestion.getQuestion());
@@ -243,20 +243,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         saveHistory(qid, "Option A", currentQuestion);
         if (currentQuestion.getAnswer().equalsIgnoreCase("Option A") ) {
             buttonA.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
-            //Check if user has not exceeds the que limit
-            if (qid < questionsList.size() - 1) {
-
-                //Now disable all the option button since user ans is correct so
-                //user won't be able to press another option button after pressing one button
-                disableButton();
-
-                //Show the dialog that ans is correct
-                correctDialog();
-            }
-            //If user has exceeds the que limit just navigate him to GameWon activity
-            else {
-
-            }
+            //TODO: when on last question and success, the success dialog does not show
+            disableButton();
+            correctDialog();
         }
         //User ans is wrong then just navigate him to the PlayAgain activity
         else {
@@ -269,13 +258,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         saveHistory(qid, "Option B", currentQuestion);
         if (currentQuestion.getAnswer().equalsIgnoreCase("Option B")) {
             buttonB.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
-            if (qid < questionsList.size() - 1) {
-
-                disableButton();
-                correctDialog();
-            } else {
-
-            }
+            //TODO: when on last question and success, the success dialog does not show
+            disableButton();
+            correctDialog();
         } else { // in place of PlayAgain activity to be implemented later? test to pull up incorrect dialog
             incorrectDialog();
         }
@@ -287,12 +272,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         saveHistory(qid, "Option C", currentQuestion);
         if (currentQuestion.getAnswer().equalsIgnoreCase("Option C") ) {
             buttonC.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
-            if (qid < questionsList.size() - 1) {
-                disableButton();
-                correctDialog();
-            } else {
-
-            }
+            //TODO: when on last question and success, the success dialog does not show
+            disableButton();
+            correctDialog();
         } else {
             incorrectDialog();
         }
@@ -303,12 +285,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         saveHistory(qid, "Option D", currentQuestion);
         if (currentQuestion.getAnswer().equalsIgnoreCase("Option D")) {
             buttonD.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
-            if (qid < questionsList.size() - 1) {
-                disableButton();
-                correctDialog();
-            } else {
-
-            }
+            //TODO: when on last question and success, the success dialog does not show
+            disableButton();
+            correctDialog();
         } else {
             incorrectDialog();
         }
