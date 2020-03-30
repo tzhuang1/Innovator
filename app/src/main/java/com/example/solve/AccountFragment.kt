@@ -17,7 +17,9 @@ import com.google.android.gms.common.api.Scope
 import com.google.android.gms.common.SignInButton
 import android.content.Intent
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.NonNull
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -26,6 +28,9 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.plus.Plus
 import com.example.solve.UserData
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.account_fragment.*
 
 
 class AccountFragment : GoogleApiClient.ConnectionCallbacks,
@@ -77,6 +82,10 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
         val sign_in_button = viewOfLayout.findViewById<SignInButton>(R.id.sign_in_button)
         sign_in_button.setOnClickListener(this);
 
+        val sign_out_button = viewOfLayout.findViewById<Button>(R.id.sign_out_button)
+        sign_out_button.setOnClickListener(this);
+
+
         //mGoogleApiClient.connect()
         //this.viewOfLayout.findViewById(R.id.sign_in_button).setOnClickListener(this)
         return viewOfLayout
@@ -114,7 +123,9 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
         Log.i("AccountFragment", "onClick invoked")
         when (v.id) {
             R.id.sign_in_button -> signIn()
+            R.id.sign_out_button -> signOut()
         }// ...
+
     }
     public override fun onStart() {
         super.onStart()
@@ -131,6 +142,30 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
+    private fun signOut() {
+        mGoogleSignInClient?.signOut()?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val sign_in_button = viewOfLayout.findViewById<SignInButton>(R.id.sign_in_button)
+                sign_in_button.visibility = View.VISIBLE
+                val sign_out_button = viewOfLayout.findViewById<Button>(R.id.sign_out_button)
+                sign_out_button.visibility = View.INVISIBLE
+                var currentUserLabel = this.viewOfLayout.findViewById(R.id.currentUser) as TextView
+                currentUserLabel.setText("")
+
+            } else {
+                Log.d("Google Sign-Out", "get failed with ", task.exception)
+            }
+        }
+
+//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(Task<Void> task) {
+//                        // ...
+//                    }
+//                });
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -140,6 +175,10 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
             // a listener.
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
+        }
+        else
+        {
+            //sign out
         }
     }
 
@@ -177,8 +216,13 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
         currentUserLabel.setText("You are signed in as: " + account!!.displayName)
         val sign_in_button = viewOfLayout.findViewById<SignInButton>(R.id.sign_in_button)
         sign_in_button.visibility = View.INVISIBLE
+        sign_out_button.visibility = View.VISIBLE
         var userData = UserData(account!!.id,account!!.email,account!!.displayName)
         InnovatorApplication.setUser(userData)
+        if (userData != null && userData.getId() != null) {
+            val qListRef = FirebaseDatabase.getInstance().reference.child("UserData").child("Profile").child(userData.getId())
+            qListRef?.push().setValue(userData)
+        }
 
     }
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
