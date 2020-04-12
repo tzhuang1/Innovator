@@ -4,17 +4,17 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class AnsweredQuestionData {
-    private Questions question;
+    private Question question;
     private String answer;
     //private boolean isAnswerCorrect;
 
-    public AnsweredQuestionData(Questions question, String answer)
+    public AnsweredQuestionData(Question question, String answer)
     {
         this.question = question;
         this.answer = answer;
         //this.isAnswerCorrect = question.getAnswer().equals(answer);
     }
-    public Questions getQuestion()
+    public Question getQuestion()
     {
         return question;
     }
@@ -23,7 +23,7 @@ public class AnsweredQuestionData {
         return answer;
     }
 
-    public void setQuestion(Questions question)
+    public void setQuestion(Question question)
     {
         this.question = question;
     }

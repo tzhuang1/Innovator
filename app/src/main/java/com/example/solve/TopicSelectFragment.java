@@ -2,9 +2,7 @@ package com.example.solve;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,20 +12,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -35,10 +24,10 @@ public class TopicSelectFragment extends Fragment {
 
     //-------------------------------variables--------------------------------
     private int topicIdx; //current topic index
-    private List<Topic> topicList;
+    private List<TopicSelect> topicList;
     //---------topic storage--------------
 
-    private Questions questions;
+    private Question question;
     //private ????[] topicLinks; //how do we communicate the topic to the practice view?
 
 
@@ -117,7 +106,7 @@ public class TopicSelectFragment extends Fragment {
 
     private void updateTopicView(int position){
         //set the ImageViews, practice title, etc.
-        Topic topic = topicList.get(position);
+        TopicSelect topic = topicList.get(position);
         setProgressBarText(topic.getMasteryPct());
         current.setImageResource(topic.getImageDrawable());
         practiceTitle.setText(topic.getTitle());
@@ -142,17 +131,17 @@ public class TopicSelectFragment extends Fragment {
     }
 
     private void generateTestTopicList(){//initiates 4 examples for debugging only
-        topicList = new ArrayList<Topic>(4);
-        Topic tmpTopic = new Topic("Topic one title", R.drawable.ic_topic_test_one, null);
+        topicList = new ArrayList<TopicSelect>(4);
+        TopicSelect tmpTopic = new TopicSelect("Topic one title", R.drawable.ic_topic_test_one, null);
         tmpTopic.setMasteryPct(10);
         topicList.add(tmpTopic);
-        tmpTopic = new Topic("Topic two title", R.drawable.ic_topic_test_two, null);
+        tmpTopic = new TopicSelect("Topic two title", R.drawable.ic_topic_test_two, null);
         tmpTopic.setMasteryPct(20);
         topicList.add(tmpTopic);
-        tmpTopic = new Topic("Topic three title", R.drawable.ic_topic_test_three, null);
+        tmpTopic = new TopicSelect("Topic three title", R.drawable.ic_topic_test_three, null);
         tmpTopic.setMasteryPct(30);
         topicList.add(tmpTopic);
-        tmpTopic = new Topic("Topic four title", R.drawable.ic_topic_test_four, null);
+        tmpTopic = new TopicSelect("Topic four title", R.drawable.ic_topic_test_four, null);
         tmpTopic.setMasteryPct(40);
         topicList.add(tmpTopic);
     }
