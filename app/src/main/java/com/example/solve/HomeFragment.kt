@@ -20,6 +20,7 @@ class HomeFragment : Fragment(){
         val dailyChallengeBtn : Button = view.findViewById(R.id.dailyChallengeButton)
         dailyChallengeBtn.setOnClickListener { v ->
             val intent = Intent(getActivity(), QuestionMainActivity::class.java)
+            intent.putExtra("TOPIC",Topic.Grade5) //TODO:placeholder!!!
             startActivity(intent)
         }
         //setContentView(view);

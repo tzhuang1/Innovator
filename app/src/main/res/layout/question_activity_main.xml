@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
     android:orientation="vertical">
-
+    <!--loading screen-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,9 +24,11 @@
             android:text="Loading Questions\n Please Wait..."
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:gravity="center_horizontal" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!--Q layout-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="13dp"
@@ -48,7 +50,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="Question with picture"
+                android:text="Question with pic text"
                 android:textColor="@color/grey"
                 android:textSize="25sp"
                 android:scrollHorizontally="false"
@@ -83,7 +85,7 @@
             android:layout_height="140dp"
             android:layout_margin="20dp"
             android:gravity="center"
-            android:text="@string/question"
+            android:text="Question with just text"
             android:textColor="@color/grey"
             android:textSize="25sp"
             fbutton:fontFamily="@font/karla"
@@ -93,13 +95,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    <!--A layout-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#FFFFFF"
         android:gravity="center"
+        android:id="@+id/textAnswersLayout"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <info.hoang8f.widget.FButton
@@ -122,7 +126,6 @@
             android:textColor="@color/grey"
             fbutton:buttonColor="@color/white"/>
 
-
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonC"
             android:layout_width="match_parent"
@@ -142,7 +145,59 @@
             android:text=""
             android:textColor="@color/grey"
             fbutton:buttonColor="@color/white"/>
-
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/picAnswersLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/optAPic"
+            fbutton:layout_constraintTop_toTopOf="parent"
+            fbutton:layout_constraintLeft_toLeftOf="parent"
+            fbutton:layout_constraintRight_toLeftOf="@id/optBPic"
+            fbutton:layout_constraintBottom_toTopOf="@id/optCPic"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/optBPic"
+            fbutton:layout_constraintTop_toTopOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintLeft_toRightOf="@id/optAPic"
+            fbutton:layout_constraintBottom_toTopOf="@id/optDPic"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/optCPic"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintLeft_toLeftOf="parent"
+            fbutton:layout_constraintTop_toBottomOf="@id/optAPic"
+            fbutton:layout_constraintRight_toLeftOf="@id/optDPic"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/optDPic"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintLeft_toRightOf="@id/optCPic"
+            fbutton:layout_constraintTop_toBottomOf="@id/optBPic"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

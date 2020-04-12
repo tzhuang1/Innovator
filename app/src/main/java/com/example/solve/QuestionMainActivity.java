@@ -43,23 +43,26 @@ import static android.view.View.GONE;
 
 public class QuestionMainActivity extends AppCompatActivity {
 
-    FButton buttonA, buttonB, buttonC, buttonD;
+
     View loadingScreen;
-    TextView question;
+
     Typeface tb;
 
     View questionPicLayout;
     TextView questionPicText;
     ImageView questionPic;
+    TextView questionText;
+
+    View textAnswersLayout;
+    View picAnswersLayout;
+    FButton buttonA, buttonB, buttonC, buttonD;
+    ImageView optAPic, optBPic, optCPic, optDPic;
+
     ImageView explanationPic;
-    ImageView optAPic, optBPic, optCPic, optDPic; //TODO: fake, no layouts
 
     Question currentQuestion;
     UserData currentUser;
-    QuestionsHelper questionsHelper;
-
-    Topic currentTopic = Topic.Grade5;
-
+    Topic currentTopic;
     List<Question> questionsList;
     List<AnsweredQuestionData> answeredQuestionList;
     int qid = 0;
@@ -70,28 +73,35 @@ public class QuestionMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity_main);
         Intent intent = getIntent();
-        String topic = intent.getStringExtra("TOPIC");//If no intent, string is empty (no try/catch needed) //TODO: get this from intent
-
+        currentTopic = (Topic) intent.getSerializableExtra("TOPIC");
         //Toast.makeText(this,topic, Toast.LENGTH_LONG ).show();
 
         //Initializing variables
-        buttonA = (FButton) findViewById(R.id.buttonA);
-        buttonB = (FButton) findViewById(R.id.buttonB);
-        buttonC = (FButton) findViewById(R.id.buttonC);
-        buttonD = (FButton) findViewById(R.id.buttonD);
+
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
-        question = (TextView) findViewById(R.id.question_text);
 
         questionPicLayout = findViewById(R.id.question_pic_layout);
         questionPicText = findViewById(R.id.question_pic_text);
         questionPic = findViewById(R.id.question_picture);
+        questionText = (TextView) findViewById(R.id.question_text);
+
+        textAnswersLayout = findViewById(R.id.textAnswersLayout);
+        picAnswersLayout = findViewById(R.id.picAnswersLayout);
+        optAPic = findViewById(R.id.optAPic);
+        optBPic = findViewById(R.id.optBPic);
+        optCPic = findViewById(R.id.optCPic);
+        optDPic = findViewById(R.id.optDPic);
+        buttonA = (FButton) findViewById(R.id.buttonA);
+        buttonB = (FButton) findViewById(R.id.buttonB);
+        buttonC = (FButton) findViewById(R.id.buttonC);
+        buttonD = (FButton) findViewById(R.id.buttonD);
 
         tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
         //Setting typefaces for textview and buttons
         questionPicText.setTypeface(tb);
-        question.setTypeface(tb);
+        questionText.setTypeface(tb);
         buttonA.setTypeface(tb);
         buttonB.setTypeface(tb);
         buttonC.setTypeface(tb);
@@ -99,8 +109,10 @@ public class QuestionMainActivity extends AppCompatActivity {
         resetColor();
 
         getFirebaseQuestionsList(currentTopic);
-        if(currentUser != null)
+        /*if(currentUser != null)
             getPerUserFirebaseQuestionsList(currentUser.getId());//not reached
+
+         */
     }
 
     private void getPerUserFirebaseQuestionsList(String userID){//TODO: find path relative to topic (switch statement)
@@ -123,8 +135,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         });
     }
 
-    private void savePerUserFirebaseQuestionsList()
-    {
+    private void savePerUserFirebaseQuestionsList() {
         //get current userID, if userID is empty, then don't save anything
         if(currentUser != null && currentUser.getId() != null) {
             DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Questions_History").child(currentUser.getId());
@@ -137,12 +148,10 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     private void getFirebaseQuestionsList(Topic topic){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
-                .child("Questions")
-                .child("Number_Number_Sense");
+                .child(topic.getQuestionFolderName());
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Question>>() {});//stops here Failed to convert value of type java.lang.Long to String
                 Log.i("FB getList", "Firebase data fetched");
                 Collections.shuffle(questionsList);
@@ -150,19 +159,16 @@ public class QuestionMainActivity extends AppCompatActivity {
                 currentQuestion = questionsList.get(qid);
                 updateQueueAndOptions();
                 loadingScreen.setVisibility(GONE);
-
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //TODO: handle network outage
                 Log.e("FB getList", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
-            }
+            }//DatabaseError: Permission denied
         });
     }
 
-    //Change this?
     private void getFirebaseUserData(){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
@@ -181,22 +187,56 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     public void updateQueueAndOptions() {
-        if(currentQuestion.getPicNumber() != -1){//question has text and picture: current question is null
-            question.setVisibility(GONE);
+        //sets visibility of layout according to what pictures are in the question
+        //question has text even if it has pic
+        boolean hasQPic = (currentQuestion.getPicNumber() > -1);
+        boolean hasAPics = (currentQuestion.getOptAPicNumber() > -1 || currentQuestion.getOptBPicNumber() > -1 || currentQuestion.getOptCPicNumber() > -1 || currentQuestion.getOptDPicNumber() > -1);
+        if(!hasQPic && !hasAPics){ //text only
+            //Q
+            questionText.setText(currentQuestion.getQuestion());
+            questionText.setVisibility(View.VISIBLE);
+            questionPicLayout.setVisibility(GONE);
+            //A
+            picAnswersLayout.setVisibility(GONE);
+            textAnswersLayout.setVisibility(View.VISIBLE);
+            buttonA.setText(currentQuestion.getOptA());
+            buttonB.setText(currentQuestion.getOptB());
+            buttonC.setText(currentQuestion.getOptC());
+            buttonD.setText(currentQuestion.getOptD());
+        }else if(hasQPic && !hasAPics){ //pic question, text answer
+            //Q
+            questionText.setVisibility(GONE);
             questionPicLayout.setVisibility(View.VISIBLE);
             questionPicText.setText(currentQuestion.getQuestion());
             loadQuestionPic(currentTopic, currentQuestion.getPicNumber());
-
-        }else{//question only has text
-            question.setText(currentQuestion.getQuestion());
-            question.setVisibility(View.VISIBLE);
+            //A
+            picAnswersLayout.setVisibility(GONE);
+            textAnswersLayout.setVisibility(View.VISIBLE);
+            buttonA.setText(currentQuestion.getOptA());
+            buttonB.setText(currentQuestion.getOptB());
+            buttonC.setText(currentQuestion.getOptC());
+            buttonD.setText(currentQuestion.getOptD());
+        }else if(!hasQPic && hasAPics){ //text question, pic answer
+            //Q
+            questionText.setText(currentQuestion.getQuestion());
+            questionText.setVisibility(View.VISIBLE);
             questionPicLayout.setVisibility(GONE);
+            //A
+            picAnswersLayout.setVisibility(View.VISIBLE);
+            textAnswersLayout.setVisibility(GONE);
+            loadAnswerPics(currentTopic, currentQuestion.getOptAPicNumber(), currentQuestion.getOptBPicNumber(), currentQuestion.getOptCPicNumber(), currentQuestion.getOptDPicNumber());
+        }else{ //all pictures
+            //Q
+            questionText.setVisibility(GONE);
+            questionPicLayout.setVisibility(View.VISIBLE);
+            questionPicText.setText(currentQuestion.getQuestion());
+            loadQuestionPic(currentTopic, currentQuestion.getPicNumber());
+            //A
+            picAnswersLayout.setVisibility(View.VISIBLE);
+            textAnswersLayout.setVisibility(GONE);
+            loadAnswerPics(currentTopic, currentQuestion.getOptAPicNumber(), currentQuestion.getOptBPicNumber(), currentQuestion.getOptCPicNumber(), currentQuestion.getOptDPicNumber());
         }
-        //This method will setText for que and options
-        buttonA.setText(currentQuestion.getOptA());
-        buttonB.setText(currentQuestion.getOptB());
-        buttonC.setText(currentQuestion.getOptC());
-        buttonD.setText(currentQuestion.getOptD());
+
     }
 
     private void saveHistory(int questionID, String answerChosen, Question currentQuestion) {
@@ -227,9 +267,9 @@ public class QuestionMainActivity extends AppCompatActivity {
     private void loadQuestionPic(Topic topic, int questionPicID){
         if(questionPicID < 0)return;
         StorageReference qImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
-                .child(topic.getRootFolderName())
+                .child(topic.getPicRootFolderName())
                 .child("Question_Pics")
-                .child(topic.getPicturePrefix()+"_q_"+questionPicID+".PNG");
+                .child(topic.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
 
         qImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
@@ -250,9 +290,9 @@ public class QuestionMainActivity extends AppCompatActivity {
     private void loadExplanationPic(Topic topic, int explanationPicID){
         if(explanationPicID < 0)return;
         StorageReference eImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
-                .child(topic.getRootFolderName())
+                .child(topic.getPicRootFolderName())
                 .child("Explanation_Pics")
-                .child(topic.getPicturePrefix()+"_e_"+explanationPicID+".PNG");
+                .child(topic.getPicNamePrefix()+"_e_"+explanationPicID+".PNG");
 
         eImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
@@ -274,9 +314,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         if(optAID > -1){
             StorageReference optAImageRef = storageReference
-                    .child(topic.getRootFolderName())
+                    .child(topic.getPicRootFolderName())
                     .child("Answer_Pics")
-                    .child(topic.getPicturePrefix()+"_a_"+optAID+".PNG");   //but what if it doesn't exist?
+                    .child(topic.getPicNamePrefix()+"_a_"+optAID+".PNG");   //but what if it doesn't exist?
             optAImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
@@ -294,9 +334,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         }
         if(optBID > -1){
             StorageReference optBImageRef = storageReference
-                    .child(topic.getRootFolderName())
+                    .child(topic.getPicRootFolderName())
                     .child("Answer_Pics")
-                    .child(topic.getPicturePrefix()+"_a_"+optBID+".PNG");   //but what if it doesn't exist?
+                    .child(topic.getPicNamePrefix()+"_a_"+optBID+".PNG");   //but what if it doesn't exist?
             optBImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
@@ -304,7 +344,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                     {
                         Glide.with(QuestionMainActivity.this)
                                 .load(task.getResult())
-                                .into(optAPic);
+                                .into(optBPic);
                     }
                     else {
                         Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -314,9 +354,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         }
         if(optCID > -1){
             StorageReference optCImageRef = storageReference
-                    .child(topic.getRootFolderName())
+                    .child(topic.getPicRootFolderName())
                     .child("Answer_Pics")
-                    .child(topic.getPicturePrefix()+"_a_"+optCID+".PNG");   //but what if it doesn't exist?
+                    .child(topic.getPicNamePrefix()+"_a_"+optCID+".PNG");   //but what if it doesn't exist?
             optCImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
@@ -334,9 +374,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         }
         if(optDID > -1){
             StorageReference optDImageRef = storageReference
-                    .child(topic.getRootFolderName())
+                    .child(topic.getPicRootFolderName())
                     .child("Answer_Pics")
-                    .child(topic.getPicturePrefix()+"_a_"+optDID+".PNG");   //but what if it doesn't exist?
+                    .child(topic.getPicNamePrefix()+"_a_"+optDID+".PNG");   //but what if it doesn't exist?
             optDImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
@@ -353,26 +393,6 @@ public class QuestionMainActivity extends AppCompatActivity {
             });
         }
     }
-
-    private void setInterface(Question question){
-        //sets visibility of layout according to what pictures are in the question
-        boolean hasQPic = (question.getPicNumber() > -1);
-        boolean hasAPics = (question.getOptAPicNumber() > -1 || question.getOptBPicNumber() > -1 || question.getOptCPicNumber() > -1 || question.getOptDPicNumber() > -1);
-        if(!hasQPic && !hasAPics){ //text only
-
-        }else if(hasQPic && !hasAPics){ //pic question, text answer
-
-        }else if(!hasQPic && hasAPics){ //text question, pic answer
-
-        }else{ //all pictures
-
-        }
-
-    }
-
-
-
-
 
 
     //--------------------------------------------------------UI stuff---------------------------------------------

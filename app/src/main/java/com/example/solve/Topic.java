@@ -1,20 +1,27 @@
 package com.example.solve;
 
-public enum Topic {
-    Grade5("Grade_5_Questions", "grade_5"), Grade6("Grade_6_Questions","grade_6");
-    private String rootFolderName, picturePrefix;
+import java.io.Serializable;
 
-    Topic(String rootFolderName, String picturePrefix) {
-        this.rootFolderName = rootFolderName;
-        this.picturePrefix = picturePrefix;
+public enum Topic implements Serializable {
+    Grade5("Grade_5_Questions", "grade_5","Grade_5"), Grade6("Grade_6_Questions","grade_6", "Grade_6");
+    private String picRootFolderName, picNamePrefix, questionFolderName;
+
+    Topic(String picRootFolderName, String picNamePrefix, String questionFolderName) {
+        this.picRootFolderName = picRootFolderName;
+        this.picNamePrefix = picNamePrefix;
+        this.questionFolderName = questionFolderName;
     }
 
-    public String getRootFolderName() {
-        return rootFolderName;
+    public String getPicRootFolderName() {
+        return picRootFolderName;
     }
 
-    public String getPicturePrefix() {
-        return picturePrefix;
+    public String getPicNamePrefix() {
+        return picNamePrefix;
+    }
+
+    public String getQuestionFolderName() {
+        return questionFolderName;
     }
 }
 /*

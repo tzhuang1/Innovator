@@ -72,7 +72,7 @@ public class TopicSelectFragment extends Fragment {
             public void onClick(View view) {
                 //Transition to another activity, bla bla bla
                 Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
-                intent.putExtra("TOPIC", practiceTitle.getText());
+                intent.putExtra("TOPIC", Topic.Grade5); //TODO: placeholder!!!
                 startActivity(intent);
             }
         });
