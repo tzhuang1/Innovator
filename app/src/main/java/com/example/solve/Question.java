@@ -5,13 +5,12 @@ import android.media.Image;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
-public class Questions{
+public class Question {
     private int id;
     private String question;
-    private String opta;
-    private String optb;
-    private String optc;
-    private String optd;
+    private String opta, optb, optc, optd;
+    private int optAPicNumber = -1, optBPicNumber = -1, optCPicNumber = -1, optDPicNumber = -1;
+
     private String answer;
     private String explanation;
     private String category;
@@ -20,7 +19,7 @@ public class Questions{
     private int picNumber;
 
 
-    public Questions(String q, String oa, String ob, String oc, String od, String ans, String ex, String ca) {
+    public Question(String q, String oa, String ob, String oc, String od, String ans, String ex, String ca) {
         question = q;
         opta = oa;
         optb = ob;
@@ -33,7 +32,7 @@ public class Questions{
         exPicNumber = -1;
     }
 
-    public Questions(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber) {
+    public Question(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber) {
         this.question = question;
         this.opta = opta;
         this.optb = optb;
@@ -46,7 +45,9 @@ public class Questions{
         this.exPicNumber = exPicNumber;
     }
 
-    public Questions() {
+
+
+    public Question() {
         id = 0;
         question = "";
         opta = "";
@@ -67,6 +68,21 @@ public class Questions{
 
     public int getExPicNumber() {return exPicNumber;}
 
+    public int getOptAPicNumber() {
+        return optAPicNumber;
+    }
+
+    public int getOptBPicNumber() {
+        return optBPicNumber;
+    }
+
+    public int getOptCPicNumber() {
+        return optCPicNumber;
+    }
+
+    public int getOptDPicNumber() {
+        return optDPicNumber;
+    }
 
     public String getQuestion() {
         return question;

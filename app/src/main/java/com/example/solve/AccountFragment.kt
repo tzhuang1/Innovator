@@ -231,7 +231,7 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
 
             // Signed in successfully, show authenticated UI.
             updateUI(account)
-        } catch (e: ApiException) {
+        } catch (e: ApiException) {//code 10: "DEVELOPER ERROR"
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             //Log.w("AccountFragment", "signInResult:failed code=" + e.statusCode)

@@ -62,35 +62,35 @@ class QuestionsHelper extends SQLiteOpenHelper {
     }
 
     void allQuestion() {
-        ArrayList<Questions> arraylist = new ArrayList<>();
+        ArrayList<Question> arraylist = new ArrayList<>();
 
-        arraylist.add(new Questions("Sample Question 1", "Option A", "Option B", "Option C", "Option D", "Option A", "The first digit to the right of the decimal place indicates the tenths place. The digit to the right of the tenths place is the hundredths place. In this problem, the first digit to the right of the decimal place is 6. Therefore, 6 is the digit in the tenths place. The next digit to the right of 6 is 1. Thus, 1 is the digit in the hundredths place. ", "Numbers"));
-        arraylist.add(new Questions("Sample Question 2", "Option A", "Option B", "Option C", "Option D", "Option B", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 3", "Option A", "Option B", "Option C", "Option D", "Option A", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 4", "Option A", "Option B", "Option C", "Option D", "Option D", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 5", "Option A", "Option B", "Option C", "Option D", "Option A", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 6", "Option A", "Option B", "Option C", "Option D", "Option C", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 7", "Option A", "Option B", "Option C", "Option D", "Option A", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 8", "Option A", "Option B", "Option C", "Option D", "Option B", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 9", "Option A", "Option B", "Option C", "Option D", "Option B", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 10", "Option A", "Option B", "Option C", "Option D", "Option C", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 11", "Option A", "Option B", "Option C", "Option D", "Option A", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 12", "Option A", "Option B", "Option C", "Option D", "Option D", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 13", "Option A", "Option B", "Option C", "Option D", "Option D", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 14", "Option A", "Option B", "Option C", "Option D", "Option B", "Explanation", "Category"));
-        arraylist.add(new Questions("Sample Question 15", "Option A", "Option B", "Option C", "Option D", "Option C", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 1", "Option A", "Option B", "Option C", "Option D", "Option A", "The first digit to the right of the decimal place indicates the tenths place. The digit to the right of the tenths place is the hundredths place. In this problem, the first digit to the right of the decimal place is 6. Therefore, 6 is the digit in the tenths place. The next digit to the right of 6 is 1. Thus, 1 is the digit in the hundredths place. ", "Numbers"));
+        arraylist.add(new Question("Sample Question 2", "Option A", "Option B", "Option C", "Option D", "Option B", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 3", "Option A", "Option B", "Option C", "Option D", "Option A", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 4", "Option A", "Option B", "Option C", "Option D", "Option D", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 5", "Option A", "Option B", "Option C", "Option D", "Option A", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 6", "Option A", "Option B", "Option C", "Option D", "Option C", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 7", "Option A", "Option B", "Option C", "Option D", "Option A", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 8", "Option A", "Option B", "Option C", "Option D", "Option B", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 9", "Option A", "Option B", "Option C", "Option D", "Option B", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 10", "Option A", "Option B", "Option C", "Option D", "Option C", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 11", "Option A", "Option B", "Option C", "Option D", "Option A", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 12", "Option A", "Option B", "Option C", "Option D", "Option D", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 13", "Option A", "Option B", "Option C", "Option D", "Option D", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 14", "Option A", "Option B", "Option C", "Option D", "Option B", "Explanation", "Category"));
+        arraylist.add(new Question("Sample Question 15", "Option A", "Option B", "Option C", "Option D", "Option C", "Explanation", "Category"));
 
         this.addAllQuestions(arraylist);
 
     }
 
 
-    private void addAllQuestions(ArrayList<Questions> allQuestions) {
+    private void addAllQuestions(ArrayList<Question> allQuestions) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            for (Questions question : allQuestions) {
+            for (Question question : allQuestions) {
                 values.put(QUESTION, question.getQuestion());
                 values.put(OPTA, question.getOptA());
                 values.put(OPTB, question.getOptB());
@@ -109,9 +109,9 @@ class QuestionsHelper extends SQLiteOpenHelper {
     }
 
 
-    List<Questions> getAllOfTheQuestions() {
+    List<Question> getAllOfTheQuestions() {
 
-        List<Questions> questionsList = new ArrayList<>();
+        List<Question> questionsList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         String column[] = {UID, QUESTION, OPTA, OPTB, OPTC, OPTD, ANSWER, EXPLANATION, CATEGORY};
@@ -119,7 +119,7 @@ class QuestionsHelper extends SQLiteOpenHelper {
 
 
         while (cursor.moveToNext()) {
-            Questions question = new Questions();
+            Question question = new Question();
             question.setId(cursor.getInt(0));
             question.setQuestion(cursor.getString(1));
             question.setOptA(cursor.getString(2));

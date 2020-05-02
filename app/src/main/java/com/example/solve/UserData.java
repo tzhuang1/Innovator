@@ -1,7 +1,5 @@
 package com.example.solve;
 
-import com.google.firebase.database.IgnoreExtraProperties;
-
 import java.util.ArrayList;
 
 public class UserData {
@@ -59,11 +57,11 @@ public class UserData {
     {
         answeredQuestionsList = list;
     }
-    public void addAnsweredQuestions(Questions question, String answer)
+    public void addAnsweredQuestions(Question question, String answer)
     {
         answeredQuestionsList.add(new AnsweredQuestionData(question, answer));
     }
-    public void deleteAnsweredQuestions(Questions question)
+    public void deleteAnsweredQuestions(Question question)
     {
         if(answeredQuestionsList.contains(question))
         {
