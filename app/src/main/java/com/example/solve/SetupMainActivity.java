@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /*
 TODO
  - Other tasks(unimportant)
@@ -187,6 +190,15 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         edit.putInt(GRADE, gradeSelect);
         edit.putInt(ACTIVITY, activitySelect);
         edit.apply();
+        UserData u = InnovatorApplication.getUser();
+        u.setGrade(gradeSelect);
+        u.setActivities(activitySelect);
+
+        if (u != null && u.getId() != null) {
+            DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Profile").child(u.getId());
+            if(qListRef!=null)
+                qListRef.push().setValue(u);
+        }
     }
 
     @Override

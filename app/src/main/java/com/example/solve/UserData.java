@@ -7,6 +7,8 @@ public class UserData {
     private String email;
     private String displayName;
     private ArrayList<AnsweredQuestionData> answeredQuestionsList;
+    private int grade;
+    private int activities;
 
 
     public UserData( String id, String email, String name) {
@@ -25,6 +27,23 @@ public class UserData {
 
 
     }
+    public int getGrade()
+    {
+        return grade;
+    }
+    public void setGrade(int g)
+    {
+        grade = g;
+    }
+    public int getActivities()
+    {
+        return activities;
+    }
+    public void setActivities(int a)
+    {
+        grade = a;
+    }
+
     public String getId()
     {
        return id;
