@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment(){
@@ -19,8 +18,18 @@ class HomeFragment : Fragment(){
 
         val dailyChallengeBtn : Button = view.findViewById(R.id.dailyChallengeButton)
         dailyChallengeBtn.setOnClickListener { v ->
+            val u = InnovatorApplication.getUser()
+
             val intent = Intent(getActivity(), QuestionMainActivity::class.java)
-            intent.putExtra("TOPIC",Topic.Grade5) //TODO:placeholder!!!
+            if(u.getGrade() == 3)
+                intent.putExtra("TOPIC",Topic.Grade3)
+            else if(u.getGrade() == 4)
+                intent.putExtra("TOPIC",Topic.Grade4)
+            else if(u.getGrade() == 5)
+                intent.putExtra("TOPIC",Topic.Grade5)
+            else if(u.getGrade() == 6)
+                intent.putExtra("TOPIC",Topic.Grade6)
+
             startActivity(intent)
         }
         //setContentView(view);

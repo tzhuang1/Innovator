@@ -3,6 +3,7 @@ package com.example.solve;
 import java.io.Serializable;
 
 public enum Topic implements Serializable {
+    Grade3("Grade_3_Questions", "grade_3","Grade_3"), Grade4("Grade_4_Questions", "grade_4","Grade_4"),
     Grade5("Grade_5_Questions", "grade_5","Grade_5"), Grade6("Grade_6_Questions","grade_6", "Grade_6");
     private String picRootFolderName, picNamePrefix, questionFolderName;
 

@@ -72,7 +72,15 @@ public class TopicSelectFragment extends Fragment {
             public void onClick(View view) {
                 //Transition to another activity, bla bla bla
                 Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
-                intent.putExtra("TOPIC", Topic.Grade5); //TODO: placeholder!!!
+                UserData u = InnovatorApplication.getUser();
+                if(u.getGrade() == 3)
+                    intent.putExtra("TOPIC",Topic.Grade3);
+                else if(u.getGrade() == 4)
+                    intent.putExtra("TOPIC",Topic.Grade4);
+                else if(u.getGrade() == 5)
+                    intent.putExtra("TOPIC",Topic.Grade5);
+                else if(u.getGrade() == 6)
+                    intent.putExtra("TOPIC",Topic.Grade6);
                 startActivity(intent);
             }
         });

@@ -1,6 +1,4 @@
 package com.example.solve;
-import android.app.Activity;
-import android.media.Image;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -8,41 +6,41 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class Question {
     private int id;
     private String question;
-    private String opta, optb, optc, optd;
+    private String optA, optB, optC, optD;
     private int optAPicNumber = -1, optBPicNumber = -1, optCPicNumber = -1, optDPicNumber = -1;
 
     private String answer;
     private String explanation;
     private String category;
-    private int exPicNumber;
+    private int explanationPicNumber;
 
-    private int picNumber;
+    private int questionPicNumber;
 
 
     public Question(String q, String oa, String ob, String oc, String od, String ans, String ex, String ca) {
         question = q;
-        opta = oa;
-        optb = ob;
-        optc = oc;
-        optd = od;
+        optA = oa;
+        optB = ob;
+        optC = oc;
+        optD = od;
         answer = ans;
         explanation = ex;
         category = ca;
-        picNumber = -1;
-        exPicNumber = -1;
+        questionPicNumber = -1;
+        explanationPicNumber = -1;
     }
 
     public Question(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber) {
         this.question = question;
-        this.opta = opta;
-        this.optb = optb;
-        this.optc = optc;
-        this.optd = optd;
+        this.optA = opta;
+        this.optB = optb;
+        this.optC = optc;
+        this.optD = optd;
         this.answer = answer;
         this.explanation = explanation;
         this.category = category;
-        this.picNumber = picNumber;
-        this.exPicNumber = exPicNumber;
+        this.questionPicNumber = picNumber;
+        this.explanationPicNumber = exPicNumber;
     }
 
 
@@ -50,23 +48,23 @@ public class Question {
     public Question() {
         id = 0;
         question = "";
-        opta = "";
-        optb = "";
-        optc = "";
-        optd = "";
+        optA = "";
+        optB = "";
+        optC = "";
+        optD = "";
         answer = "";
         explanation = "";
         category = "";
-        picNumber = -1;
-        exPicNumber = -1;
+        questionPicNumber = -1;
+        explanationPicNumber = -1;
 
     }
 
     public int getPicNumber() {
-        return picNumber;
+        return questionPicNumber;
     }
 
-    public int getExPicNumber() {return exPicNumber;}
+    public int getExPicNumber() {return explanationPicNumber;}
 
     public int getOptAPicNumber() {
         return optAPicNumber;
@@ -89,19 +87,19 @@ public class Question {
     }
 
     public String getOptA() {
-        return opta;
+        return optA;
     }
 
     public String getOptB() {
-        return optb;
+        return optB;
     }
 
     public String getOptC() {
-        return optc;
+        return optC;
     }
 
     public String getOptD() {
-        return optd;
+        return optD;
     }
 
     public String getAnswer() {
@@ -123,19 +121,19 @@ public class Question {
     }
 
     public void setOptA(String o1) {
-        opta = o1;
+        optA = o1;
     }
 
     public void setOptB(String o2) {
-        optb = o2;
+        optB = o2;
     }
 
     public void setOptC(String o3) {
-        optc = o3;
+        optC = o3;
     }
 
     public void setOptD(String o4) {
-        optd = o4;
+        optD = o4;
     }
 
     public void setAnswer(String ans) {
@@ -151,6 +149,6 @@ public class Question {
     }
 
     public void setExPicNumber(int expic) {
-        exPicNumber = expic;
+        explanationPicNumber = expic;
     }
 }
