@@ -191,13 +191,17 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         edit.putInt(ACTIVITY, activitySelect);
         edit.apply();
         UserData u = InnovatorApplication.getUser();
-        u.setGrade(gradeSelect);
-        u.setActivities(activitySelect);
-
-        if (u != null && u.getId() != null) {
+        if(u != null && u.getId() != null) {
+            u.setGrade(gradeSelect);
+            u.setActivities(activitySelect);
             DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Profile").child(u.getId());
             if(qListRef!=null)
-                qListRef.push().setValue(u);
+                qListRef.setValue(u);
+//            else {
+//                FirebaseDatabase.getInstance().getReference().child("UserData").child("Profile").add
+//                qListRef.push().setValue(u);
+//
+//            }
         }
     }
 

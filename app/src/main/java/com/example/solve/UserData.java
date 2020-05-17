@@ -41,7 +41,7 @@ public class UserData {
     }
     public void setActivities(int a)
     {
-        grade = a;
+        activities = a;
     }
 
     public String getId()
