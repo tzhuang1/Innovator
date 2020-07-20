@@ -1,0 +1,56 @@
+Public class FIBQuestion implements Question{
+    private int id;
+    private String question;
+    private String answer;
+    private String explanation;
+    private String category;
+    private int picNumber;
+
+    Public FIBQuestion(String questionIN, String answerIN, String correctANS, String ex, String ca){
+        question = questionIN;
+        answer = correctANS;
+        explanation = ex;
+        category = ca;
+        picNumber = -1;
+    }
+    getId
+    {
+        return id;
+    }
+    getQuestion
+    {
+        return question;
+    }
+    getAnswer
+    {
+        return answer;
+    }
+    getExplanation
+    {
+        return explanation;
+    }
+    getCategory
+    {
+        return category;
+    }
+    public void setAnswer(String ans) {
+        answer = ans;
+    }
+
+    public void setExplanation(String ex) {
+        explanation = ex;
+    }
+    public void setCategory(String ca) {
+        category = ca;
+    }
+    public void setExPicNumber(int expic) {
+        explanationPicNumber = expic;
+    }
+    public void setId(int i) {
+        id = i;
+    }
+
+    public void setQuestion(String q1) {
+        question = q1;
+    }
+}
