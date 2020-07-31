@@ -29,7 +29,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.plus.Plus
 import com.example.solve.UserData
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.account_fragment.*
 
 
@@ -221,7 +224,25 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
         InnovatorApplication.setUser(userData)
         if (userData != null && userData.getId() != null) {
             val qListRef = FirebaseDatabase.getInstance().reference.child("UserData").child("Profile").child(userData.getId())
-            qListRef?.push().setValue(userData)
+            //qListRef?.(userData)
+            val postListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    // Get Post object and use the values to update the UI
+                    val myData = dataSnapshot.getValue()
+                    userData.grade = (myData as HashMap<*, *>)["grade"].toString().toInt()
+                    //userData = dataSnapshot.getValue() as UserData
+                    InnovatorApplication.setUser(userData)
+                    // ...
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Getting Post failed, log a message
+                    //Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+                    // ...
+                }
+            }
+            qListRef.addValueEventListener(postListener)
+
         }
 
     }
