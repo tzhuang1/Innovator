@@ -21,7 +21,7 @@ public class ShortAnswerMainActivity extends AppCompatActivity {
     TextView question;
     EditText editAnswer;
 
-    List<Item> questions;
+    List<ShortAnswerItem> questions;
     int curQuestions = 0;
     Random random;
 
@@ -39,7 +39,7 @@ public class ShortAnswerMainActivity extends AppCompatActivity {
         questions = new ArrayList<>();
         //add questions and answers to the game
         for (int i = 0; i < ShortAnswerDatabase.questions.length; i++){
-            questions.add(new Item(ShortAnswerDatabase.questions[i], ShortAnswerDatabase.answers[i]));
+            questions.add(new ShortAnswerItem(ShortAnswerDatabase.questions[i], ShortAnswerDatabase.answers[i]));
         }
         //shuffle the questions
         Collections.shuffle(questions);
