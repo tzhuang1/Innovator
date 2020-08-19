@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,14 +56,14 @@ public class HLQuestionMainActivity extends AppCompatActivity {
 
     View textAnswersLayout;
     View picAnswersLayout;
-    FButton buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonSubmit;
+    Button buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonSubmit;
     ImageView optAPic, optBPic, optCPic, optDPic;
     ImageView explanationPic;
 
-    Question currentQuestion;
+    HLQuestion currentQuestion;
     UserData currentUser;
     Topic currentTopic;
-    List<Question> questionsList;
+    List<HLQuestion> questionsList;
     List<AnsweredQuestionData> answeredQuestionList;
     int qid = 0;
 
@@ -70,7 +71,7 @@ public class HLQuestionMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //------------------------------------------------------------------view
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.question_activity_main);
+        setContentView(R.layout.hlquestion_activity_main);
         Intent intent = getIntent();
         currentTopic = (Topic) intent.getSerializableExtra("TOPIC");
         //Toast.makeText(this,topic, Toast.LENGTH_LONG ).show();
@@ -91,13 +92,13 @@ public class HLQuestionMainActivity extends AppCompatActivity {
         optBPic = findViewById(R.id.optBPic);
         optCPic = findViewById(R.id.optCPic);
         optDPic = findViewById(R.id.optDPic);
-        buttonA = (FButton) findViewById(R.id.abutton);
-        buttonB = (FButton) findViewById(R.id.bbutton);
-        buttonC = (FButton) findViewById(R.id.cbutton);
-        buttonD = (FButton) findViewById(R.id.dbutton);
-        buttonE = (FButton) findViewById(R.id.ebutton);
-        buttonF = (FButton) findViewById(R.id.fbutton);
-        buttonSubmit=(FButton) findViewById(R.id.submitButton);
+        buttonA = findViewById(R.id.abutton);
+        buttonB = findViewById(R.id.bbutton);
+        buttonC = findViewById(R.id.cbutton);
+        buttonD = findViewById(R.id.dbutton);
+        buttonE = findViewById(R.id.ebutton);
+        buttonF = findViewById(R.id.fbutton);
+        buttonSubmit= findViewById(R.id.submitButton);
 
         tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
@@ -157,7 +158,7 @@ public class HLQuestionMainActivity extends AppCompatActivity {
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Question>>() {});//stops here Failed to convert value of type java.lang.Long to String
+                questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<HLQuestion>>() {});//stops here Failed to convert value of type java.lang.Long to String
                 Log.i("FB getList", "Firebase data fetched");
                 Collections.shuffle(questionsList);
                 //currentQuestion will hold the que, 4 option and ans for particular id
@@ -436,8 +437,9 @@ public class HLQuestionMainActivity extends AppCompatActivity {
             buttonA.setEnabled(true);
             saveHistory(qid, "Option A", currentQuestion);
             if (currentQuestion.getAnswer().equalsIgnoreCase("Option A") ) {
-                buttonA.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
+                //((FButton)buttonA).setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
                 //TODO: when on last question and success, the success dialog does not show
+                buttonA.setBackgroundColor(Color.GREEN);
                 disableButton();
                 correctDialog();
             }
@@ -450,8 +452,9 @@ public class HLQuestionMainActivity extends AppCompatActivity {
             buttonB.setEnabled(true);
             saveHistory(qid, "Option B", currentQuestion);
             if (currentQuestion.getAnswer().equalsIgnoreCase("Option B")) {
-                buttonB.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
+                //((FButton)buttonB).setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
                 //TODO: when on last question and success, the success dialog does not show
+                buttonB.setBackgroundColor(Color.GREEN);
                 disableButton();
                 correctDialog();
             } else { // in place of PlayAgain activity to be implemented later? test to pull up incorrect dialog
@@ -462,8 +465,9 @@ public class HLQuestionMainActivity extends AppCompatActivity {
             buttonC.setEnabled(true);
             saveHistory(qid, "Option C", currentQuestion);
             if (currentQuestion.getAnswer().equalsIgnoreCase("Option C") ) {
-                buttonC.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
+               // ((FButton)buttonC).setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
                 //TODO: when on last question and success, the success dialog does not show
+                buttonC.setBackgroundColor(Color.GREEN);
                 disableButton();
                 correctDialog();
             } else {
@@ -474,8 +478,9 @@ public class HLQuestionMainActivity extends AppCompatActivity {
             buttonD.setEnabled(true);
             saveHistory(qid, "Option D", currentQuestion);
             if (currentQuestion.getAnswer().equalsIgnoreCase("Option D")) {
-                buttonD.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
+                //((FButton)buttonD).setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
                 //TODO: when on last question and success, the success dialog does not show
+                buttonD.setBackgroundColor(Color.GREEN);
                 disableButton();
                 correctDialog();
             } else {
@@ -695,10 +700,10 @@ public class HLQuestionMainActivity extends AppCompatActivity {
 
     //This method will make button color white again since our one button color was turned green
     public void resetColor() {
-        buttonA.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
-        buttonB.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
-        buttonC.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
-        buttonD.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
+        ((FButton)buttonA).setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
+        ((FButton)buttonB).setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
+        ((FButton)buttonC).setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
+        ((FButton)buttonD).setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
     }
 
     //This method will disable all the option button
