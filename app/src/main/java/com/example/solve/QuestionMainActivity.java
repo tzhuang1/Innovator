@@ -150,6 +150,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     private void getFirebaseQuestionsList(Topic topic){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
+                .child("Math")
                 .child(topic.getQuestionFolderName());
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
