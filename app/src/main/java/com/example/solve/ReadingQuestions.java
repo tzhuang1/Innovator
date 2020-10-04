@@ -100,7 +100,8 @@ public class ReadingQuestions extends AppCompatActivity {
                         if(entry != null) {
                             //String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber
                             Question newQuestion = new Question(entry.get("question").toString(), entry.get("optA").toString(), entry.get("optB").toString(), entry.get("optC").toString(), entry.get("optD").toString(),
-                                    entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), Integer.parseInt(entry.get("questionPicNumber").toString()), Integer.parseInt(entry.get("explanationPicNumber").toString()));
+                                    entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), Integer.parseInt(entry.get("questionPicNumber").toString()), Integer.parseInt(entry.get("explanationPicNumber").toString()),
+                                    entry.get("passage").toString());
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
                         }
@@ -160,6 +161,7 @@ public class ReadingQuestions extends AppCompatActivity {
             questionText.setVisibility(GONE);
             //A
         }
+        passageText.setText(currentQuestion.getPassage());
 
     }
     private void resetColor() {

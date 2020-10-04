@@ -154,6 +154,30 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/practice_title" />
 
+    <RadioGroup
+        android:id="@+id/RadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:orientation="horizontal"
+        fbutton:layout_constraintEnd_toEndOf="parent"
+        fbutton:layout_constraintStart_toStartOf="parent"
+        fbutton:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/radioMath"
+            android:paddingRight="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Math" />
+
+        <RadioButton
+            android:id="@+id/radioReading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reading" />
+    </RadioGroup>
+
     <!--app:fontFamily="@font/Karla-Regular"-->
 
 
