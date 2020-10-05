@@ -1,3 +1,24 @@
+buildscript {
+    ext{
+        kotlin_version='1.3.72'
+    }
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'   //change this with latest gradle version.
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72'
+        classpath 'com.google.gms:google-services:4.3.3'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+    }
+}
 apply plugin: 'com.android.application'
 
 android {

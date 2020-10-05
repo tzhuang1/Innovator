@@ -5,10 +5,11 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidStudioProjects-Innovator.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidStudioProjects-Innovator.iml" group="Innovator" />
       <module fileurl="file://$PROJECT_DIR$/Desktop-Projects-Innovator.iml" filepath="$PROJECT_DIR$/Desktop-Projects-Innovator.iml" />
       <module fileurl="file://$PROJECT_DIR$/Documents-GitHub-Innovator.iml" filepath="$PROJECT_DIR$/Documents-GitHub-Innovator.iml" group="Innovator" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DragandDrop.iml" filepath="$PROJECT_DIR$/.idea/modules/DragandDrop.iml" group="DragandDrop" />
       <module fileurl="file://$PROJECT_DIR$/GitHub-Innovator.iml" filepath="$PROJECT_DIR$/GitHub-Innovator.iml" />
       <module fileurl="file://$PROJECT_DIR$/Innovator.iml" filepath="$PROJECT_DIR$/Innovator.iml" />
       <module fileurl="file://$PROJECT_DIR$/Projects-Innovator.iml" filepath="$PROJECT_DIR$/Projects-Innovator.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Innovator/app" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="DragandDrop/app" />
     </modules>
   </component>
 </project>
