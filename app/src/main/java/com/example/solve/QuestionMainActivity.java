@@ -262,28 +262,28 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     private void saveHistory(int questionID, String answerChosen, Question currentQuestion) {
-        if(answeredQuestionList != null)
-        {
-            Iterator<AnsweredQuestionData> iterator = answeredQuestionList.iterator();
-            AnsweredQuestionData currentAnsweredQuestion = null;
-            while (iterator.hasNext()) {
-                AnsweredQuestionData question = iterator.next();
-                if (question.getQuestion().getId() == questionID) {
-                    currentAnsweredQuestion = question;
-                    break;
-                }
-            }
-            if(currentAnsweredQuestion == null)
+            if(answeredQuestionList != null)
             {
-                currentAnsweredQuestion = new AnsweredQuestionData(currentQuestion, answerChosen);
-                answeredQuestionList.add(currentAnsweredQuestion);
-            }
-            else {
-                currentAnsweredQuestion.setAnswer(answerChosen);
-            }
-            savePerUserFirebaseQuestionsList();
+                Iterator<AnsweredQuestionData> iterator = answeredQuestionList.iterator();
+                AnsweredQuestionData currentAnsweredQuestion = null;
+                while (iterator.hasNext()) {
+                    AnsweredQuestionData question = iterator.next();
+                    if (question.getQuestion().getId() == questionID) {
+                        currentAnsweredQuestion = question;
+                        break;
+                    }
+                }
+                if(currentAnsweredQuestion == null)
+                {
+                    currentAnsweredQuestion = new AnsweredQuestionData(currentQuestion, answerChosen);
+                    answeredQuestionList.add(currentAnsweredQuestion);
+                }
+                else {
+                    currentAnsweredQuestion.setAnswer(answerChosen);
+                }
+                savePerUserFirebaseQuestionsList();
 
-        }
+            }
     }
 
     private void loadQuestionPic(Topic topic, int questionPicID){
@@ -423,7 +423,8 @@ public class QuestionMainActivity extends AppCompatActivity {
     public void buttonA(View view) {
         //compare the option with the ans if yes then make button color green
         saveHistory(qid, "Option A", currentQuestion);
-        if (currentQuestion.getAnswer().equalsIgnoreCase("Option A") ) {
+        if (currentQuestion.getAnswer().equalsIgnoreCase("Option A") ||
+                currentQuestion.getAnswer().equalsIgnoreCase("A")) {
             buttonA.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
@@ -438,7 +439,8 @@ public class QuestionMainActivity extends AppCompatActivity {
     //Onclick listener for sec button
     public void buttonB(View view) {
         saveHistory(qid, "Option B", currentQuestion);
-        if (currentQuestion.getAnswer().equalsIgnoreCase("Option B")) {
+        if (currentQuestion.getAnswer().equalsIgnoreCase("Option B") ||
+                currentQuestion.getAnswer().equalsIgnoreCase("B")) {
             buttonB.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
@@ -451,7 +453,8 @@ public class QuestionMainActivity extends AppCompatActivity {
     //Onclick listener for third button
     public void buttonC(View view) {
         saveHistory(qid, "Option C", currentQuestion);
-        if (currentQuestion.getAnswer().equalsIgnoreCase("Option C") ) {
+        if (currentQuestion.getAnswer().equalsIgnoreCase("Option C") ||
+                currentQuestion.getAnswer().equalsIgnoreCase("C")) {
             buttonC.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
@@ -464,7 +467,8 @@ public class QuestionMainActivity extends AppCompatActivity {
     //Onclick listener for fourth button
     public void buttonD(View view) {
         saveHistory(qid, "Option D", currentQuestion);
-        if (currentQuestion.getAnswer().equalsIgnoreCase("Option D")) {
+        if (currentQuestion.getAnswer().equalsIgnoreCase("Option D") ||
+                currentQuestion.getAnswer().equalsIgnoreCase("D")) {
             buttonD.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
