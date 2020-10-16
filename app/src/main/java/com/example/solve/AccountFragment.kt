@@ -229,7 +229,13 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     // Get Post object and use the values to update the UI
                     val myData = dataSnapshot.getValue()
-                    userData.grade = (myData as HashMap<*, *>)["grade"].toString().toInt()
+                    if(myData != null) {
+                        userData.grade = (myData as HashMap<*, *>)["grade"].toString().toInt()
+                    }
+                    else {
+                        userData.grade = 3;
+                    }
+
                     //userData = dataSnapshot.getValue() as UserData
                     InnovatorApplication.setUser(userData)
                     // ...
