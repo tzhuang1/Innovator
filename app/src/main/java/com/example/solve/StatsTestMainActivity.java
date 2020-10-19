@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,9 +79,17 @@ public class StatsTestMainActivity extends AppCompatActivity {
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
 
-        drawPie()
-        tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
+        tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
+        button=(Button) findVeiwById(R.id.returnHome)
+        button.setOnClickListener(new View.OnClickListener()) {
+            @Override
+            public void onClick(View v){
+                Intent intent=new Intent(StatsTestMainActivity.this, QuestionMainActivity.class);
+                startActivity(intent)
+            }
+        }
+        drawPie();
         //Setting typefaces for textview and buttons
 
 
@@ -144,34 +153,35 @@ public class StatsTestMainActivity extends AppCompatActivity {
             }//DatabaseError: Permission denied
         });
     }*/
-   public void drawPie(){
+   public void drawPie() {
        AnimatedPieView mAnimatedPieView = findViewById(R.id.animatedPieView);
        AnimatedPieViewConfig config = new AnimatedPieViewConfig();
        config.startAngle(-90)// Starting angle offset
-               .addData(new SimplePieInfo((float)(currentUser.getMissedAddSub()), Color.parseColor("BLACK"), "Addition and Subtraction"))//Data (bean that implements the IPieInfo interface)
-               .addData(new SimplePieInfo((float)(currentUser.getMissedMeasGeo()), Color.parseColor("MAGENTA"), "Measurement and Geometry"))
-               .addData(new SimplePieInfo((float)(currentUser.getMissedNumSense()), Color.parseColor("RED"), "Number and Number Sense"))
-               .addData(new SimplePieInfo((float)(currentUser.getMissedPatFuncAlg()), Color.parseColor("BLUE"), "Patterns, Functions, and Algebra"))
-               .addData(new SimplePieInfo((float)(currentUser.getMissedProbStat()), Color.parseColor("GREEN"), "Probability and Statistics")).drawText(true).textSize(30)
+               .addData(new SimplePieInfo((float) (currentUser.getMissedAddSub()), Color.parseColor("BLACK"), "Addition and Subtraction"))//Data (bean that implements the IPieInfo interface)
+               .addData(new SimplePieInfo((float) (currentUser.getMissedMeasGeo()), Color.parseColor("MAGENTA"), "Measurement and Geometry"))
+               .addData(new SimplePieInfo((float) (currentUser.getMissedNumSense()), Color.parseColor("RED"), "Number and Number Sense"))
+               .addData(new SimplePieInfo((float) (currentUser.getMissedPatFuncAlg()), Color.parseColor("BLUE"), "Patterns, Functions, and Algebra"))
+               .addData(new SimplePieInfo((float) (currentUser.getMissedProbStat()), Color.parseColor("GREEN"), "Probability and Statistics")).drawText(true).textSize(30)
                .duration(2000);
 
 
-    private void getFirebaseUserData(){
-        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
-        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<UserData> type = new GenericTypeIndicator<UserData>() {};
-                currentUser = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
-                Log.i("Get User Data", "Firebase data fetched");
-            }
+       private void getFirebaseUserData () {
+           DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
+           qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
+               @Override
+               public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                   GenericTypeIndicator<UserData> type = new GenericTypeIndicator<UserData>() {
+                   };
+                   currentUser = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
+                   Log.i("Get User Data", "Firebase data fetched");
+               }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FB getUserData", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
-            }
-        });
-    }
+               @Override
+               public void onCancelled(@NonNull DatabaseError databaseError) {
+                   Log.e("FB getUserData", "onCancelled with " + databaseError.getMessage() + ", details: " + databaseError.getDetails());
+               }
+           });
+       }
 
    /* public void updateQueueAndOptions() {
         //sets visibility of layout according to what pictures are in the question
@@ -226,36 +236,31 @@ public class StatsTestMainActivity extends AppCompatActivity {
 
     }*/
 
-    private void saveHistory(int questionID, String answerChosen, Question currentQuestion) {
-        if(answeredQuestionList != null)
-        {
-            Iterator<AnsweredQuestionData> iterator = answeredQuestionList.iterator();
-            AnsweredQuestionData currentAnsweredQuestion = null;
-            while (iterator.hasNext()) {
-                AnsweredQuestionData question = iterator.next();
-                if (question.getQuestion().getId() == questionID) {
-                    currentAnsweredQuestion = question;
-                    break;
-                }
-            }
-            if(currentAnsweredQuestion == null)
-            {
-                currentAnsweredQuestion = new AnsweredQuestionData(currentQuestion, answerChosen);
-                answeredQuestionList.add(currentAnsweredQuestion);
-            }
-            else {
-                currentAnsweredQuestion.setAnswer(answerChosen);
-            }
-            savePerUserFirebaseQuestionsList();
+       private void saveHistory ( int questionID, String answerChosen, Question currentQuestion){
+           if (answeredQuestionList != null) {
+               Iterator<AnsweredQuestionData> iterator = answeredQuestionList.iterator();
+               AnsweredQuestionData currentAnsweredQuestion = null;
+               while (iterator.hasNext()) {
+                   AnsweredQuestionData question = iterator.next();
+                   if (question.getQuestion().getId() == questionID) {
+                       currentAnsweredQuestion = question;
+                       break;
+                   }
+               }
+               if (currentAnsweredQuestion == null) {
+                   currentAnsweredQuestion = new AnsweredQuestionData(currentQuestion, answerChosen);
+                   answeredQuestionList.add(currentAnsweredQuestion);
+               } else {
+                   currentAnsweredQuestion.setAnswer(answerChosen);
+               }
+               savePerUserFirebaseQuestionsList();
 
-        }
-    }
+           }
+       }
 
 
+       //--------------------------------------------------------UI stuff---------------------------------------------
 
-
-    //--------------------------------------------------------UI stuff---------------------------------------------
-
-    //Onclick listener for first button
-
+       //Onclick listener for first button
+   }
 }
