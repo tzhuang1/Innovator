@@ -35,7 +35,9 @@
         android:layout_height="wrap_content"
         android:text="@string/next"
         android:textColor="@color/white"/>
-    <View
+    
+    <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
-        android:layout_height="50dp"></View>
+        android:layout_height="268dp"
+        android:src="@drawable/avatar_apple" />
 </LinearLayout>
