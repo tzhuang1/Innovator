@@ -13,6 +13,7 @@ public class Question {
     private String explanation;
     private String category;
     private int explanationPicNumber;
+    private String passage;
 
     private int questionPicNumber;
 
@@ -41,6 +42,20 @@ public class Question {
         this.category = category;
         this.questionPicNumber = picNumber;
         this.explanationPicNumber = exPicNumber;
+    }
+
+    public Question(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber, String pass) {
+        this.question = question;
+        this.optA = opta;
+        this.optB = optb;
+        this.optC = optc;
+        this.optD = optd;
+        this.answer = answer;
+        this.explanation = explanation;
+        this.category = category;
+        this.questionPicNumber = picNumber;
+        this.explanationPicNumber = exPicNumber;
+        passage = pass;
     }
 
 
@@ -111,6 +126,8 @@ public class Question {
     public String getCategory() { return category; }
 
     public int getId() { return id; }
+
+    public String getPassage() { return passage; }
 
     public void setId(int i) {
         id = i;

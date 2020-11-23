@@ -10,7 +10,7 @@ android {
     defaultConfig {
         // applicationId needs to be changed(?)
         applicationId "com.example.innovatorsetup"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -54,6 +54,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'info.hoang8f:fbutton:1.0.5'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.21'//added. 1.2.19 -> 1.2.21
 }
 
 repositories {
