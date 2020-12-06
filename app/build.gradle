@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    compileSdkVersion 30
+    buildToolsVersion '30.0.1'
     defaultConfig {
         // applicationId needs to be changed(?)
         applicationId "com.example.innovatorsetup"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -22,9 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-}
-repositories {
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -52,12 +49,15 @@ dependencies {
     implementation 'com.google.android.gms:play-services-identity:17.0.0'
     implementation 'com.google.android.gms:play-services-plus:17.0.0'
 
+    implementation 'com.github.razerdp:AnimatedPieView: 1.2.0 '
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'info.hoang8f:fbutton:1.0.5'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.github.razerdp:AnimatedPieView: 1.2.0 '
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.21'//added. 1.2.19 -> 1.2.21
 }
 
 repositories {
