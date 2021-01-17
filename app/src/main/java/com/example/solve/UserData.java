@@ -87,7 +87,78 @@ public class UserData {
             answeredQuestionsList.remove(question);
         }
     }
-
+    public int getMissedAddSub()
+    {
+        int count = 0;
+        for(AnsweredQuestionData aqd : answeredQuestionsList)
+        {
+            if((aqd.getQuestion().getCategory().equalsIgnoreCase("addition and subtraction")) && !aqd.getIsAnswerCorrect());
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int getMissedCompEst()
+    {
+        int count = 0;
+        for(AnsweredQuestionData aqd : answeredQuestionsList)
+        {
+            if((aqd.getQuestion().getCategory().equalsIgnoreCase("computation and estimation")) && !aqd.getIsAnswerCorrect());
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int getMissedMeasGeo()
+    {
+        int count = 0;
+        for(AnsweredQuestionData aqd : answeredQuestionsList)
+        {
+            if(((aqd.getQuestion().getCategory().equalsIgnoreCase("Measurement and Geometry")||aqd.getQuestion().getCategory().equalsIgnoreCase("Measurement") )||aqd.getQuestion().getCategory().equalsIgnoreCase("Geometry")) && !aqd.getIsAnswerCorrect());
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int getMissedPatFuncAlg()
+    {
+        int count = 0;
+        for(AnsweredQuestionData aqd : answeredQuestionsList)
+        {
+            if((aqd.getQuestion().getCategory().equalsIgnoreCase("Patterns, Functions, and Algebra")) && !aqd.getIsAnswerCorrect());
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int getMissedProbStat()
+    {
+        int count = 0;
+        for(AnsweredQuestionData aqd : answeredQuestionsList)
+        {
+            if((aqd.getQuestion().getCategory().equalsIgnoreCase("probability and statistics")) && !aqd.getIsAnswerCorrect());
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int getMissedNumSense()
+    {
+        int count = 0;
+        for(AnsweredQuestionData aqd : answeredQuestionsList)
+        {
+            if((aqd.getQuestion().getCategory().equalsIgnoreCase("Numbers and Number Sense")) && !aqd.getIsAnswerCorrect());
+            {
+                count++;
+            }
+        }
+        return count;
+    }
     /*
 
     public String getQuestion() {
