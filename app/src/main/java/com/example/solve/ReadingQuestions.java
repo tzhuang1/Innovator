@@ -100,6 +100,7 @@ public class ReadingQuestions extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Object myData = dataSnapshot.getValue();
                 questionsList = new ArrayList<Question>();
+                //List<HashMap<Object, Object>> listOfQuestions = (List<HashMap<Object, Object>>)dataSnapshot.getValue();
                 List<HashMap<Object, Object>> listOfQuestions = (List<HashMap<Object, Object>>)dataSnapshot.getValue();
                 for(int i = 0; i < listOfQuestions.size(); i++) {
                     HashMap<Object, Object> entry = listOfQuestions.get(i);
