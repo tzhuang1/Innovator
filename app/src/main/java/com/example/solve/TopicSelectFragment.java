@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,8 +36,6 @@ public class TopicSelectFragment extends Fragment {
     private ImageButton leftButton, rightButton;
     private ImageView left, current, right;
     private TextView practiceTitle;
-    private RadioButton radioButtonReading;
-    private RadioButton radioButtonMath;
 
     //-------------progress bar------------
     private ProgressBar progress;
@@ -69,19 +66,12 @@ public class TopicSelectFragment extends Fragment {
         progressText = view.findViewById(R.id.progress_text);
 
         startPracticeButton = view.findViewById(R.id.practice_start_button);
-
-        radioButtonReading = view.findViewById(R.id.radioReading);
-        radioButtonMath = view.findViewById(R.id.radioMath);
-        radioButtonMath.setChecked(true); //by default, math is selected
         //------------------------------listeners-----------------------------
         startPracticeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Transition to another activity, bla bla bla
                 Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
-                if(radioButtonReading.isChecked()) {
-                    intent = new Intent(TopicSelectFragment.this.getActivity(),ReadingQuestions.class);
-                }
                 UserData u = InnovatorApplication.getUser();
                 if(u.getGrade() == 3)
                     intent.putExtra("TOPIC",Topic.Grade3);
@@ -91,7 +81,6 @@ public class TopicSelectFragment extends Fragment {
                     intent.putExtra("TOPIC",Topic.Grade5);
                 else if(u.getGrade() == 6)
                     intent.putExtra("TOPIC",Topic.Grade6);
-
                 startActivity(intent);
             }
         });
