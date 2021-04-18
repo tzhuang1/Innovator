@@ -9,6 +9,13 @@
     android:background="@drawable/branchoutlogoexample"
     tools:context="com.example.solve.ProgressBarActivity">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="268dp"
+        android:layout_above="@+id/text_view"
+        android:layout_marginBottom="153dp"
+        android:src="@drawable/avatar_blueberries" />
+
     <TextView
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
