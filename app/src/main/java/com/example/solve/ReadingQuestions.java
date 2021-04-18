@@ -1,37 +1,29 @@
 package com.example.solve;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.text.method.ScrollingMovementMethod;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,67 +34,51 @@ import java.util.List;
 import info.hoang8f.widget.FButton;
 
 import static android.view.View.GONE;
+import static com.example.solve.R.id.btnA;
 
-public class QuestionMainActivity extends AppCompatActivity {
+public class ReadingQuestions extends AppCompatActivity {
 
+    private View loadingScreen;
 
-    View loadingScreen;
+    private Typeface tb;
 
-    Typeface tb;
+    private View scrollViewPassage;
+    private TextView questionText;
+    private TextView passageText;
 
-    View questionPicLayout;
-    TextView questionPicText;
-    ImageView questionPic;
-    TextView questionText;
+    private FButton buttonA, buttonB, buttonC, buttonD;
 
-    View textAnswersLayout;
-    View picAnswersLayout;
-    FButton buttonA, buttonB, buttonC, buttonD;
-    ImageView optAPic, optBPic, optCPic, optDPic;
+    //ImageView explanationPic;    TODO: ask CD if there are explanation pics
 
-    ImageView explanationPic;
-
-    Question currentQuestion;
-    UserData currentUser;
-    Topic currentTopic;
-    List<Question> questionsList;
-    List<AnsweredQuestionData> answeredQuestionList;
-    int qid = 0;
+    private Question currentQuestion;
+    private UserData currentUser;
+    private Topic currentTopic;
+    private List<Question> questionsList;
+    private List<AnsweredQuestionData> answeredQuestionList;
+    private int qid = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //------------------------------------------------------------------view
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.question_activity_main);
+        setContentView(R.layout.activity_reading_questions);
         Intent intent = getIntent();
         currentTopic = (Topic) intent.getSerializableExtra("TOPIC");
-        //Toast.makeText(this,topic, Toast.LENGTH_LONG ).show();
 
-        //Initializing variables
-
+        //initializing variables
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
 
-        questionPicLayout = findViewById(R.id.question_pic_layout);
-        questionPicText = findViewById(R.id.question_pic_text);
-        questionPic = findViewById(R.id.question_picture);
-        questionText = (TextView) findViewById(R.id.question_text);
-
-        textAnswersLayout = findViewById(R.id.textAnswersLayout);
-        picAnswersLayout = findViewById(R.id.picAnswersLayout);
-        optAPic = findViewById(R.id.optAPic);
-        optBPic = findViewById(R.id.optBPic);
-        optCPic = findViewById(R.id.optCPic);
-        optDPic = findViewById(R.id.optDPic);
-        buttonA = (FButton) findViewById(R.id.buttonA);
-        buttonB = (FButton) findViewById(R.id.buttonB);
-        buttonC = (FButton) findViewById(R.id.buttonC);
-        buttonD = (FButton) findViewById(R.id.buttonD);
+        scrollViewPassage = findViewById(R.id.scrollView2);
+        passageText = findViewById(R.id.txtPassage);
+        questionText = findViewById(R.id.textView2);
+        buttonA = (FButton) findViewById(R.id.btnA);
+        buttonB = (FButton) findViewById(R.id.btnB);
+        buttonC = (FButton) findViewById(R.id.btnC);
+        buttonD = (FButton) findViewById(R.id.btnD);
 
         tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
         //Setting typefaces for textview and buttons
-        questionPicText.setTypeface(tb);
         questionText.setTypeface(tb);
         buttonA.setTypeface(tb);
         buttonB.setTypeface(tb);
@@ -110,61 +86,40 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonD.setTypeface(tb);
         resetColor();
 
+        //TODO: From database get all values
+
         getFirebaseQuestionsList(currentTopic);
-        /*if(currentUser != null)
-            getPerUserFirebaseQuestionsList(currentUser.getId());//not reached
-
-         */
-    }
-
-    private void getPerUserFirebaseQuestionsList(String userID){//TODO: find path relative to topic (switch statement)
-        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Questions_History").child(userID);//that goes nowhere!
-
-        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                answeredQuestionList = dataSnapshot.getValue(new GenericTypeIndicator<List<AnsweredQuestionData>>() {});//stops here Failed to convert value of type java.lang.Long to String
-                Log.i("get user data", "Firebase data fetched");
-                //currentQuestion will hold the que, 4 option and ans for particular id
-                loadingScreen.setVisibility(GONE);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //TODO: handle network outage
-                Log.e("FB getList", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
-            }
-        });
-    }
-
-    private void savePerUserFirebaseQuestionsList() {
-        //get current userID, if userID is empty, then don't save anything
-        if(currentUser != null && currentUser.getId() != null) {
-            DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Questions_History").child(currentUser.getId());
-            if(qListRef != null)
-            {
-                qListRef.setValue(answeredQuestionList);
-            }
-        }
     }
 
     private void getFirebaseQuestionsList(Topic topic){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
-                .child("Math")
+                .child("Reading")
                 .child(topic.getQuestionFolderName());
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Object myData = dataSnapshot.getValue();
                 questionsList = new ArrayList<Question>();
+                //List<HashMap<Object, Object>> listOfQuestions = (List<HashMap<Object, Object>>)dataSnapshot.getValue();
                 List<HashMap<Object, Object>> listOfQuestions = (List<HashMap<Object, Object>>)dataSnapshot.getValue();
                 for(int i = 0; i < listOfQuestions.size(); i++) {
                     HashMap<Object, Object> entry = listOfQuestions.get(i);
                     try{
                         if(entry != null) {
+                            int pictureNum = -1;
+                            if(entry.get("questionPicNumber") != null){
+                                pictureNum = Integer.parseInt(entry.get("questionPicNumber").toString());
+                            }
+
+                            int explanationNum = -1;
+                            if(entry.get("explanationPicNumber") != null){
+                                explanationNum = Integer.parseInt(entry.get("explanationPicNumber").toString());
+                            }
+
                             //String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber
                             Question newQuestion = new Question(entry.get("question").toString(), entry.get("optA").toString(), entry.get("optB").toString(), entry.get("optC").toString(), entry.get("optD").toString(),
-                                    entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), Integer.parseInt(entry.get("questionPicNumber").toString()), Integer.parseInt(entry.get("explanationPicNumber").toString()));
+                                    entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), pictureNum, explanationNum,
+                                    entry.get("passage").toString());
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
                         }
@@ -178,7 +133,9 @@ public class QuestionMainActivity extends AppCompatActivity {
                 Log.i("FB getList", "Firebase data fetched");
                 Collections.shuffle(questionsList);
                 //currentQuestion will hold the que, 4 option and ans for particular id
-                currentQuestion = questionsList.get(qid);
+                if(questionsList.size()>0) {
+                    currentQuestion = questionsList.get(qid);
+                }
                 updateQueueAndOptions();
                 loadingScreen.setVisibility(GONE);
             }
@@ -191,23 +148,6 @@ public class QuestionMainActivity extends AppCompatActivity {
         });
     }
 
-    private void getFirebaseUserData(){
-        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
-        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<UserData> type = new GenericTypeIndicator<UserData>() {};
-                currentUser = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
-                Log.i("Get User Data", "Firebase data fetched");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FB getUserData", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
-            }
-        });
-    }
-
     public void updateQueueAndOptions() {
         //sets visibility of layout according to what pictures are in the question
         //question has text even if it has pic
@@ -217,10 +157,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //Q
             questionText.setText(currentQuestion.getQuestion());
             questionText.setVisibility(View.VISIBLE);
-            questionPicLayout.setVisibility(GONE);
             //A
-            picAnswersLayout.setVisibility(GONE);
-            textAnswersLayout.setVisibility(View.VISIBLE);
             buttonA.setText(currentQuestion.getOptA());
             buttonB.setText(currentQuestion.getOptB());
             buttonC.setText(currentQuestion.getOptC());
@@ -228,12 +165,8 @@ public class QuestionMainActivity extends AppCompatActivity {
         }else if(hasQPic && !hasAPics){ //pic question, text answer
             //Q
             questionText.setVisibility(GONE);
-            questionPicLayout.setVisibility(View.VISIBLE);
-            questionPicText.setText(currentQuestion.getQuestion());
-            loadQuestionPic(currentTopic, currentQuestion.getPicNumber());
+            questionText.setText(currentQuestion.getQuestion());
             //A
-            picAnswersLayout.setVisibility(GONE);
-            textAnswersLayout.setVisibility(View.VISIBLE);
             buttonA.setText(currentQuestion.getOptA());
             buttonB.setText(currentQuestion.getOptB());
             buttonC.setText(currentQuestion.getOptC());
@@ -242,184 +175,40 @@ public class QuestionMainActivity extends AppCompatActivity {
             //Q
             questionText.setText(currentQuestion.getQuestion());
             questionText.setVisibility(View.VISIBLE);
-            questionPicLayout.setVisibility(GONE);
             //A
-            picAnswersLayout.setVisibility(View.VISIBLE);
-            textAnswersLayout.setVisibility(GONE);
-            loadAnswerPics(currentTopic, currentQuestion.getOptAPicNumber(), currentQuestion.getOptBPicNumber(), currentQuestion.getOptCPicNumber(), currentQuestion.getOptDPicNumber());
         }else{ //all pictures
             //Q
             questionText.setVisibility(GONE);
-            questionPicLayout.setVisibility(View.VISIBLE);
-            questionPicText.setText(currentQuestion.getQuestion());
-            loadQuestionPic(currentTopic, currentQuestion.getPicNumber());
             //A
-            picAnswersLayout.setVisibility(View.VISIBLE);
-            textAnswersLayout.setVisibility(GONE);
-            loadAnswerPics(currentTopic, currentQuestion.getOptAPicNumber(), currentQuestion.getOptBPicNumber(), currentQuestion.getOptCPicNumber(), currentQuestion.getOptDPicNumber());
         }
+        passageText.setText(currentQuestion.getPassage());
 
     }
-
     private void saveHistory(int questionID, String answerChosen, Question currentQuestion) {
-            if(answeredQuestionList != null)
+        if(answeredQuestionList != null)
+        {
+            Iterator<AnsweredQuestionData> iterator = answeredQuestionList.iterator();
+            AnsweredQuestionData currentAnsweredQuestion = null;
+            while (iterator.hasNext()) {
+                AnsweredQuestionData question = iterator.next();
+                if (question.getQuestion().getId() == questionID) {
+                    currentAnsweredQuestion = question;
+                    break;
+                }
+            }
+            if(currentAnsweredQuestion == null)
             {
-                Iterator<AnsweredQuestionData> iterator = answeredQuestionList.iterator();
-                AnsweredQuestionData currentAnsweredQuestion = null;
-                while (iterator.hasNext()) {
-                    AnsweredQuestionData question = iterator.next();
-                    if (question.getQuestion().getId() == questionID) {
-                        currentAnsweredQuestion = question;
-                        break;
-                    }
-                }
-                if(currentAnsweredQuestion == null)
-                {
-                    currentAnsweredQuestion = new AnsweredQuestionData(currentQuestion, answerChosen);
-                    answeredQuestionList.add(currentAnsweredQuestion);
-                }
-                else {
-                    currentAnsweredQuestion.setAnswer(answerChosen);
-                }
-                savePerUserFirebaseQuestionsList();
-
+                currentAnsweredQuestion = new AnsweredQuestionData(currentQuestion, answerChosen);
+                answeredQuestionList.add(currentAnsweredQuestion);
             }
-    }
-
-    private void loadQuestionPic(Topic topic, int questionPicID){
-        if(questionPicID < 0)return;
-        StorageReference qImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
-                .child(topic.getPicRootFolderName())
-                .child("Question_Pics")
-                .child(topic.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
-
-        qImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if(task.isSuccessful())
-                {
-                    Glide.with(QuestionMainActivity.this)
-                            .load(task.getResult())
-                            .into(questionPic);
-                }
-                else {
-                    Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
+            else {
+                currentAnsweredQuestion.setAnswer(answerChosen);
             }
-        });
-    }
+            //savePerUserFirebaseQuestionsList();
 
-    private void loadExplanationPic(Topic topic, int explanationPicID){
-        if(explanationPicID < 0)return;
-        StorageReference eImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
-                .child(topic.getPicRootFolderName())
-                .child("Explanation_Pics")
-                .child(topic.getPicNamePrefix()+"_e_"+explanationPicID+".PNG");
-
-        eImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if(task.isSuccessful())
-                {
-                    Glide.with(QuestionMainActivity.this)
-                            .load(task.getResult())
-                            .into(explanationPic);
-                }
-                else {
-                    Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    private void loadAnswerPics(Topic topic, int optAID, int optBID, int optCID, int optDID){
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        if(optAID > -1){
-            StorageReference optAImageRef = storageReference
-                    .child(topic.getPicRootFolderName())
-                    .child("Answer_Pics")
-                    .child(topic.getPicNamePrefix()+"_a_"+optAID+".PNG");   //but what if it doesn't exist?
-            optAImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful())
-                    {
-                        Glide.with(QuestionMainActivity.this)
-                                .load(task.getResult())
-                                .into(optAPic);
-                    }
-                    else {
-                        Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-        if(optBID > -1){
-            StorageReference optBImageRef = storageReference
-                    .child(topic.getPicRootFolderName())
-                    .child("Answer_Pics")
-                    .child(topic.getPicNamePrefix()+"_a_"+optBID+".PNG");   //but what if it doesn't exist?
-            optBImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful())
-                    {
-                        Glide.with(QuestionMainActivity.this)
-                                .load(task.getResult())
-                                .into(optBPic);
-                    }
-                    else {
-                        Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-        if(optCID > -1){
-            StorageReference optCImageRef = storageReference
-                    .child(topic.getPicRootFolderName())
-                    .child("Answer_Pics")
-                    .child(topic.getPicNamePrefix()+"_a_"+optCID+".PNG");   //but what if it doesn't exist?
-            optCImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful())
-                    {
-                        Glide.with(QuestionMainActivity.this)
-                                .load(task.getResult())
-                                .into(optCPic);
-                    }
-                    else {
-                        Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-        if(optDID > -1){
-            StorageReference optDImageRef = storageReference
-                    .child(topic.getPicRootFolderName())
-                    .child("Answer_Pics")
-                    .child(topic.getPicNamePrefix()+"_a_"+optDID+".PNG");   //but what if it doesn't exist?
-            optDImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful())
-                    {
-                        Glide.with(QuestionMainActivity.this)
-                                .load(task.getResult())
-                                .into(optDPic);
-                    }
-                    else {
-                        Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
         }
     }
 
-
-    //--------------------------------------------------------UI stuff---------------------------------------------
-
-    //Onclick listener for first button
     public void buttonA(View view) {
         //compare the option with the ans if yes then make button color green
         saveHistory(qid, "Option A", currentQuestion);
@@ -480,7 +269,7 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     //This dialog is show to the user after he ans correct
     public void correctDialog() {
-        final Dialog dialogCorrect = new Dialog(QuestionMainActivity.this);
+        final Dialog dialogCorrect = new Dialog(ReadingQuestions.this);
         dialogCorrect.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (dialogCorrect.getWindow() != null) {
             ColorDrawable colorDrawable = new ColorDrawable(Color.TRANSPARENT);
@@ -530,7 +319,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     public void congratsDialog() {
-        final Dialog dialogComplete = new Dialog(QuestionMainActivity.this);
+        final Dialog dialogComplete = new Dialog(ReadingQuestions.this);
         dialogComplete.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (dialogComplete.getWindow() != null) {
             ColorDrawable colorDrawable = new ColorDrawable(Color.TRANSPARENT);
@@ -569,7 +358,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     public void incorrectDialog() {
-        final Dialog dialogIncorrect = new Dialog(QuestionMainActivity.this);
+        final Dialog dialogIncorrect = new Dialog(ReadingQuestions.this);
         dialogIncorrect.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (dialogIncorrect.getWindow() != null) {
             ColorDrawable colorDrawable = new ColorDrawable(Color.TRANSPARENT);
@@ -627,15 +416,6 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     }
 
-    //This method will make button color white again since our one button color was turned green
-    public void resetColor() {
-        buttonA.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
-        buttonB.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
-        buttonC.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
-        buttonD.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
-    }
-
-    //This method will disable all the option button
     public void disableButton() {
         buttonA.setEnabled(false);
         buttonB.setEnabled(false);
@@ -649,5 +429,12 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonB.setEnabled(true);
         buttonC.setEnabled(true);
         buttonD.setEnabled(true);
+    }
+
+    private void resetColor() {
+        buttonA.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
+        buttonB.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
+        buttonC.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
+        buttonD.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
     }
 }

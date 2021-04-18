@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- package may need to be changed -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.solve">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+  
     <application
+
         android:name=".InnovatorApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,28 +15,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.solve.MainMenuActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.example.solve.QuestionMainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.example.solve.SetupMainActivity">
+        <activity android:name=".ProgressBarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.solve.Question">
+        <activity android:name=".ReadingQuestions"></activity>
+        <activity android:name=".MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.solve.TopicSelectActivity">
+        <activity android:name=".QuestionMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SetupMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+<!--        <activity android:name=".Question">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.DEFAULT" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+        <activity android:name=".TopicSelectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
@@ -42,7 +52,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
 </manifest>
