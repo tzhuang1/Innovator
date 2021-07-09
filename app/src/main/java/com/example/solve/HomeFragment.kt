@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 
@@ -21,16 +22,20 @@ class HomeFragment : Fragment(){
             val u = InnovatorApplication.getUser()
 
             val intent = Intent(getActivity(), QuestionMainActivity::class.java)
-            if(u.getGrade() == 3)
-                intent.putExtra("TOPIC",Topic.Grade3)
-            else if(u.getGrade() == 4)
-                intent.putExtra("TOPIC",Topic.Grade4)
-            else if(u.getGrade() == 5)
-                intent.putExtra("TOPIC",Topic.Grade5)
-            else if(u.getGrade() == 6)
-                intent.putExtra("TOPIC",Topic.Grade6)
-
-            startActivity(intent)
+            if (u == null) {
+                Toast.makeText(view.context, "Please Sign-in before starting questions", Toast.LENGTH_SHORT).show();
+            } else {
+                if (u.getGrade() == 3) {
+                    intent.putExtra("TOPIC", Topic.Grade3);
+                } else if (u.getGrade() == 4) {
+                    intent.putExtra("TOPIC", Topic.Grade4);
+                } else if (u.getGrade() == 5){
+                    intent.putExtra("TOPIC", Topic.Grade5);
+                }else if(u.getGrade() == 6){
+                    intent.putExtra("TOPIC", Topic.Grade6);
+                }
+                startActivity(intent)
+            }
         }
         //setContentView(view);
 
