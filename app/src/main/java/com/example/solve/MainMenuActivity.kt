@@ -43,11 +43,15 @@ class MainMenuActivity : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, SettingsFragment()).commit()
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_account -> {
+            R.id.navigation_account -> { //ACCOUNT
                 //textMessage.setText(R.string.title_account)
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AccountFragment()).commit()
                 return@OnNavigationItemSelectedListener true
-
+            }
+            R.id.navigation_progress -> { //PROGRESS
+                //textMessage.setText(R.string.title_account)
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, ProgressFragment()).commit()
+                return@OnNavigationItemSelectedListener true
             }
         }
         false
