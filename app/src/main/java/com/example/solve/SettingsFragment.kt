@@ -38,6 +38,11 @@ class SettingsFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    override fun onStop() {
+        super.onStop()
+
+    }
+
 
 
 }
