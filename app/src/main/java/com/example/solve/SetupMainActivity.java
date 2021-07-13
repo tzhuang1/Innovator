@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -151,7 +152,9 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
                     currSetupPage--;
                     setupProgressBar.setProgress(currSetupPage);
                 }
-
+                else{
+                    Toast.makeText(view.getContext(), "Please Sign-in before starting questions", Toast.LENGTH_SHORT).show();
+                }
                 switch (currSetupPage) {
                     case 0:
                         setupTxt.setText("Sign in To Google");
@@ -165,6 +168,8 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
                     case 3:
 
                         break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + currSetupPage);
                 }
 
                 //onBackPressed();
