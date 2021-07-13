@@ -69,6 +69,7 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
 
 
 
+
     private lateinit var viewModel: AccountViewModel
 
     fun newInstance(defaultGradeNum: Int): AccountFragment {
@@ -132,6 +133,11 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
     }
     public override fun onStart() {
         super.onStart()
+        var accountt: GoogleSignInAccount? =null
+        accountt= GoogleSignIn.getLastSignedInAccount(getActivity())
+        if(accountt != null){
+            updateUI(accountt)
+        }
         mGoogleApiClient?.connect()
     }
 
@@ -229,13 +235,7 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     // Get Post object and use the values to update the UI
                     val myData = dataSnapshot.getValue()
-                    if(myData != null) {
-                        userData.grade = (myData as HashMap<*, *>)["grade"].toString().toInt()
-                    }
-                    else {
-                        userData.grade = 3;
-                    }
-
+                    userData.grade = (myData as HashMap<*, *>)["grade"].toString().toInt()
                     //userData = dataSnapshot.getValue() as UserData
                     InnovatorApplication.setUser(userData)
                     // ...
