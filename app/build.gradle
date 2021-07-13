@@ -6,7 +6,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '30.0.1'
+    buildToolsVersion '30.0.3'
     defaultConfig {
         // applicationId needs to be changed(?)
         applicationId "com.example.innovatorsetup"
@@ -57,8 +57,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.21'//added. 1.2.19 -> 1.2.21
-
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
 
 repositories {

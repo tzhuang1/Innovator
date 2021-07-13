@@ -20,4 +20,9 @@
             android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/title_account" />
 
+    <item
+        android:id="@+id/navigation_progress"
+        android:icon="@drawable/ic_progress_black_24dp"
+        android:title="@string/title_progress" />
+
 </menu>
