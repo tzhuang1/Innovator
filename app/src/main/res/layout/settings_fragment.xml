@@ -73,6 +73,32 @@
                 android:inputType="number"
                 android:padding="10dp" />
         </TableRow>
+
+        <TableRow
+            android:id="@+id/notificationsTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/notificationsTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Notification Reminders Enabled: "
+                android:textSize="16sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp" />
+
+            <CheckBox
+                android:id="@+id/notificationsCheckbox"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:padding="10dp" />
+        </TableRow>
     </TableLayout>
 
     <Button

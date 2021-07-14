@@ -18,6 +18,7 @@ class SettingsFragment : Fragment() {
     var saved: SharedPreferences? = null
     var gradeStr: String? = null
     var actPerDayStr: String? = null
+    var notifsBool: Boolean? = false
 
     companion object {
         fun newInstance() = SettingsFragment()
@@ -39,15 +40,18 @@ class SettingsFragment : Fragment() {
         saved = this.getActivity()?.getSharedPreferences("pref", Context.MODE_PRIVATE);
         gradeSettingsNumInput.setText(saved?.getString("grade", ""))
         activitiesPerDayNumInput.setText(saved?.getString("activitiesPerDay",""))
+        saved?.getBoolean("notifsChecked", false)?.let { notificationsCheckbox.setChecked(it) }
 
         settingsSaveBtn.setOnClickListener(View.OnClickListener {
             gradeStr = gradeSettingsNumInput.getText().toString()
             actPerDayStr = activitiesPerDayNumInput.getText().toString()
+            notifsBool = notificationsCheckbox.isChecked()
 
             sp = this.getActivity()?.getSharedPreferences("pref", Context.MODE_PRIVATE);
             val editor = sp!!.edit()
             editor.putString("grade", gradeStr)
             editor.putString("activitiesPerDay", actPerDayStr)
+            editor.putBoolean("notifsChecked", notifsBool!!)
             editor.commit()
 
             Toast.makeText(this.requireActivity(), "Settings saved.", Toast.LENGTH_SHORT).show()
