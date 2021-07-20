@@ -15,7 +15,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notif")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle("SOLve Practice Reminder")
-                .setContentText("Hey! You haven't met your daily practice goal yet today! Keep up the progress!")
+                .setContentText("Hey! You haven't met your daily practice goal yet! Keep up the progress!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notifManager = NotificationManagerCompat.from(context);
