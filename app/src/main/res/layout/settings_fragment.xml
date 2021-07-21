@@ -37,13 +37,16 @@
 
             <EditText
                 android:id="@+id/gradeSettingsNumInput"
-                android:layout_width="75dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:importantForAutofill="no"
                 android:inputType="number"
-                android:padding="10dp" />
+                android:text="1"
+                android:maxLength="1"
+                android:gravity="center"
+                android:layout_marginHorizontal="20dp"/>
         </TableRow>
 
         <TableRow
@@ -65,15 +68,84 @@
 
             <EditText
                 android:id="@+id/activitiesPerDayNumInput"
-                android:layout_width="75dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:gravity="center"
+                android:maxLength="4"
+                android:text="10"
                 android:importantForAutofill="no"
-                android:inputType="number"
-                android:padding="10dp" />
+                android:inputType="number" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/notifsTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/notifsTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Notification Reminders Enabled: "
+                android:textSize="16sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp" />
+
+            <CheckBox
+                android:id="@+id/notifsCheckbox"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:foregroundGravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/notifsTimeTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/notifsTimeTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Time to Send Reminder: "
+                android:textSize="16sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp"/>
+
+            <TextView
+                android:id="@+id/notifsTimeDisplay"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:padding="10dp"
+                android:text="12:00 AM"
+                android:textSize="16sp"/>
         </TableRow>
     </TableLayout>
+
+
+    <Button
+        android:id="@+id/notifsTimeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Set Reminder Time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsInputTableLayout"/>
 
     <Button
         android:id="@+id/settingsSaveBtn"
@@ -83,7 +155,7 @@
         app:layout_constraintBottom_toTopOf="@+id/aboutUsCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsInputTableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/notifsTimeBtn" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/aboutUsCardView"
@@ -94,6 +166,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsInputTableLayout"/>
+        app:layout_constraintTop_toBottomOf="@+id/settingsInputTableLayout"
+        android:visibility="invisible"/><!-- change when used again -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
