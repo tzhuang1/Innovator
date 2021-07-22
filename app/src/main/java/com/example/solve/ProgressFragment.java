@@ -62,10 +62,11 @@ public class ProgressFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+
     /*  adds questions to the statistics, and updates values depending on if it was correct or not.
-    *   Correct is list of correctness of all questions entered, each element
-    *   must be either "CORRECT" or "INCORRECT" */
-    public void addQuestion(ArrayList<String> questions) {
+    *   Correct is list of correctness of all questions entered, each element must be either
+    *   "CORRECT" or "INCORRECT"    */
+    public void addQuestions(ArrayList<String> questions) {
         int numQuestions = questions.size();
         //updates completed questions
         questionsCompletedToday += numQuestions;
@@ -76,7 +77,7 @@ public class ProgressFragment extends Fragment {
         questionsCompletedWeeklyCount.setText(questionsCompletedWeekly);
         questionsCompletedOverallCount.setText(questionsCompletedWeekly);
 
-        //calculates the number of correct questions
+        //calculates and updates the number of correct questions
         int numCorrect = 0;
         for(int i=0; i < numQuestions; i++) {
             if(questions.get(i).equals("CORRECT")) {
