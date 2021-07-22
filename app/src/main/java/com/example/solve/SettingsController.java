@@ -20,6 +20,7 @@ public class SettingsController extends Fragment {
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
         Toast.makeText(getActivity(), "kl;kljljkljk", Toast.LENGTH_SHORT).show();
+
     }
 
 

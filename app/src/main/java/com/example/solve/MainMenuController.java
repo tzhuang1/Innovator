@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -43,6 +44,7 @@ public class MainMenuController extends AppCompatActivity{
     private GoogleSignInClient signInClient;
 
     private String email;
+
 
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
