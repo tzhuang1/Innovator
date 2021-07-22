@@ -13,10 +13,18 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-        <com.google.android.gms.common.SignInButton
+        <!-- <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="initiateSignIn"
+            tools:ignore="OnClick" />-->
+        <Button
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="initiateSignIn"
+            tools:ignore="OnClick" />
 
         <Button
             android:id="@+id/sign_out_button"
@@ -26,10 +34,22 @@
             android:visibility="gone" />
 
         <TextView
-                android:id="@+id/currentUser"
+                android:id="@+id/userName"
                 android:layout_width="173dp"
                 android:layout_height="72dp"
                 android:text="Account View" />
+
+        <TextView
+            android:id="@+id/userEmail"
+            android:layout_width="173dp"
+            android:layout_height="72dp"
+            android:text="Account View" />
+
+        <TextView
+            android:id="@+id/currentUser"
+            android:layout_width="173dp"
+            android:layout_height="72dp"
+            android:text="Account View" />
 
     </LinearLayout>
 

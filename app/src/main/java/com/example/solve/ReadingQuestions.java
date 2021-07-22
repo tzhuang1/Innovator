@@ -89,6 +89,8 @@ public class ReadingQuestions extends AppCompatActivity {
         //TODO: From database get all values
 
         getFirebaseQuestionsList(currentTopic);
+
+        System.out.println("Reading questions");
     }
 
     private void getFirebaseQuestionsList(Topic topic){

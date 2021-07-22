@@ -54,10 +54,14 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'info.hoang8f:fbutton:1.0.5'
-    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
     
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.21'//added. 1.2.19 -> 1.2.21
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    implementation platform('com.google.firebase:firebase-bom:28.2.1')
 }
 
 repositories {

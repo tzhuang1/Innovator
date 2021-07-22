@@ -55,4 +55,10 @@ class HomeFragment : Fragment(){
         return view
     }
 
+    // TODO: redirect user to new xml page that displays past problems he/she as completed
+    fun buttonB(v: View){
+        Toast.makeText(v.context, "Past proglems button clicked", Toast.LENGTH_SHORT).show()
+        println("Past problems button clicked")
+    }
+
 }
