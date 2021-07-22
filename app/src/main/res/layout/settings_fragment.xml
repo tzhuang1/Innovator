@@ -155,7 +155,8 @@
         app:layout_constraintBottom_toTopOf="@+id/aboutUsCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notifsTimeBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/notifsTimeBtn"
+        android:onClick="saveSettings"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/aboutUsCardView"

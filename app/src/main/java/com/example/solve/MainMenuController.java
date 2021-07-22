@@ -36,14 +36,13 @@ public class MainMenuController extends AppCompatActivity{
     private static final int RC_SIGN_IN = 0;
     private NavigationBarView bottomNavBar;
     private int selectedItemID;
-    private FirebaseAuth auth;
 
+    private FirebaseAuth auth;
     private FirebaseUser currentUser;
 
     private GoogleSignInClient signInClient;
 
-    private TextView emailText;
-    private TextView nameText;
+    private String email;
 
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
@@ -53,8 +52,8 @@ public class MainMenuController extends AppCompatActivity{
         currentUser=auth.getCurrentUser();
 
         bottomNavBar=findViewById(R.id.nav_view);
-        emailText=findViewById(R.id.userEmail);
-        nameText=findViewById(R.id.userName);
+
+        email=null;
 
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, HomeController.class, null).commit();
 
@@ -64,17 +63,12 @@ public class MainMenuController extends AppCompatActivity{
                 selectedItemID=item.getItemId();
 
                 if(selectedItemID==R.id.navigation_home){
-                    //getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, HomeController.class, null).commit();
                     getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, HomeController.class, null).commit();
-
                 }
                 if(selectedItemID==R.id.navigation_account){
-                    //getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, AccountController.class, null).commit();
                     getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, AccountController.class, null).commit();
-
                 }
                 if(selectedItemID==R.id.navigation_dashboard){
-                    //getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, TopicSelectFragment.class, null).commit();
                     getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, TopicSelectFragment.class, null).commit();
                 }
                 if(selectedItemID==R.id.navigation_notifications){
@@ -86,20 +80,18 @@ public class MainMenuController extends AppCompatActivity{
                 return true;
             }
         });
-
         configureSignIn();
-
-
     }
 
+    // OnClick listeners
     public void buttonB(View view){
-        if(currentUser!=null)
-            Toast.makeText(this, "Button b clicked", Toast.LENGTH_SHORT).show();
+        if(email==null)
+            Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
     }
 
     public void buttonA(View view){
-        if(currentUser!=null)
-            Toast.makeText(this, "Button a clicked", Toast.LENGTH_SHORT).show();
+        if(email==null)
+            Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
     }
 
     public void initiateSignIn(View view){
@@ -107,6 +99,9 @@ public class MainMenuController extends AppCompatActivity{
         signIn();
     }
 
+
+
+    // Google sign in feature
     public void configureSignIn(){
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -144,7 +139,7 @@ public class MainMenuController extends AppCompatActivity{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             currentUser = auth.getCurrentUser();
-                            Log.d("User Data", currentUser.getEmail());
+                            email=currentUser.getEmail();
                         } else {
                             //Toast.makeText(MainMenuActivity.this, "Google sign-in failed", Toast.LENGTH_SHORT).show();
                         }
