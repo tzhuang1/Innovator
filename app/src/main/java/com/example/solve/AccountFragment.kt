@@ -2,38 +2,40 @@ package com.example.solve
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import androidx.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.google.firebase.auth.FirebaseUser
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.Scopes
-import com.google.android.gms.common.api.Scope
-import com.google.android.gms.common.SignInButton
-import android.content.Intent
-import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.NonNull
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.Task
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.Scopes
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.Scope
 import com.google.android.gms.plus.Plus
-import com.example.solve.UserData
-import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.account_fragment.*
+import androidx.annotation.NonNull
+import com.example.solve.UserData
+import com.google.android.gms.tasks.OnCompleteListener
+
 
 
 class AccountFragment : GoogleApiClient.ConnectionCallbacks,
@@ -67,9 +69,12 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
     private var mGoogleApiClient: GoogleApiClient? = null
     private var mGoogleSignInClient: GoogleSignInClient? = null
 
-
-
-
+    val SHARED_PREFERENCES_FILE = "com.example.solve.preferenceFile"
+    val GRADE = "SelectGrade"
+    val ACTIVITY = "SelectActivity"
+    //var settings: SharedPreferences? = null
+    //settings = getSharedPreferences(SetupMainActivity.SHARED_PREFERENCES_FILE, 0)
+    val settings = activity?.getSharedPreferences(SHARED_PREFERENCES_FILE, 0)
     private lateinit var viewModel: AccountViewModel
 
     fun newInstance(defaultGradeNum: Int): AccountFragment {
@@ -133,11 +138,12 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
     }
     public override fun onStart() {
         super.onStart()
-        //var accountt: GoogleSignInAccount? =null
-        //accountt= GoogleSignIn.getLastSignedInAccount(getActivity())
-        //if(accountt != null){
-        //    updateUI(accountt)
-        //}
+        var accountt: GoogleSignInAccount? =null
+        accountt= GoogleSignIn.getLastSignedInAccount(getActivity())
+        if(accountt != null){
+            updateUI(accountt)
+        }
+
         mGoogleApiClient?.connect()
     }
 
@@ -194,6 +200,8 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
 
     private fun updateUI ( account: GoogleSignInAccount?) {
         // TODO: Use the ViewModel
+        val settings = activity?.getPreferences(0) ?: return
+        val grade = settings.getInt(GRADE, 5)
         if(account == null )
         {
             // Initialize a new instance of
@@ -234,18 +242,16 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
             val postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     // Get Post object and use the values to update the UI
-                    var arr = ArrayList<String>()
-                    var myData=0
-                    for(childSnapshot in dataSnapshot.children){
-                        arr.add(childSnapshot.getValue().toString())
+                    var myData =dataSnapshot.getValue()
+                    if(myData != null) {
+                        userData.grade = (myData as HashMap<*, *>)["grade"].toString().toInt()
                     }
-                    userData.grade=arr.get(3).toInt()
-                    //userData.grade=myData as Int
-                    userData.grade = (myData as HashMap<*, *>)["grade"].toString().toInt()
+                    else {
+                        userData.grade = grade
+                    }
 
-                    userData.grade=myData as Int
-
-                    userData.grade = (myData as HashMap<*, *>)["grade"].toString().toInt()
+                    //Toast.makeText(view!!.context,"Error setting grade, defualted to 5th grade", Toast.LENGTH_SHORT).show()
+                    //userData.grade = (myData as HashMap<*, *>)["grade"].toString().toInt()
                     //userData = dataSnapshot.getValue() as UserData
                     InnovatorApplication.setUser(userData)
                     // ...
