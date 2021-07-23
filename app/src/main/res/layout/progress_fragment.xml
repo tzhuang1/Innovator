@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dailyTitle"
-        app:layout_constraintVertical_bias=".005">
+        app:layout_constraintVertical_bias=".001">
 
         <TableRow
             android:id="@+id/questionsCompletedTodayTableRow"
@@ -48,7 +48,7 @@
 
             <TextView
                 android:id="@+id/questionsCompletedTodayCount"
-                android:layout_width="90dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:importantForAutofill="no"
@@ -76,7 +76,7 @@
 
             <TextView
                 android:id="@+id/goalMetDisplay"
-                android:layout_width="90dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:importantForAutofill="no"
@@ -104,7 +104,7 @@
 
             <TextView
                 android:id="@+id/dailyAccuracyDisplay"
-                android:layout_width="90dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:importantForAutofill="no"
@@ -137,7 +137,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/weeklyTitle"
-        app:layout_constraintVertical_bias=".005">
+        app:layout_constraintVertical_bias=".001">
 
         <TableRow
             android:id="@+id/questionsCompletedWeeklyTableRow"
@@ -158,7 +158,7 @@
 
             <TextView
                 android:id="@+id/questionsCompletedWeeklyCount"
-                android:layout_width="90dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:importantForAutofill="no"
@@ -186,7 +186,7 @@
 
             <TextView
                 android:id="@+id/weeklyAccuracyDisplay"
-                android:layout_width="90dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:importantForAutofill="no"
@@ -219,7 +219,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/overallTitle"
-        app:layout_constraintVertical_bias=".005">
+        app:layout_constraintVertical_bias=".001">
 
         <TableRow
             android:id="@+id/questionsCompletedOverallTableRow"
@@ -240,7 +240,7 @@
 
             <TextView
                 android:id="@+id/questionsCompletedOverallCount"
-                android:layout_width="90dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:importantForAutofill="no"
@@ -268,7 +268,7 @@
 
             <TextView
                 android:id="@+id/overallAccuracyDisplay"
-                android:layout_width="90dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:importantForAutofill="no"
@@ -276,7 +276,20 @@
                 android:text="89%"
                 android:textSize="20sp" />
         </TableRow>
-
     </TableLayout>
+
+    <Button
+        android:id="@+id/achievementsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:importantForAutofill="no"
+        android:padding="10dp"
+        android:text="If Achievements Implemented"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/overallTableLayout"
+        android:layout_marginTop="5dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
