@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/dailyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:padding="10dp"
+        android:text="Today's Progress"
+        android:textSize="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="22dp"
+        tools:layout_conversion_absoluteWidth="109dp" />
+
+    <TableLayout
+        android:id="@+id/dailyTableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dailyTitle"
+        app:layout_constraintVertical_bias=".001">
+
+        <TableRow
+            android:id="@+id/questionsCompletedTodayTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/questionsCompletedTodayTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Questions Completed: "
+                android:textSize="20sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp"/>
+
+            <TextView
+                android:id="@+id/questionsCompletedTodayCount"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:padding="10dp"
+                android:text="15"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dailyGoalTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/goalProgressTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Daily Goal Progress: "
+                android:textSize="20sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp"/>
+
+            <TextView
+                android:id="@+id/goalMetDisplay"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:padding="10dp"
+                android:text="67%"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/accuracyTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/dailyAccuracyTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Question Accuracy: "
+                android:textSize="20sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp"/>
+
+            <TextView
+                android:id="@+id/dailyAccuracyDisplay"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:padding="10dp"
+                android:text="95%"
+                android:textSize="20sp" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/weeklyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:text="Weekly Progress"
+        android:textSize="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dailyTableLayout"
+        tools:layout_conversion_absoluteHeight="22dp"
+        tools:layout_conversion_absoluteWidth="109dp" />
+
+    <TableLayout
+        android:id="@+id/weeklyTableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weeklyTitle"
+        app:layout_constraintVertical_bias=".001">
+
+        <TableRow
+            android:id="@+id/questionsCompletedWeeklyTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/questionsCompletedWeeklyTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Weekly Questions Completed: "
+                android:textSize="20sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp"/>
+
+            <TextView
+                android:id="@+id/questionsCompletedWeeklyCount"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:padding="10dp"
+                android:text="45"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/weeklyAccuracyTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/weeklyAccuracyTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Weekly Question Accuracy: "
+                android:textSize="20sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp" />
+
+            <TextView
+                android:id="@+id/weeklyAccuracyDisplay"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:padding="10dp"
+                android:text="93%"
+                android:textSize="20sp" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/overallTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:text="Overall Statistics"
+        android:textSize="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weeklyTableLayout"
+        tools:layout_conversion_absoluteHeight="22dp"
+        tools:layout_conversion_absoluteWidth="109dp" />
+
+    <TableLayout
+        android:id="@+id/overallTableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/overallTitle"
+        app:layout_constraintVertical_bias=".001">
+
+        <TableRow
+            android:id="@+id/questionsCompletedOverallTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/questionsCompletedOverallTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Total Questions Completed: "
+                android:textSize="20sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp"/>
+
+            <TextView
+                android:id="@+id/questionsCompletedOverallCount"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:padding="10dp"
+                android:text="207"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/overallAccuracyTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/overallAccuracyTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Overall Question Accuracy: "
+                android:textSize="20sp"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="2dp" />
+
+            <TextView
+                android:id="@+id/overallAccuracyDisplay"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:importantForAutofill="no"
+                android:padding="10dp"
+                android:text="89%"
+                android:textSize="20sp" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/achievementsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:importantForAutofill="no"
+        android:padding="10dp"
+        android:text="If Achievements Implemented"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/overallTableLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
