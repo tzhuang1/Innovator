@@ -16,13 +16,18 @@ import com.google.android.gms.common.SignInButton;
 public class AccountController extends Fragment{
 
 
-    private TextView nameText, emailText;
 
     public AccountController(){
 
         super(R.layout.account_fragment);
 
 
+    }
+
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        //TextView
     }
 
     public void displayUserData(String userName, String userEmail){

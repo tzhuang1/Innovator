@@ -4,9 +4,13 @@ import java.io.*;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,23 +43,30 @@ public class MainMenuController extends AppCompatActivity{
     private int selectedItemID;
 
     private FirebaseAuth auth;
-    private FirebaseUser currentUser;
 
     private GoogleSignInClient signInClient;
+    private GoogleSignInAccount googleAccount;
 
     private String email;
 
+    protected void onStart(){
+        super.onStart();
+        FirebaseUser user=auth.getCurrentUser();
+        if(user!=null){
+            Toast.makeText(this, "User is already signed in", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.angela_activity_main);
 
         auth=FirebaseAuth.getInstance();
-        currentUser=auth.getCurrentUser();
 
         bottomNavBar=findViewById(R.id.nav_view);
-
-        email=null;
 
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, HomeController.class, null).commit();
 
@@ -74,7 +85,7 @@ public class MainMenuController extends AppCompatActivity{
                     getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, TopicSelectFragment.class, null).commit();
                 }
                 if(selectedItemID==R.id.navigation_notifications){
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, SettingsController.class, null).commit();
+                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, SettingsFragment.class, null).commit();
                 }
                 if(selectedItemID==R.id.navigation_progress){
                     getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, ProgressFragment.class, null).commit();
@@ -87,17 +98,14 @@ public class MainMenuController extends AppCompatActivity{
 
     // OnClick listeners
     public void buttonB(View view){
-        if(email==null)
-            Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
+
     }
 
     public void buttonA(View view){
-        if(email==null)
-            Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
+
     }
 
     public void initiateSignIn(View view){
-        //Toast.makeText(this, "Sign In Button pressed", Toast.LENGTH_SHORT).show();
         signIn();
     }
 
@@ -129,7 +137,7 @@ public class MainMenuController extends AppCompatActivity{
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, e.getMessage()+" errOR", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -140,13 +148,25 @@ public class MainMenuController extends AppCompatActivity{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            currentUser = auth.getCurrentUser();
-                            email=currentUser.getEmail();
+                            FirebaseUser currentUser = auth.getCurrentUser();
+                            googleAccount=GoogleSignIn.getLastSignedInAccount(MainMenuController.this);
+                            if(currentUser!=null)
+                                Toast.makeText(MainMenuController.this, "Signed into google: "+googleAccount.getEmail(), Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(MainMenuController.this, "Sign in error", Toast.LENGTH_SHORT).show();
                         } else {
-                            //Toast.makeText(MainMenuActivity.this, "Google sign-in failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    private void setUserInfo(String userNameStr, String userEmailStr){
+        TextView userEmail =findViewById(R.id.userEmail);
+        TextView userName=findViewById(R.id.userName);
+        if(userEmail!=null&&userName!=null){
+            userName.setText(userNameStr);
+            userEmail.setText(userEmailStr);
+        }
     }
 
 }

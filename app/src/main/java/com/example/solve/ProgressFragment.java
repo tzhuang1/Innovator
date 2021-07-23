@@ -22,5 +22,7 @@ import java.util.List;
 
 
 public class ProgressFragment extends Fragment {
-
+    public ProgressFragment(){
+        super(R.layout.explore_fragment);
+    }
 }
