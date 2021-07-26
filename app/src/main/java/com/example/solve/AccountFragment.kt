@@ -158,7 +158,7 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
                 sign_in_button.visibility = View.VISIBLE
                 val sign_out_button = viewOfLayout.findViewById<Button>(R.id.sign_out_button)
                 sign_out_button.visibility = View.INVISIBLE
-                var currentUserLabel = this.viewOfLayout.findViewById(R.id.currentUser) as TextView
+                var currentUserLabel = this.viewOfLayout.findViewById(R.id.userName) as TextView
                 currentUserLabel.setText("")
 
             } else {
@@ -221,7 +221,7 @@ class AccountFragment : GoogleApiClient.ConnectionCallbacks,
 
 
         }
-        var currentUserLabel = this.viewOfLayout.findViewById(R.id.currentUser) as TextView
+        var currentUserLabel = this.viewOfLayout.findViewById(R.id.userName) as TextView
         currentUserLabel.setText("You are signed in as: " + account!!.displayName)
         val sign_in_button = viewOfLayout.findViewById<SignInButton>(R.id.sign_in_button)
         sign_in_button.visibility = View.INVISIBLE

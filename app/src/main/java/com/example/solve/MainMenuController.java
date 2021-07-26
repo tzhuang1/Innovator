@@ -1,6 +1,8 @@
 package com.example.solve;
 
 import java.io.*;
+import java.util.HashMap;
+
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -43,20 +49,26 @@ public class MainMenuController extends AppCompatActivity{
     private int selectedItemID;
 
     private FirebaseAuth auth;
+    private DatabaseReference userDatabase;
 
     private GoogleSignInClient signInClient;
     private GoogleSignInAccount googleAccount;
 
-    private String email;
+    private boolean isUserSignedIn(){
+        FirebaseUser user=auth.getCurrentUser();
+        if(user!=null){
+            return true;
+        }
+        return false;
+    }
 
     protected void onStart(){
         super.onStart();
-        FirebaseUser user=auth.getCurrentUser();
-        if(user!=null){
-            Toast.makeText(this, "User is already signed in", Toast.LENGTH_SHORT).show();
+        if(isUserSignedIn()){
+            Toast.makeText(this, "You are already signed in", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Not signed in", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -65,40 +77,32 @@ public class MainMenuController extends AppCompatActivity{
         setContentView(R.layout.angela_activity_main);
 
         auth=FirebaseAuth.getInstance();
+        googleAccount=GoogleSignIn.getLastSignedInAccount(this);
+        userDatabase=FirebaseDatabase.getInstance().getReference();
 
         bottomNavBar=findViewById(R.id.nav_view);
 
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, HomeController.class, null).commit();
 
-        bottomNavBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                selectedItemID=item.getItemId();
-
-                if(selectedItemID==R.id.navigation_home){
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, HomeController.class, null).commit();
-                }
-                if(selectedItemID==R.id.navigation_account){
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, AccountController.class, null).commit();
-                }
-                if(selectedItemID==R.id.navigation_dashboard){
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, TopicSelectFragment.class, null).commit();
-                }
-                if(selectedItemID==R.id.navigation_notifications){
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, SettingsFragment.class, null).commit();
-                }
-                if(selectedItemID==R.id.navigation_progress){
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, ProgressFragment.class, null).commit();
-                }
-                return true;
-            }
-        });
+        establishNavBarTask();
         configureSignIn();
     }
 
     // OnClick listeners
-    public void buttonB(View view){
+    public void seePastProblems(View view){
+        setContentView(R.layout.all_past_problems);
 
+        RelativeLayout problemsPastUI = (RelativeLayout)findViewById(R.id.past_problems_relative_layout);
+        PastProblems userCompletedProblems= new PastProblems(problemsPastUI, userDatabase);
+
+        userCompletedProblems.populateLayout();
+
+
+    }
+
+    public void returnToHome(View view){
+        setContentView(R.layout.angela_activity_main);
+        getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, HomeController.class, null).commit();
     }
 
     public void buttonA(View view){
@@ -109,7 +113,15 @@ public class MainMenuController extends AppCompatActivity{
         signIn();
     }
 
-
+    public void signOut(View view){
+        if(googleAccount!=null){
+            auth.signOut();
+            Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "Not signed in yet", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     // Google sign in feature
     public void configureSignIn(){
@@ -150,10 +162,7 @@ public class MainMenuController extends AppCompatActivity{
                         if (task.isSuccessful()) {
                             FirebaseUser currentUser = auth.getCurrentUser();
                             googleAccount=GoogleSignIn.getLastSignedInAccount(MainMenuController.this);
-                            if(currentUser!=null)
-                                Toast.makeText(MainMenuController.this, "Signed into google: "+googleAccount.getEmail(), Toast.LENGTH_SHORT).show();
-                            else
-                                Toast.makeText(MainMenuController.this, "Sign in error", Toast.LENGTH_SHORT).show();
+                            setUserInfo(googleAccount.getDisplayName(), googleAccount.getEmail());
                         } else {
                         }
                     }
@@ -167,6 +176,39 @@ public class MainMenuController extends AppCompatActivity{
             userName.setText(userNameStr);
             userEmail.setText(userEmailStr);
         }
+        else{
+            Toast.makeText(this, "text views are null", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void establishNavBarTask(){
+        bottomNavBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                selectedItemID=item.getItemId();
+
+                if(selectedItemID==R.id.navigation_home){
+                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, HomeController.class, null).commit();
+                }
+                if(selectedItemID==R.id.navigation_account){
+                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, AccountController.class, null).commit();
+                    if(isUserSignedIn())
+                        setUserInfo(googleAccount.getDisplayName(), googleAccount.getEmail());
+                    else
+                        setUserInfo("Not signed in", "Not signed in");
+                }
+                if(selectedItemID==R.id.navigation_dashboard){
+                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, TopicSelectFragment.class, null).commit();
+                }
+                if(selectedItemID==R.id.navigation_notifications){
+                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, SettingsFragment.class, null).commit();
+                }
+                if(selectedItemID==R.id.navigation_progress){
+                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, ProgressFragment.class, null).commit();
+                }
+                return true;
+            }
+        });
     }
 
 }

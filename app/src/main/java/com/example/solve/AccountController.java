@@ -27,11 +27,10 @@ public class AccountController extends Fragment{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+       // TextView userName=getActivity().findViewById(R.id.userName);
+        //TextView userEmail=getActivity().findViewById(R.id.userEmail);
+
         //TextView
-    }
-
-    public void displayUserData(String userName, String userEmail){
-
     }
 
 
