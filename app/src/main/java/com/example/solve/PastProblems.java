@@ -14,6 +14,8 @@ import com.google.firebase.database.DatabaseReference;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PastProblems {
 
@@ -30,15 +32,9 @@ public class PastProblems {
     }
 
     public void populateLayout(){
-        userData.child("UserData").child("Profile").child("103788776077754662736").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    HashMap<String, String> userInfo=(HashMap<String, String>)task.getResult().getValue();
-                    Log.i("User Info", userInfo.get("email"));
-                }
-            }
-        });
+
+
+
     }
 
 }

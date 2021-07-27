@@ -2,6 +2,10 @@ package com.example.solve;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -42,7 +46,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
-public class MainMenuController extends AppCompatActivity{
+public class MainMenuController extends AppCompatActivity implements OnCompleteListener<DataSnapshot>{
 
     private static final int RC_SIGN_IN = 0;
     private NavigationBarView bottomNavBar;
@@ -53,6 +57,8 @@ public class MainMenuController extends AppCompatActivity{
 
     private GoogleSignInClient signInClient;
     private GoogleSignInAccount googleAccount;
+
+    private UserData currentUser;
 
     private boolean isUserSignedIn(){
         FirebaseUser user=auth.getCurrentUser();
@@ -80,12 +86,14 @@ public class MainMenuController extends AppCompatActivity{
         googleAccount=GoogleSignIn.getLastSignedInAccount(this);
         userDatabase=FirebaseDatabase.getInstance().getReference();
 
-        bottomNavBar=findViewById(R.id.nav_view);
-
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, HomeController.class, null).commit();
 
         establishNavBarTask();
         configureSignIn();
+
+        checkUserExists("");
+
+        //UserData userInfo=new UserData();
     }
 
     // OnClick listeners
@@ -103,9 +111,12 @@ public class MainMenuController extends AppCompatActivity{
     public void returnToHome(View view){
         setContentView(R.layout.angela_activity_main);
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, HomeController.class, null).commit();
+        establishNavBarTask();
     }
 
     public void buttonA(View view){
+        setContentView(R.layout.daily_challenge);
+
 
     }
 
@@ -176,12 +187,11 @@ public class MainMenuController extends AppCompatActivity{
             userName.setText(userNameStr);
             userEmail.setText(userEmailStr);
         }
-        else{
-            Toast.makeText(this, "text views are null", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void establishNavBarTask(){
+        bottomNavBar=findViewById(R.id.nav_view);
+
         bottomNavBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
@@ -211,4 +221,39 @@ public class MainMenuController extends AppCompatActivity{
         });
     }
 
+    private void checkUserExists(String email){
+        userDatabase.child("UserData").child("Profile").get().addOnCompleteListener(this);
+
+    }
+
+    @Override
+    public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+        if(googleAccount==null){
+            return;
+        }
+        Map<String, Object> allUsers = (Map<String, Object>) task.getResult().getValue();
+
+        for(Map.Entry<String, Object> mapElement : allUsers.entrySet()){
+            String key=(String)mapElement.getKey();
+            Map<String, Object> specificUserInfo=(Map<String, Object>)allUsers.get(key);
+
+            String checkingUser=(String)specificUserInfo.get("email");
+
+            if(checkingUser.equals(googleAccount.getEmail())){
+                currentUser=new UserData(key, (String)specificUserInfo.get("Email"), (String)specificUserInfo.get("displayName"));
+                return;
+            }
+        }
+        currentUser=new UserData(UserIdController.generateID(), googleAccount.getEmail(), googleAccount.getDisplayName());
+
+    }
+
+    private void populateUsersSet(Map<String, Object> userDatabase){
+        Set<String> allUsers=new HashSet<String>();
+        for(Map.Entry<String, Object> mapElement : userDatabase.entrySet()){
+            String key=(String)mapElement.getKey();
+            allUsers.add(key);
+        }
+        UserIdController.setAllUsers(allUsers);
+    }
 }
