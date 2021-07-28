@@ -97,14 +97,14 @@ public class TopicSelectFragment extends Fragment {
                     intent = new Intent(TopicSelectFragment.this.getActivity(),ReadingQuestions.class);
                 }
                 UserData u = InnovatorApplication.getUser();
-                Log.d("grade_debug", grade);
-                if(grade == "3")
+
+                if(grade.equals("3"))
                     intent.putExtra("TOPIC",Topic.Grade3);
-                else if(grade == "4")
+                else if(grade.equals("4"))
                     intent.putExtra("TOPIC",Topic.Grade4);
-                else if(grade == "5")
+                else if(grade.equals("5"))
                     intent.putExtra("TOPIC",Topic.Grade5);
-                else if(grade == "6")
+                else if(grade.equals("6"))
                     intent.putExtra("TOPIC",Topic.Grade6);
 
                 startActivity(intent);
