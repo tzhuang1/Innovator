@@ -26,4 +26,7 @@ public class UserIdController {
         return allUsers.contains(id);
     }
 
+    public static Set<String> getAllUsers(){
+        return allUsers;
+    }
 }

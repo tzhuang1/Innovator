@@ -3,6 +3,7 @@ package com.example.solve;
 import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,6 +34,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.AuthCredential;
@@ -46,7 +48,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
-public class MainMenuController extends AppCompatActivity implements OnCompleteListener<DataSnapshot>{
+public class MainMenuController extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 0;
     private NavigationBarView bottomNavBar;
@@ -58,8 +60,6 @@ public class MainMenuController extends AppCompatActivity implements OnCompleteL
     private GoogleSignInClient signInClient;
     private GoogleSignInAccount googleAccount;
 
-    private UserData currentUser;
-
     private boolean isUserSignedIn(){
         FirebaseUser user=auth.getCurrentUser();
         if(user!=null){
@@ -68,32 +68,28 @@ public class MainMenuController extends AppCompatActivity implements OnCompleteL
         return false;
     }
 
-    protected void onStart(){
-        super.onStart();
-        if(isUserSignedIn()){
-            Toast.makeText(this, "You are already signed in", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "Not signed in", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.angela_activity_main);
 
         auth=FirebaseAuth.getInstance();
+
+        isUserSignedIn();
         googleAccount=GoogleSignIn.getLastSignedInAccount(this);
         userDatabase=FirebaseDatabase.getInstance().getReference();
 
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, HomeController.class, null).commit();
 
+        if(googleAccount!=null){
+            Toast.makeText(this, "Already signed in", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "Not yet signed in", Toast.LENGTH_SHORT).show();
+        }
+
         establishNavBarTask();
         configureSignIn();
-
-        checkUserExists("");
-
-        //UserData userInfo=new UserData();
     }
 
     // OnClick listeners
@@ -116,8 +112,6 @@ public class MainMenuController extends AppCompatActivity implements OnCompleteL
 
     public void buttonA(View view){
         setContentView(R.layout.daily_challenge);
-
-
     }
 
     public void initiateSignIn(View view){
@@ -134,7 +128,7 @@ public class MainMenuController extends AppCompatActivity implements OnCompleteL
         }
     }
 
-    // Google sign in feature
+    // region Google sign in feature
     public void configureSignIn(){
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -174,11 +168,13 @@ public class MainMenuController extends AppCompatActivity implements OnCompleteL
                             FirebaseUser currentUser = auth.getCurrentUser();
                             googleAccount=GoogleSignIn.getLastSignedInAccount(MainMenuController.this);
                             setUserInfo(googleAccount.getDisplayName(), googleAccount.getEmail());
+                            instantiateUserData();
                         } else {
                         }
                     }
                 });
     }
+    // endregion
 
     private void setUserInfo(String userNameStr, String userEmailStr){
         TextView userEmail =findViewById(R.id.userEmail);
@@ -221,39 +217,54 @@ public class MainMenuController extends AppCompatActivity implements OnCompleteL
         });
     }
 
-    private void checkUserExists(String email){
-        userDatabase.child("UserData").child("Profile").get().addOnCompleteListener(this);
 
-    }
+    private void instantiateUserData(){
+        userDatabase.child("UserData").child("Profile").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+                if(googleAccount==null){
+                    return;
+                }
+                else{
+                    Toast.makeText(MainMenuController.this, ""+googleAccount.getEmail(), Toast.LENGTH_SHORT).show();
+                }
+                try{
+                    Map<String, Object> allUsers = (Map<String, Object>) task.getResult().getValue();
+                    UserIdController.setAllUsers(allUsers.keySet());
 
-    @Override
-    public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
-        if(googleAccount==null){
-            return;
-        }
-        Map<String, Object> allUsers = (Map<String, Object>) task.getResult().getValue();
+                    Iterator<String> itr=UserIdController.getAllUsers().iterator();
+                    UserIdController.setAllUsers(allUsers.keySet());
 
-        for(Map.Entry<String, Object> mapElement : allUsers.entrySet()){
-            String key=(String)mapElement.getKey();
-            Map<String, Object> specificUserInfo=(Map<String, Object>)allUsers.get(key);
+                    while(itr.hasNext()){
+                        String currentID=itr.next();
+                        String currentEmail=((Map<String,String>)allUsers.get(currentID)).get("email");
+                        if(currentEmail.equals(googleAccount.getEmail())){
+                            InnovatorApplication.setUser(new UserData(currentID, currentEmail, googleAccount.getDisplayName()));
+                            return;
+                        }
+                    }
+                    String generatedID=UserIdController.generateID();
 
-            String checkingUser=(String)specificUserInfo.get("email");
+                    InnovatorApplication.setUser(new UserData(generatedID, googleAccount.getEmail(), googleAccount.getDisplayName()));
+                    String[] queryData={googleAccount.getDisplayName(), googleAccount.getEmail(), generatedID};
+                    addUserToDatabase(queryData, 0);
 
-            if(checkingUser.equals(googleAccount.getEmail())){
-                currentUser=new UserData(key, (String)specificUserInfo.get("Email"), (String)specificUserInfo.get("displayName"));
-                return;
+                }
+                catch(Exception e){
+                    Toast.makeText(MainMenuController.this, ""+e.toString(), Toast.LENGTH_LONG).show();
+                }
             }
+        });
+    }
+
+
+    public void addUserToDatabase(String[] queryData, int activityCount){
+        String[] categories={"displayName", "email", "id"};
+        userDatabase.child("UserData").child("Profile").child(InnovatorApplication.getUser().getId()).child("activities").setValue(activityCount);
+        for(int i=1;i<categories.length;i++){
+            userDatabase.child("UserData").child("Profile").child(InnovatorApplication.getUser().getId()).child(categories[i]).setValue(queryData[i]);
         }
-        currentUser=new UserData(UserIdController.generateID(), googleAccount.getEmail(), googleAccount.getDisplayName());
 
     }
 
-    private void populateUsersSet(Map<String, Object> userDatabase){
-        Set<String> allUsers=new HashSet<String>();
-        for(Map.Entry<String, Object> mapElement : userDatabase.entrySet()){
-            String key=(String)mapElement.getKey();
-            allUsers.add(key);
-        }
-        UserIdController.setAllUsers(allUsers);
-    }
 }
