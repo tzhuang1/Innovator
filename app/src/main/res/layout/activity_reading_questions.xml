@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,9 +30,7 @@
             android:gravity="center_horizontal" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -42,88 +41,97 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        fbutton:layout_constraintGuide_percent="0.5" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        fbutton:layout_constraintBottom_toTopOf="@+id/guideline"
+        fbutton:layout_constraintEnd_toEndOf="parent"
+        fbutton:layout_constraintHorizontal_bias="1.0"
+        fbutton:layout_constraintStart_toStartOf="parent"
+        fbutton:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtPassage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Read the following passage:\nIsabella woke up one morning hearing her mother shouting, “Come on Isabella, you’re going to be late for summer camp!” \nHer mother had signed her up for a camp without her knowledge, and Isabella had been anxious ever since she had known. The camp, her mother said, was one for adolescents to explore the outdoors. Isabella read over the activity list that day and one thing in particular caught her eye while she skimmed through the pamphlet. Rock Climbing. Ever since she was young, she had an immense fear of heights. Even looking out the window on a high floor made her feel uneasy inside.\nHer thoughts were interrupted when her mother called for her once more. She didn’t want to, but Isabella had no choice but to get out of bed and prepare herself for whatever the camp had to bring."
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/txtQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="10dp"
+        android:text="Which best describes the reason why Isabella doesn’t want to go to summer camp?"
+        android:textSize="19sp"
+        fbutton:layout_constraintEnd_toEndOf="parent"
+        fbutton:layout_constraintStart_toStartOf="parent"
+        fbutton:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/btnA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="10dp"
         android:onClick="buttonA"
         android:backgroundTint="@color/blue"
         android:text="Button"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        fbutton:layout_constraintEnd_toEndOf="@+id/txtQuestion"
+        fbutton:layout_constraintStart_toStartOf="@+id/txtQuestion"
+        fbutton:layout_constraintTop_toBottomOf="@+id/txtQuestion" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/btnB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
         android:onClick="buttonB"
         android:text="Button"
         android:backgroundTint="@color/blue"
-        app:layout_constraintEnd_toEndOf="@+id/btnA"
-        app:layout_constraintStart_toStartOf="@+id/btnA"
-        app:layout_constraintTop_toBottomOf="@+id/btnA" />
+        fbutton:layout_constraintEnd_toEndOf="@+id/btnA"
+        fbutton:layout_constraintStart_toStartOf="@+id/btnA"
+        fbutton:layout_constraintTop_toBottomOf="@+id/btnA" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/btnC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
         android:onClick="buttonC"
         android:text="Button"
         android:backgroundTint="@color/blue"
-        app:layout_constraintEnd_toEndOf="@+id/btnB"
-        app:layout_constraintStart_toStartOf="@+id/btnB"
-        app:layout_constraintTop_toBottomOf="@+id/btnB" />
+        fbutton:layout_constraintEnd_toEndOf="@+id/btnB"
+        fbutton:layout_constraintStart_toStartOf="@+id/btnB"
+        fbutton:layout_constraintTop_toBottomOf="@+id/btnB" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/btnD"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
         android:onClick="buttonD"
         android:text="Button"
         android:backgroundTint="@color/blue"
-        app:layout_constraintEnd_toEndOf="@+id/btnC"
-        app:layout_constraintStart_toStartOf="@+id/btnC"
-        app:layout_constraintTop_toBottomOf="@+id/btnC" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Question"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="409dp"
-        android:layout_height="381dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txtPassage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-    </ScrollView>
+        fbutton:layout_constraintEnd_toEndOf="@+id/btnC"
+        fbutton:layout_constraintStart_toStartOf="@+id/btnC"
+        fbutton:layout_constraintTop_toBottomOf="@+id/btnC" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

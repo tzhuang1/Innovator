@@ -70,7 +70,7 @@ public class ReadingQuestions extends AppCompatActivity {
 
         scrollViewPassage = findViewById(R.id.scrollView2);
         passageText = findViewById(R.id.txtPassage);
-        questionText = findViewById(R.id.textView2);
+        questionText = findViewById(R.id.txtQuestion);
         buttonA = (FButton) findViewById(R.id.btnA);
         buttonB = (FButton) findViewById(R.id.btnB);
         buttonC = (FButton) findViewById(R.id.btnC);
@@ -119,7 +119,7 @@ public class ReadingQuestions extends AppCompatActivity {
                             //String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber
                             Question newQuestion = new Question(entry.get("question").toString(), entry.get("optA").toString(), entry.get("optB").toString(), entry.get("optC").toString(), entry.get("optD").toString(),
                                     entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), pictureNum, explanationNum,
-                                    entry.get("passage").toString());
+                                    (String) entry.get("passage"));
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
                         }
