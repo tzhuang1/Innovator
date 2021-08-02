@@ -35,6 +35,7 @@ import info.hoang8f.widget.FButton;
 
 import static android.view.View.GONE;
 import static com.example.solve.R.id.btnA;
+import static com.example.solve.R.id.homeButton;
 
 public class ReadingQuestions extends AppCompatActivity {
 
@@ -46,6 +47,7 @@ public class ReadingQuestions extends AppCompatActivity {
     private TextView questionText;
     private TextView passageText;
 
+    private Button homeButton;
     private FButton buttonA, buttonB, buttonC, buttonD;
 
     //ImageView explanationPic;    TODO: ask CD if there are explanation pics
@@ -68,6 +70,8 @@ public class ReadingQuestions extends AppCompatActivity {
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
 
+        homeButton = findViewById(R.id.homeButton);
+
         scrollViewPassage = findViewById(R.id.scrollView2);
         passageText = findViewById(R.id.txtPassage);
         questionText = findViewById(R.id.txtQuestion);
@@ -89,6 +93,15 @@ public class ReadingQuestions extends AppCompatActivity {
         //TODO: From database get all values
 
         getFirebaseQuestionsList(currentTopic);
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Switch back to home activity
+                Intent intent = new Intent(ReadingQuestions.this, MainMenuActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getFirebaseQuestionsList(Topic topic){
