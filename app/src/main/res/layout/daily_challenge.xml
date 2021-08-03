@@ -6,13 +6,14 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="358dp"
-        android:layout_height="270dp"
+        android:id="@+id/questionDisplay"
+        android:layout_width="364dp"
+        android:layout_height="226dp"
+        android:text="Question"
         app:layout_constraintBottom_toTopOf="@+id/answers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyChallengeText"
-        android:text="Question"/>
+        app:layout_constraintTop_toBottomOf="@+id/dailyChallengeText" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
@@ -47,7 +48,7 @@
         android:id="@+id/dailyChallengeText"
         android:text="DAILY  CHALLENGE"
         android:gravity="center"
-        android:textSize="28dp"
+        android:textSize="35dp"
         android:textStyle="bold"
         android:fontFamily="@font/karla"/>
 

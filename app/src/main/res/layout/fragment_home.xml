@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:onClick="buttonA"
+            android:onClick="dailyChallenge"
             android:text="Daily Challenge"
             android:textColor="@color/white"
             fbutton:buttonColor="@color/blue"></info.hoang8f.widget.FButton>

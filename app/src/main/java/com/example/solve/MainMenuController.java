@@ -110,8 +110,9 @@ public class MainMenuController extends AppCompatActivity {
         establishNavBarTask();
     }
 
-    public void buttonA(View view){
-        setContentView(R.layout.daily_challenge);
+    public void dailyChallenge(View view){
+        //setContentView(R.layout.daily_challenge);
+        startActivity(new Intent(this, DailyChallenge.class));
     }
 
     public void initiateSignIn(View view){
@@ -222,36 +223,38 @@ public class MainMenuController extends AppCompatActivity {
         userDatabase.child("UserData").child("Profile").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
-                if(googleAccount==null){
-                    return;
-                }
-                else{
-                    Toast.makeText(MainMenuController.this, ""+googleAccount.getEmail(), Toast.LENGTH_SHORT).show();
-                }
-                try{
-                    Map<String, Object> allUsers = (Map<String, Object>) task.getResult().getValue();
-                    UserIdController.setAllUsers(allUsers.keySet());
-
-                    Iterator<String> itr=UserIdController.getAllUsers().iterator();
-                    UserIdController.setAllUsers(allUsers.keySet());
-
-                    while(itr.hasNext()){
-                        String currentID=itr.next();
-                        String currentEmail=((Map<String,String>)allUsers.get(currentID)).get("email");
-                        if(currentEmail.equals(googleAccount.getEmail())){
-                            InnovatorApplication.setUser(new UserData(currentID, currentEmail, googleAccount.getDisplayName()));
-                            return;
-                        }
+                if(task.isSuccessful()){
+                    if(googleAccount==null){
+                        return;
                     }
-                    String generatedID=UserIdController.generateID();
+                    else{
+                        Toast.makeText(MainMenuController.this, ""+googleAccount.getEmail(), Toast.LENGTH_SHORT).show();
+                    }
+                    try{
+                        Map<String, Object> allUsers = (Map<String, Object>) task.getResult().getValue();
+                        UserIdController.setAllUsers(allUsers.keySet());
 
-                    InnovatorApplication.setUser(new UserData(generatedID, googleAccount.getEmail(), googleAccount.getDisplayName()));
-                    String[] queryData={googleAccount.getDisplayName(), googleAccount.getEmail(), generatedID};
-                    addUserToDatabase(queryData, 0);
+                        Iterator<String> itr=UserIdController.getAllUsers().iterator();
+                        UserIdController.setAllUsers(allUsers.keySet());
 
-                }
-                catch(Exception e){
-                    Toast.makeText(MainMenuController.this, ""+e.toString(), Toast.LENGTH_LONG).show();
+                        while(itr.hasNext()){
+                            String currentID=itr.next();
+                            String currentEmail=((Map<String,String>)allUsers.get(currentID)).get("email");
+                            if(currentEmail.equals(googleAccount.getEmail())){
+                                InnovatorApplication.setUser(new UserData(currentID, currentEmail, googleAccount.getDisplayName()));
+                                return;
+                            }
+                        }
+                        String generatedID=UserIdController.generateID();
+
+                        InnovatorApplication.setUser(new UserData(generatedID, googleAccount.getEmail(), googleAccount.getDisplayName()));
+                        String[] queryData={googleAccount.getDisplayName(), googleAccount.getEmail(), generatedID};
+                        addUserToDatabase(queryData, 0);
+
+                    }
+                    catch(Exception e){
+                        Toast.makeText(MainMenuController.this, ""+e.toString(), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -264,7 +267,6 @@ public class MainMenuController extends AppCompatActivity {
         for(int i=1;i<categories.length;i++){
             userDatabase.child("UserData").child("Profile").child(InnovatorApplication.getUser().getId()).child(categories[i]).setValue(queryData[i]);
         }
-
     }
 
 }
