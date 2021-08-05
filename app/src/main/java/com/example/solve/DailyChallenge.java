@@ -43,7 +43,9 @@ public class DailyChallenge extends AppCompatActivity{
     private FirebaseAuth auth;
     private DatabaseReference userDatabase;
 
-    private int questionIndex=1;
+    private int questionIndex=-1;
+
+    private Map<String, Object> currentQuestionData;
 
     @Override
     protected void onCreate(Bundle savedInstance){
@@ -81,14 +83,16 @@ public class DailyChallenge extends AppCompatActivity{
         Button choiceC=findViewById(R.id.answerC);
         Button choiceD=findViewById(R.id.answerD);
 
-        Map<String, Object> currentQuestionData=DailyChallengeManager.getCurrentQuestionData();
+        currentQuestionData=DailyChallengeManager.getCurrentQuestionData();
 
         questionDisplay.setText("Question: "+(String)currentQuestionData.get("question"));
         choiceA.setText("A. "+(String)currentQuestionData.get("optA"));
         choiceB.setText("B. "+(String)currentQuestionData.get("optB"));
         choiceC.setText("C. "+(String)currentQuestionData.get("optC"));
         choiceD.setText("D. "+(String)currentQuestionData.get("optD"));
+
     }
+
 
 
 
@@ -99,11 +103,11 @@ public class DailyChallenge extends AppCompatActivity{
         int hour = calendar.get(Calendar.HOUR);
         int AMvalue=calendar.get(Calendar.AM);
 
-
-        if(minutes==0&&hour==12&&AMvalue==1){
-            questionIndex=3;
-            Toast.makeText(this, ""+minutes+""+hour, Toast.LENGTH_SHORT).show();
+        if((minutes==0&&hour==12&&AMvalue==1)||questionIndex==-1){
+            questionIndex=3; // replace with algorithm to generate question index
         }
+
+        questionIndex=3;
 
         userDatabase.child(category).child("Grade_"+challengeGradeLevel).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -113,30 +117,38 @@ public class DailyChallenge extends AppCompatActivity{
                     DailyChallengeManager.setCurrentType(category+""+challengeGradeLevel);
                     DailyChallengeManager.setCurrentQuestionData((Map<String, Object>)questionsList.get(questionIndex));
                     loadChallenge();
-                    //saveInProperties(category+""+challengeGradeLevel, (Map<String, Object>)questionsList.get(1));
-
                 }
             }
         });
 
     }
 
-    private void saveInProperties(String currentType, Map<String, Object> metaData){
-        String filePath = getApplicationContext().getFilesDir().getPath().toString();
+    // OnClick methods
+    public void clickedA(View view){
+        verifyAnswer("A");
+    }
 
-        try (OutputStream outputStream=new FileOutputStream(filePath+"DailyChallengeProperties.properties")){
-            Properties prop=new Properties();
+    public void clickedB(View view){
+        verifyAnswer("B");
+    }
 
-            //prop.setProperty(currentType)
+    public void clickedC(View view){
+        verifyAnswer("C");
+    }
 
-            prop.store(outputStream, null);
+    public void clickedD(View view){
+        verifyAnswer("D");
+    }
 
-            Toast.makeText(this, ""+prop.getProperty("HelloMessage"), Toast.LENGTH_SHORT).show();
+    private void verifyAnswer(String choice){
+        TextView explanationText = findViewById(R.id.explanation);
 
-
+        if((choice.equals((String)currentQuestionData.get("answer")))||("Option "+choice).equals((String)currentQuestionData.get("answer"))){
+            explanationText.setText("Correct. "+currentQuestionData.get("explanation"));
         }
-        catch(Exception e){
-            Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
+        else{
+            explanationText.setText("Incorrect. "+currentQuestionData.get("explanation"));
         }
     }
+
 }

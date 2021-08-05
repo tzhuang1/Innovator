@@ -111,7 +111,6 @@ public class MainMenuController extends AppCompatActivity {
     }
 
     public void dailyChallenge(View view){
-        //setContentView(R.layout.daily_challenge);
         startActivity(new Intent(this, DailyChallenge.class));
     }
 

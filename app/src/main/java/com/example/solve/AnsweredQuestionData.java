@@ -5,13 +5,13 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class AnsweredQuestionData {
     private Question question;
-    private String answer;
+    private String userAnswer;
     //private boolean isAnswerCorrect;
 
     public AnsweredQuestionData(Question question, String answer)
     {
         this.question = question;
-        this.answer = answer;
+        this.userAnswer = answer;
         //this.isAnswerCorrect = question.getAnswer().equals(answer);
     }
     public Question getQuestion()
@@ -20,7 +20,7 @@ public class AnsweredQuestionData {
     }
     public String getAnswer()
     {
-        return answer;
+        return userAnswer;
     }
 
     public void setQuestion(Question question)
@@ -29,11 +29,11 @@ public class AnsweredQuestionData {
     }
     public void setAnswer(String answer)
     {
-        this.answer = answer;
+        this.userAnswer = answer;
     }
     public boolean getIsAnswerCorrect()
     {
-        return question.getAnswer().equals(answer);
+        return question.getAnswer().equals(userAnswer);
     }
 
 }
