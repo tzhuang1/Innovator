@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import info.hoang8f.widget.FButton;
 
@@ -81,35 +82,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         currentUserID=InnovatorApplication.getUser().getId();
         firestoreDB = FirebaseFirestore.getInstance();
 
-        firestoreDB.collection("726586736827487891212").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if(!queryDocumentSnapshots.isEmpty()){
-                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-
-                    Toast.makeText(QuestionMainActivity.this, ""+list.get(1).get("question"), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        Question temp = new Question("q", "a", "b", "c", "d", "answ", "expl", "ca");
-        firestoreDB.collection("726586736827487891212").document("Math_10_0").set(new AnsweredQuestionData(temp, "YES")).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(QuestionMainActivity.this, "Succes added", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        firestoreDB.collection("726586736827487891212").document("LKASJDKL").update("userAnswer", "NO").addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-
-            }
-        });
-
-        //firestoreDB.collection("726586736827487891212").document("MATH!)").set
-
-
+        answeredQuestionList=new ArrayList<AnsweredQuestionData>();
 
         //------------------------------------------------------------------view
         super.onCreate(savedInstanceState);
@@ -185,15 +158,23 @@ public class QuestionMainActivity extends AppCompatActivity {
         });
     }
 
-    private void savePerUserFirebaseQuestionsList() {
+    private void savePerUserFirebaseQuestionsList(AnsweredQuestionData currentAnsweredQuestion) {
         //get current userID, if userID is empty, then don't save anything
         if(InnovatorApplication.getUser() != null) {
-//            DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Questions_History").child(InnovatorApplication.getUser().getId());
-//            if(qListRef != null)
-//            {
-//                qListRef.setValue(answeredQuestionList);
-//            }
-            //firestoreDB.collection(currentUserID).document().set()
+            int questionNumber = currentAnsweredQuestion.getQuestion().getId();
+            String currentGrade=TopicManager.getGradeLevel();
+            try{
+               firestoreDB.collection("User_"+currentUserID).document("Math"+currentGrade+"_"+questionNumber).set(currentAnsweredQuestion).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                    public void onSuccess(Void unused) {
+                    //Toast.makeText(QuestionMainActivity.this, "Question complete added to user", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            catch(Exception e){
+                Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
 
         }
     }
@@ -207,16 +188,17 @@ public class QuestionMainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Object myData = dataSnapshot.getValue();
                 questionsList = new ArrayList<Question>();
-                List<HashMap<Object, Object>> listOfQuestions = (List<HashMap<Object, Object>>)dataSnapshot.getValue();
+                List<Map<String, Object>> listOfQuestions = (List<Map<String, Object>>)(dataSnapshot.getValue());
                 for(int i = 0; i < listOfQuestions.size(); i++) {
-                    HashMap<Object, Object> entry = listOfQuestions.get(i);
+                    Map<String, Object> entry = listOfQuestions.get(i);
                     try{
                         if(entry != null) {
-                            //String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber
-                            Question newQuestion = new Question(entry.get("question").toString(), entry.get("optA").toString(), entry.get("optB").toString(), entry.get("optC").toString(), entry.get("optD").toString(),
-                                    entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), Integer.parseInt(entry.get("questionPicNumber").toString()), Integer.parseInt(entry.get("explanationPicNumber").toString()));
-                            newQuestion.setId(i);
-                            questionsList.add(newQuestion);
+                            if(retrieveDataPoints(entry)){
+                                Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
+                                                 entry.get("answer")+"", entry.get("explanation")+"", entry.get("category")+"", Integer.parseInt(entry.get("questionPicNumber")+""), Integer.parseInt(entry.get("explanationPicNumber")+""));
+                                newQuestion.setId(i);
+                                questionsList.add(newQuestion);
+                            }
                         }
                     }
                     catch (Exception ex) {
@@ -331,7 +313,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                 else {
                     currentAnsweredQuestion.setAnswer(answerChosen);
                 }
-                savePerUserFirebaseQuestionsList();
+                savePerUserFirebaseQuestionsList(currentAnsweredQuestion);
 
             }
     }
@@ -699,5 +681,27 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonB.setEnabled(true);
         buttonC.setEnabled(true);
         buttonD.setEnabled(true);
+    }
+
+    private boolean retrieveDataPoints(Map<String, Object> databaseStorage){
+        Object question, opta, optb, optc, optd, answer, explanation, category, picNumber, exPicNumber;
+
+        question=databaseStorage.get("question");
+        opta=databaseStorage.get("optA");
+        optb=databaseStorage.get("optB");
+        optc=databaseStorage.get("optC");
+        optd=databaseStorage.get("optD");
+        answer=databaseStorage.get("answer");
+        explanation=databaseStorage.get("explanation");
+        category=databaseStorage.get("category");
+
+        picNumber=databaseStorage.get("questionPicNumber");
+        exPicNumber=databaseStorage.get("explanationPicNumber");
+
+        if(question==null||opta==null||optb==null||optc==null||optd==null||answer==null||explanation==null||category==null||picNumber==null||exPicNumber==null){
+            return false;
+        }
+        return true;
+
     }
 }

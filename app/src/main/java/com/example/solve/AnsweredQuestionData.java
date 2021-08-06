@@ -6,13 +6,13 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class AnsweredQuestionData {
     private Question question;
     private String userAnswer;
-    //private boolean isAnswerCorrect;
+    private boolean isAnswerCorrect;
 
     public AnsweredQuestionData(Question question, String answer)
     {
         this.question = question;
         this.userAnswer = answer;
-        //this.isAnswerCorrect = question.getAnswer().equals(answer);
+        this.isAnswerCorrect = (question.getAnswer().equals(answer) || ("Option "+question.getAnswer()).equals(answer));
     }
     public Question getQuestion()
     {

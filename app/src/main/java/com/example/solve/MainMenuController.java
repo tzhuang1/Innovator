@@ -63,6 +63,7 @@ public class MainMenuController extends AppCompatActivity {
     private boolean isUserSignedIn(){
         FirebaseUser user=auth.getCurrentUser();
         if(user!=null){
+            instantiateUserData();
             return true;
         }
         return false;
@@ -75,9 +76,10 @@ public class MainMenuController extends AppCompatActivity {
 
         auth=FirebaseAuth.getInstance();
 
-        isUserSignedIn();
         googleAccount=GoogleSignIn.getLastSignedInAccount(this);
         userDatabase=FirebaseDatabase.getInstance().getReference();
+        isUserSignedIn();
+
 
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, HomeController.class, null).commit();
 
