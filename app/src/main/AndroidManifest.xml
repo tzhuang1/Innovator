@@ -32,6 +32,11 @@
                 <action android:name="android.intent.action.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name=".PastProblems">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".QuestionMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />

@@ -90,12 +90,6 @@ public class QuestionMainActivity extends AppCompatActivity {
 
         //Intent intent = getIntent();
 
-        try{
-            Toast.makeText(this, ""+TopicManager.getQuestionFolderName(), Toast.LENGTH_SHORT).show();
-        }
-        catch(Exception e){
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
 
 
         //Initializing variables

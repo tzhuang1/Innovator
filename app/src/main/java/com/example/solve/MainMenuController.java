@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,14 +97,7 @@ public class MainMenuController extends AppCompatActivity {
 
     // OnClick listeners
     public void seePastProblems(View view){
-        setContentView(R.layout.all_past_problems);
-
-        RelativeLayout problemsPastUI = (RelativeLayout)findViewById(R.id.past_problems_relative_layout);
-        PastProblems userCompletedProblems= new PastProblems(problemsPastUI, userDatabase);
-
-        userCompletedProblems.populateLayout();
-
-
+        startActivity(new Intent(this, PastProblems.class));
     }
 
     public void returnToHome(View view){
