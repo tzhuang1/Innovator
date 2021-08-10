@@ -1,6 +1,7 @@
 package com.example.solve;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -58,6 +59,8 @@ public class PastProblems extends AppCompatActivity{
                     List<DocumentSnapshot> dataList=queryDocumentSnapshots.getDocuments();
                     int index=0;
                     for(DocumentSnapshot d : dataList){
+                        String selectedAnswer = d.get("answer").toString();
+
                         Map<String, Object> questionData = (Map<String, Object>)d.get("question");
                         Button b = new Button(pastProblemsLayout.getContext());
                         if(questionData.get("question").toString().length()<45){
@@ -70,12 +73,10 @@ public class PastProblems extends AppCompatActivity{
                         b.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
-
                                 setContentView(R.layout.single_past_problem);
                                 Toast.makeText(PastProblems.this, "dasjkljklasdjklasdjklasdjkl", Toast.LENGTH_LONG).show();
 
-
+                                String correctAnswer=questionData.get("answer").toString();
                                 try{
                                     Button choiceA = findViewById(R.id.pastAnswerA);
                                     Button choiceB=findViewById(R.id.pastAnswerB);
@@ -85,6 +86,13 @@ public class PastProblems extends AppCompatActivity{
                                     TextView questionText=findViewById(R.id.pastQuestionDisplay);
                                     TextView explanationText=findViewById(R.id.pastExplanation);
 
+                                    Map<String, Button> references = new HashMap<String, Button>(){{
+                                       put("Option A", choiceA);
+                                       put("Option B", choiceB);
+                                       put("Option C", choiceC);
+                                       put("Option D", choiceD);
+                                    }};
+
                                     choiceA.setText(questionData.get("optA").toString());
                                     choiceB.setText(questionData.get("optB").toString());
                                     choiceC.setText(questionData.get("optC").toString());
@@ -92,12 +100,18 @@ public class PastProblems extends AppCompatActivity{
 
                                     questionText.setText(questionData.get("question").toString());
                                     explanationText.setText(questionData.get("explanation").toString());
+
+                                    references.get("Option "+correctAnswer).setBackgroundColor(Color.GREEN);
+                                    references.get("Option "+correctAnswer).setTextColor(Color.WHITE);
+
+                                    if(!("Option "+correctAnswer).equals(selectedAnswer)){
+                                        references.get(selectedAnswer).setBackgroundColor(Color.RED);
+                                        references.get(selectedAnswer).setTextColor(Color.WHITE);
+                                    }
                                 }
                                 catch(Exception e){
                                     Toast.makeText(PastProblems.this, "choiceA button is null: "+e.toString(), Toast.LENGTH_SHORT).show();
                                 }
-
-
                             }
                         });
                         pastProblemsLayout.addView(b);
@@ -123,5 +137,5 @@ public class PastProblems extends AppCompatActivity{
     public void returnToHome(View v){
         startActivity(new Intent(this, MainMenuController.class));
     }
-
+    
 }

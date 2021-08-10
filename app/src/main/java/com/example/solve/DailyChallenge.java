@@ -151,4 +151,26 @@ public class DailyChallenge extends AppCompatActivity{
         }
     }
 
+    private boolean retrieveDataPoints(Map<String, Object> databaseStorage){
+        Object question, opta, optb, optc, optd, answer, explanation, category, picNumber, exPicNumber;
+
+        question=databaseStorage.get("question");
+        opta=databaseStorage.get("optA");
+        optb=databaseStorage.get("optB");
+        optc=databaseStorage.get("optC");
+        optd=databaseStorage.get("optD");
+        answer=databaseStorage.get("answer");
+        explanation=databaseStorage.get("explanation");
+        category=databaseStorage.get("category");
+
+        picNumber=databaseStorage.get("questionPicNumber");
+        exPicNumber=databaseStorage.get("explanationPicNumber");
+
+        if(question==null||opta==null||optb==null||optc==null||optd==null||answer==null||explanation==null||category==null||picNumber==null||exPicNumber==null){
+            return false;
+        }
+        return true;
+
+    }
+
 }

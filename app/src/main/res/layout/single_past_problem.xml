@@ -66,9 +66,7 @@
             android:layout_below="@+id/pastAnswerA"
             android:text="B."
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp"
-            android:background="@color/red"
-            android:textColor="@color/white"/>
+            tools:layout_editor_absoluteY="571dp" />
 
         <Button
             android:id="@+id/pastAnswerC"
@@ -86,9 +84,7 @@
             android:layout_below="@+id/pastAnswerC"
             android:text="D."
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp"
-            android:background="@color/green"
-            android:textColor="@color/white"/>
+            tools:layout_editor_absoluteY="571dp" />
 
     </RelativeLayout>
 
