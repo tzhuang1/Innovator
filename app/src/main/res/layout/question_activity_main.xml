@@ -24,7 +24,7 @@
             android:text="Loading Questions\n Please Wait..."
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="25dp"
             android:gravity="center_horizontal" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -41,27 +41,34 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/question_pic_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:text="Question with pic text"
-                android:textColor="@color/grey"
-                android:textSize="25sp"
-                android:scrollHorizontally="false"
-                android:layout_weight="0.5"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="25sp"
-                fbutton:fontFamily="@font/karla"
-                fbutton:layout_constraintBottom_toBottomOf="parent"
-                fbutton:layout_constraintRight_toRightOf="parent"
-                fbutton:layout_constraintTop_toTopOf="parent"
-                fbutton:layout_constraintLeft_toRightOf="@id/question_picture"/>
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="35dp">
+                <TextView
+                    android:id="@+id/question_pic_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="Question with pic text"
+                    android:textColor="@color/grey"
+                    android:textSize="25sp"
+                    android:scrollHorizontally="false"
+                    android:layout_weight="0.5"
+                    android:autoSizeTextType="uniform"
+                    android:autoSizeMaxTextSize="20sp"
+                    fbutton:fontFamily="@font/karla"
+                    fbutton:layout_constraintBottom_toBottomOf="parent"
+                    fbutton:layout_constraintRight_toRightOf="parent"
+                    fbutton:layout_constraintTop_toTopOf="parent"
+                    fbutton:layout_constraintLeft_toRightOf="@id/question_picture"/>
+            </ScrollView>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -87,7 +94,7 @@
             android:gravity="center"
             android:text="Question with just text"
             android:textColor="@color/grey"
-            android:textSize="25sp"
+            android:textSize="20sp"
             fbutton:fontFamily="@font/karla"
             fbutton:layout_constraintBottom_toBottomOf="parent"
             fbutton:layout_constraintRight_toRightOf="parent"

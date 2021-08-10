@@ -88,7 +88,6 @@ public class TopicSelectFragment extends Fragment {
         SharedPreferences saved;
         saved = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         grade = saved.getString("grade", "3");
-        Toast.makeText(getActivity(), ""+grade, Toast.LENGTH_SHORT).show();
         //------------------------------listeners-----------------------------
         startPracticeButton.setOnClickListener(new View.OnClickListener() {
             @Override

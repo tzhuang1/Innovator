@@ -81,7 +81,6 @@ public class MainMenuController extends AppCompatActivity {
         userDatabase=FirebaseDatabase.getInstance().getReference();
         isUserSignedIn();
 
-
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, HomeController.class, null).commit();
 
         if(googleAccount!=null){
@@ -221,9 +220,6 @@ public class MainMenuController extends AppCompatActivity {
                 if(task.isSuccessful()){
                     if(googleAccount==null){
                         return;
-                    }
-                    else{
-                        Toast.makeText(MainMenuController.this, ""+googleAccount.getEmail(), Toast.LENGTH_SHORT).show();
                     }
                     try{
                         Map<String, Object> allUsers = (Map<String, Object>) task.getResult().getValue();
