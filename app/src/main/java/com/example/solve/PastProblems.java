@@ -69,12 +69,13 @@ public class PastProblems extends AppCompatActivity{
                         else{
                             b.setText(questionData.get("question").toString().substring(0, 44)+"...");
                         }
+
+
                         b.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                         b.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 setContentView(R.layout.single_past_problem);
-                                Toast.makeText(PastProblems.this, "dasjkljklasdjklasdjklasdjkl", Toast.LENGTH_LONG).show();
 
                                 String correctAnswer=questionData.get("answer").toString();
                                 try{
@@ -83,8 +84,8 @@ public class PastProblems extends AppCompatActivity{
                                     Button choiceC=findViewById(R.id.pastAnswerC);
                                     Button choiceD=findViewById(R.id.pastAnswerD);
 
-                                    TextView questionText=findViewById(R.id.pastQuestionDisplay);
-                                    TextView explanationText=findViewById(R.id.pastExplanation);
+                                    TextView questionText=findViewById(R.id.questionDisplay);
+                                    TextView explanationText=findViewById(R.id.explanation);
 
                                     Map<String, Button> references = new HashMap<String, Button>(){{
                                        put("Option A", choiceA);
@@ -98,8 +99,8 @@ public class PastProblems extends AppCompatActivity{
                                     choiceC.setText(questionData.get("optC").toString());
                                     choiceD.setText(questionData.get("optD").toString());
 
-                                    questionText.setText(questionData.get("question").toString());
-                                    explanationText.setText(questionData.get("explanation").toString());
+                                    questionText.setText("Question: "+questionData.get("question").toString());
+                                    explanationText.setText("Explanation: "+questionData.get("explanation").toString());
 
                                     references.get("Option "+correctAnswer).setBackgroundColor(Color.GREEN);
                                     references.get("Option "+correctAnswer).setTextColor(Color.WHITE);
@@ -108,6 +109,13 @@ public class PastProblems extends AppCompatActivity{
                                         references.get(selectedAnswer).setBackgroundColor(Color.RED);
                                         references.get(selectedAnswer).setTextColor(Color.WHITE);
                                     }
+
+                                    if(questionData.get("passage")!=null){
+                                        TextView passageText=findViewById(R.id.text_view);
+                                        passageText.setText("Passage: "+questionData.get("passage").toString());
+                                    }
+
+
                                 }
                                 catch(Exception e){
                                     Toast.makeText(PastProblems.this, "choiceA button is null: "+e.toString(), Toast.LENGTH_SHORT).show();

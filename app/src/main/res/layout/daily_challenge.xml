@@ -5,20 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/questionDisplay"
-        android:layout_width="363dp"
-        android:layout_height="82dp"
-        android:layout_below="@+id/dailyChallengeText"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="25dp"
-        android:text="Question"
-        app:layout_constraintBottom_toTopOf="@+id/answers"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyChallengeText"
-        app:layout_constraintVertical_bias="0.215" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
@@ -55,74 +41,89 @@
         android:fontFamily="@font/karla"
         android:layout_below="@+id/constraintLayout3"/>
 
+    <ScrollView
+        android:layout_height="200dp"
+        android:layout_width="360dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/dailyChallengeText"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/topScroll">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/passageText"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/questionDisplay"
+                android:text="Quesiton"
+                android:layout_below="@+id/passageText"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/questionDisplay"
+                android:layout_marginTop="20dp"
+                android:id="@+id/questionPic"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/explanation"
+                android:layout_below="@+id/questionPic"
+                android:layout_marginTop="22dp"
+                />
+        </RelativeLayout>
+
+    </ScrollView>
+
     <RelativeLayout
-        android:id="@+id/answers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_below="@+id/explanationScroll">
+        android:layout_width="360dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topScroll"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        >
 
         <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/answerA"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:onClick="clickedA"
-            android:text="A."
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp" />
-
+            />
         <Button
-            android:id="@+id/answerB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/answerB"
             android:layout_below="@+id/answerA"
             android:onClick="clickedB"
-            android:text="B."
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp" />
-
+            />
         <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/answerC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/answerB"
+            android:layout_below="@id/answerB"
             android:onClick="clickedC"
-            android:text="C."
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp" />
+            />
 
         <Button
-            android:id="@+id/answerD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/answerC"
-            android:onClick="clickedD"
-            android:text="D."
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp" />
+            android:id="@+id/answerD"
+            android:layout_below="@id/answerC"
+            android:onClick="clickedD"/>
 
     </RelativeLayout>
 
-
-    <ScrollView
-        android:id="@+id/explanationScroll"
-        android:layout_width="369dp"
-        android:layout_height="94dp"
-        android:layout_below="@+id/questionDisplay"
-        android:layout_marginTop="15dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp">
-
-        <TextView
-            android:id="@+id/explanation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:text=""
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="372dp" />
-
-    </ScrollView>
 
 
 
