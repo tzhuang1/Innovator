@@ -37,8 +37,8 @@ class SettingsFragment : Fragment() {
     private lateinit var viewModel: SettingsViewModel
 
     override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.settings_fragment, container, false)
     }
@@ -85,16 +85,16 @@ class SettingsFragment : Fragment() {
         //Set notification time
         notifsTimeBtn.setOnClickListener(View.OnClickListener {
             val timePickerDialog = TimePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                { view, hourOfDay, minute ->
-                    displayHour = hourOfDay
-                    displayMinute = minute
+                    { view, hourOfDay, minute ->
+                        displayHour = hourOfDay
+                        displayMinute = minute
 
-                    val calendar: Calendar = Calendar.getInstance()
-                    calendar.set(0, 0, 0, displayHour, displayMinute)
+                        val calendar: Calendar = Calendar.getInstance()
+                        calendar.set(0, 0, 0, displayHour, displayMinute)
 
-                    // Display Selected date in textbox
-                    notifsTimeDisplay.setText(DateFormat.format("hh:mm aa", calendar))
-                }, 12, 0, false)
+                        // Display Selected date in textbox
+                        notifsTimeDisplay.setText(DateFormat.format("hh:mm aa", calendar))
+                    }, 12, 0, false)
             timePickerDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
 
             timePickerDialog.updateTime(displayHour, displayMinute)
@@ -128,8 +128,8 @@ class SettingsFragment : Fragment() {
 
                 //Notifications
                 val intent = Intent(
-                    this.activity,
-                    ReminderBroadcast::class.java
+                        this.activity,
+                        ReminderBroadcast::class.java
                 )
                 val pendingIntent = PendingIntent.getBroadcast(this.activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
                 val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -157,7 +157,7 @@ class SettingsFragment : Fragment() {
                     calendar[Calendar.SECOND] = 0
 
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY, pendingIntent);
+                            AlarmManager.INTERVAL_DAY, pendingIntent);
                 }
                 else{
                     alarmManager.cancel(pendingIntent);
@@ -179,7 +179,7 @@ class SettingsFragment : Fragment() {
             val channel = NotificationChannel("notif", name, importance)
             channel.description = description
             val notificationManager: NotificationManager? =
-                context?.let { getSystemService(it, NotificationManager::class.java) }
+                    context?.let { getSystemService(it, NotificationManager::class.java) }
             notificationManager!!.createNotificationChannel(channel)
         }
     }

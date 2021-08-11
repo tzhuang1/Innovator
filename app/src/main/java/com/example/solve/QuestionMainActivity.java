@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -38,6 +42,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import info.hoang8f.widget.FButton;
 
@@ -64,19 +69,28 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     Question currentQuestion;
     UserData currentUser;
-    Topic currentTopic;
+
     List<Question> questionsList;
     List<AnsweredQuestionData> answeredQuestionList;
     int qid = 0;
 
+    private FirebaseFirestore firestoreDB;
+    private String currentUserID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        currentUserID=InnovatorApplication.getUser().getId();
+        firestoreDB = FirebaseFirestore.getInstance();
+
+        answeredQuestionList=new ArrayList<AnsweredQuestionData>();
+
         //------------------------------------------------------------------view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity_main);
-        Intent intent = getIntent();
-        currentTopic = (Topic) intent.getSerializableExtra("TOPIC");
-        //Toast.makeText(this,topic, Toast.LENGTH_LONG ).show();
+
+        //Intent intent = getIntent();
+
+
 
         //Initializing variables
 
@@ -110,11 +124,12 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonD.setTypeface(tb);
         resetColor();
 
-        getFirebaseQuestionsList(currentTopic);
-        /*if(currentUser != null)
-            getPerUserFirebaseQuestionsList(currentUser.getId());//not reached
-
-         */
+        try{
+            getFirebaseQuestionsList();
+        }
+        catch(Exception e){
+            Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void getPerUserFirebaseQuestionsList(String userID){//TODO: find path relative to topic (switch statement)
@@ -137,36 +152,47 @@ public class QuestionMainActivity extends AppCompatActivity {
         });
     }
 
-    private void savePerUserFirebaseQuestionsList() {
+    private void savePerUserFirebaseQuestionsList(AnsweredQuestionData currentAnsweredQuestion) {
         //get current userID, if userID is empty, then don't save anything
-        if(currentUser != null && currentUser.getId() != null) {
-            DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference().child("UserData").child("Questions_History").child(currentUser.getId());
-            if(qListRef != null)
-            {
-                qListRef.setValue(answeredQuestionList);
+        if(InnovatorApplication.getUser() != null) {
+            int questionNumber = currentAnsweredQuestion.getQuestion().getId();
+            String currentGrade=TopicManager.getGradeLevel();
+            try{
+               firestoreDB.collection("User_"+currentUserID).document("Math"+currentGrade+"_"+questionNumber).set(currentAnsweredQuestion).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                    public void onSuccess(Void unused) {
+                    //Toast.makeText(QuestionMainActivity.this, "Question complete added to user", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
+            catch(Exception e){
+                Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
         }
     }
 
-    private void getFirebaseQuestionsList(Topic topic){
+    private void getFirebaseQuestionsList(){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Math")
-                .child(topic.getQuestionFolderName());
+                .child(TopicManager.getQuestionFolderName());
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Object myData = dataSnapshot.getValue();
                 questionsList = new ArrayList<Question>();
-                List<HashMap<Object, Object>> listOfQuestions = (List<HashMap<Object, Object>>)dataSnapshot.getValue();
+                List<Map<String, Object>> listOfQuestions = (List<Map<String, Object>>)(dataSnapshot.getValue());
                 for(int i = 0; i < listOfQuestions.size(); i++) {
-                    HashMap<Object, Object> entry = listOfQuestions.get(i);
+                    Map<String, Object> entry = listOfQuestions.get(i);
                     try{
                         if(entry != null) {
-                            //String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber
-                            Question newQuestion = new Question(entry.get("question").toString(), entry.get("optA").toString(), entry.get("optB").toString(), entry.get("optC").toString(), entry.get("optD").toString(),
-                                    entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), Integer.parseInt(entry.get("questionPicNumber").toString()), Integer.parseInt(entry.get("explanationPicNumber").toString()));
-                            newQuestion.setId(i);
-                            questionsList.add(newQuestion);
+                            if(retrieveDataPoints(entry)){
+                                Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
+                                                 entry.get("answer")+"", entry.get("explanation")+"", entry.get("category")+"", Integer.parseInt(entry.get("questionPicNumber")+""), Integer.parseInt(entry.get("explanationPicNumber")+""));
+                                newQuestion.setId(i);
+                                questionsList.add(newQuestion);
+                            }
                         }
                     }
                     catch (Exception ex) {
@@ -191,22 +217,22 @@ public class QuestionMainActivity extends AppCompatActivity {
         });
     }
 
-    private void getFirebaseUserData(){
-        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
-        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<UserData> type = new GenericTypeIndicator<UserData>() {};
-                currentUser = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
-                Log.i("Get User Data", "Firebase data fetched");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FB getUserData", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
-            }
-        });
-    }
+//    private void getFirebaseUserData(){
+//        DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference("UserData");
+//        qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                GenericTypeIndicator<UserData> type = new GenericTypeIndicator<UserData>() {};
+//                currentUser = dataSnapshot.getValue(type); //DatabaseException: Class java.util.List has generic type parameters, please use GenericTypeIndicator instead
+//                Log.i("Get User Data", "Firebase data fetched");
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e("FB getUserData", "onCancelled with "+databaseError.getMessage()+", details: "+databaseError.getDetails());
+//            }
+//        });
+//    }
 
     public void updateQueueAndOptions() {
         //sets visibility of layout according to what pictures are in the question
@@ -230,7 +256,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             questionText.setVisibility(GONE);
             questionPicLayout.setVisibility(View.VISIBLE);
             questionPicText.setText(currentQuestion.getQuestion());
-            loadQuestionPic(currentTopic, currentQuestion.getPicNumber());
+            loadQuestionPic(currentQuestion.getPicNumber());
             //A
             picAnswersLayout.setVisibility(GONE);
             textAnswersLayout.setVisibility(View.VISIBLE);
@@ -246,17 +272,17 @@ public class QuestionMainActivity extends AppCompatActivity {
             //A
             picAnswersLayout.setVisibility(View.VISIBLE);
             textAnswersLayout.setVisibility(GONE);
-            loadAnswerPics(currentTopic, currentQuestion.getOptAPicNumber(), currentQuestion.getOptBPicNumber(), currentQuestion.getOptCPicNumber(), currentQuestion.getOptDPicNumber());
+            loadAnswerPics(currentQuestion.getOptAPicNumber(), currentQuestion.getOptBPicNumber(), currentQuestion.getOptCPicNumber(), currentQuestion.getOptDPicNumber());
         }else{ //all pictures
             //Q
             questionText.setVisibility(GONE);
             questionPicLayout.setVisibility(View.VISIBLE);
             questionPicText.setText(currentQuestion.getQuestion());
-            loadQuestionPic(currentTopic, currentQuestion.getPicNumber());
+            loadQuestionPic(currentQuestion.getPicNumber());
             //A
             picAnswersLayout.setVisibility(View.VISIBLE);
             textAnswersLayout.setVisibility(GONE);
-            loadAnswerPics(currentTopic, currentQuestion.getOptAPicNumber(), currentQuestion.getOptBPicNumber(), currentQuestion.getOptCPicNumber(), currentQuestion.getOptDPicNumber());
+            loadAnswerPics(currentQuestion.getOptAPicNumber(), currentQuestion.getOptBPicNumber(), currentQuestion.getOptCPicNumber(), currentQuestion.getOptDPicNumber());
         }
 
     }
@@ -281,17 +307,17 @@ public class QuestionMainActivity extends AppCompatActivity {
                 else {
                     currentAnsweredQuestion.setAnswer(answerChosen);
                 }
-                savePerUserFirebaseQuestionsList();
+                savePerUserFirebaseQuestionsList(currentAnsweredQuestion);
 
             }
     }
 
-    private void loadQuestionPic(Topic topic, int questionPicID){
+    private void loadQuestionPic(int questionPicID){
         if(questionPicID < 0)return;
         StorageReference qImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
-                .child(topic.getPicRootFolderName())
+                .child(TopicManager.getPicRootFolderName())
                 .child("Question_Pics")
-                .child(topic.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
+                .child(TopicManager.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
 
         qImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
@@ -332,13 +358,13 @@ public class QuestionMainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadAnswerPics(Topic topic, int optAID, int optBID, int optCID, int optDID){
+    private void loadAnswerPics(int optAID, int optBID, int optCID, int optDID){
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         if(optAID > -1){
             StorageReference optAImageRef = storageReference
-                    .child(topic.getPicRootFolderName())
+                    .child(TopicManager.getPicRootFolderName())
                     .child("Answer_Pics")
-                    .child(topic.getPicNamePrefix()+"_a_"+optAID+".PNG");   //but what if it doesn't exist?
+                    .child(TopicManager.getPicNamePrefix()+"_a_"+optAID+".PNG");   //but what if it doesn't exist?
             optAImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
@@ -356,9 +382,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         }
         if(optBID > -1){
             StorageReference optBImageRef = storageReference
-                    .child(topic.getPicRootFolderName())
+                    .child(TopicManager.getPicRootFolderName())
                     .child("Answer_Pics")
-                    .child(topic.getPicNamePrefix()+"_a_"+optBID+".PNG");   //but what if it doesn't exist?
+                    .child(TopicManager.getPicNamePrefix()+"_a_"+optBID+".PNG");   //but what if it doesn't exist?
             optBImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
@@ -376,9 +402,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         }
         if(optCID > -1){
             StorageReference optCImageRef = storageReference
-                    .child(topic.getPicRootFolderName())
+                    .child(TopicManager.getPicRootFolderName())
                     .child("Answer_Pics")
-                    .child(topic.getPicNamePrefix()+"_a_"+optCID+".PNG");   //but what if it doesn't exist?
+                    .child(TopicManager.getPicNamePrefix()+"_a_"+optCID+".PNG");   //but what if it doesn't exist?
             optCImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
@@ -396,9 +422,9 @@ public class QuestionMainActivity extends AppCompatActivity {
         }
         if(optDID > -1){
             StorageReference optDImageRef = storageReference
-                    .child(topic.getPicRootFolderName())
+                    .child(TopicManager.getPicRootFolderName())
                     .child("Answer_Pics")
-                    .child(topic.getPicNamePrefix()+"_a_"+optDID+".PNG");   //but what if it doesn't exist?
+                    .child(TopicManager.getPicNamePrefix()+"_a_"+optDID+".PNG");   //but what if it doesn't exist?
             optDImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
@@ -649,5 +675,27 @@ public class QuestionMainActivity extends AppCompatActivity {
         buttonB.setEnabled(true);
         buttonC.setEnabled(true);
         buttonD.setEnabled(true);
+    }
+
+    private boolean retrieveDataPoints(Map<String, Object> databaseStorage){
+        Object question, opta, optb, optc, optd, answer, explanation, category, picNumber, exPicNumber;
+
+        question=databaseStorage.get("question");
+        opta=databaseStorage.get("optA");
+        optb=databaseStorage.get("optB");
+        optc=databaseStorage.get("optC");
+        optd=databaseStorage.get("optD");
+        answer=databaseStorage.get("answer");
+        explanation=databaseStorage.get("explanation");
+        category=databaseStorage.get("category");
+
+        picNumber=databaseStorage.get("questionPicNumber");
+        exPicNumber=databaseStorage.get("explanationPicNumber");
+
+        if(question==null||opta==null||optb==null||optc==null||optd==null||answer==null||explanation==null||category==null||picNumber==null||exPicNumber==null){
+            return false;
+        }
+        return true;
+
     }
 }

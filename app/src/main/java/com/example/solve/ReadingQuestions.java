@@ -18,18 +18,22 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import info.hoang8f.widget.FButton;
 
@@ -52,17 +56,24 @@ public class ReadingQuestions extends AppCompatActivity {
 
     private Question currentQuestion;
     private UserData currentUser;
-    private Topic currentTopic;
+    //private Topic currentTopic;
     private List<Question> questionsList;
     private List<AnsweredQuestionData> answeredQuestionList;
     private int qid = 0;
 
+    private FirebaseFirestore firestoreDB;
+    private String currentUserID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        firestoreDB=FirebaseFirestore.getInstance();
+        currentUserID=InnovatorApplication.getUser().getId();
+
+        answeredQuestionList=new ArrayList<AnsweredQuestionData>();
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_questions);
-        Intent intent = getIntent();
-        currentTopic = (Topic) intent.getSerializableExtra("TOPIC");
 
         //initializing variables
         loadingScreen = findViewById(R.id.loading_screen);
@@ -88,35 +99,36 @@ public class ReadingQuestions extends AppCompatActivity {
 
         //TODO: From database get all values
 
-        getFirebaseQuestionsList(currentTopic);
+        getFirebaseQuestionsList();
+
     }
 
-    private void getFirebaseQuestionsList(Topic topic){
+    private int checkIfNull(Map<String, Object> entry, String key){
+        int keyValue=-1;
+        if(entry.get(key) !=null){
+            keyValue=Integer.parseInt(entry.get(key).toString());
+        }
+        return keyValue;
+    }
+
+    private void getFirebaseQuestionsList(){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Reading")
-                .child(topic.getQuestionFolderName());
+                .child(TopicManager.getQuestionFolderName());
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Object myData = dataSnapshot.getValue();
                 questionsList = new ArrayList<Question>();
-                //List<HashMap<Object, Object>> listOfQuestions = (List<HashMap<Object, Object>>)dataSnapshot.getValue();
-                List<HashMap<Object, Object>> listOfQuestions = (List<HashMap<Object, Object>>)dataSnapshot.getValue();
+                Toast.makeText(ReadingQuestions.this, ""+dataSnapshot.getValue().getClass().toString(), Toast.LENGTH_SHORT).show();
+                List<Map<String, Object>> listOfQuestions = (List<Map<String, Object>>)dataSnapshot.getValue();
                 for(int i = 0; i < listOfQuestions.size(); i++) {
-                    HashMap<Object, Object> entry = listOfQuestions.get(i);
+                    Map<String, Object> entry = listOfQuestions.get(i);
                     try{
                         if(entry != null) {
-                            int pictureNum = -1;
-                            if(entry.get("questionPicNumber") != null){
-                                pictureNum = Integer.parseInt(entry.get("questionPicNumber").toString());
-                            }
+                            int pictureNum=checkIfNull(entry, "questionPicNumber");
+                            int explanationNum=checkIfNull(entry, "explanationPicNumber");
 
-                            int explanationNum = -1;
-                            if(entry.get("explanationPicNumber") != null){
-                                explanationNum = Integer.parseInt(entry.get("explanationPicNumber").toString());
-                            }
-
-                            //String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber
                             Question newQuestion = new Question(entry.get("question").toString(), entry.get("optA").toString(), entry.get("optB").toString(), entry.get("optC").toString(), entry.get("optD").toString(),
                                     entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), pictureNum, explanationNum,
                                     entry.get("passage").toString());
@@ -204,7 +216,27 @@ public class ReadingQuestions extends AppCompatActivity {
             else {
                 currentAnsweredQuestion.setAnswer(answerChosen);
             }
-            //savePerUserFirebaseQuestionsList();
+            savePerUserFirebaseQuestionsList(currentAnsweredQuestion);
+
+        }
+    }
+
+    private void savePerUserFirebaseQuestionsList(AnsweredQuestionData answeredQuestionData){
+        if(InnovatorApplication.getUser() != null) {
+            int questionNumber = answeredQuestionData.getQuestion().getId();
+            String currentGrade=TopicManager.getGradeLevel();
+            try{
+                firestoreDB.collection("User_"+currentUserID).document("Reading"+currentGrade+"_"+questionNumber).set(answeredQuestionData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //Toast.makeText(QuestionMainActivity.this, "Question complete added to user", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            catch(Exception e){
+                Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
 
         }
     }

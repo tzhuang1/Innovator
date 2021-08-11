@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/pastQuestionDisplay"
+        android:layout_width="366dp"
+        android:layout_height="140dp"
+        android:layout_below="@+id/constraintLayout3"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="25dp"
+        android:text="Question"
+        app:layout_constraintBottom_toTopOf="@+id/pastAnswers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+        app:layout_constraintVertical_bias="0.215" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="424dp"
+        android:layout_height="53dp"
+        android:background="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:onClick="back"
+            android:src="@drawable/ic_back_arrow_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.063"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/pastAnswers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_below="@+id/pastExplanationScroll">
+
+        <Button
+            android:id="@+id/pastAnswerA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A."
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="571dp" />
+
+        <Button
+            android:id="@+id/pastAnswerB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pastAnswerA"
+            android:text="B."
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="571dp" />
+
+        <Button
+            android:id="@+id/pastAnswerC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pastAnswerB"
+            android:text="C."
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="571dp" />
+
+        <Button
+            android:id="@+id/pastAnswerD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pastAnswerC"
+            android:text="D."
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="571dp" />
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:id="@+id/pastExplanationScroll"
+        android:layout_width="363dp"
+        android:layout_height="101dp"
+        android:layout_below="@+id/pastQuestionDisplay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
+
+        <TextView
+            android:id="@+id/pastExplanation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            tools:layout_editor_absoluteX="30dp"
+            tools:layout_editor_absoluteY="372dp" />
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

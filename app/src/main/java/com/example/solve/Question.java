@@ -17,6 +17,8 @@ public class Question {
 
     private int questionPicNumber;
 
+    private int questionNumber;
+
 
     public Question(String q, String oa, String ob, String oc, String od, String ans, String ex, String ca) {
         question = q;
@@ -167,5 +169,9 @@ public class Question {
 
     public void setExPicNumber(int expic) {
         explanationPicNumber = expic;
+    }
+
+    public void setQuestionNumber(int i){
+        questionNumber=i;
     }
 }
