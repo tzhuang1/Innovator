@@ -7,25 +7,25 @@
     android:orientation="vertical">
     <!--loading screen-->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loading_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/loading_screen"
-        android:visibility="gone"
         android:background="@color/blue"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
-            fbutton:layout_constraintTop_toTopOf="parent"
-            fbutton:layout_constraintBottom_toBottomOf="parent"
-            fbutton:layout_constraintLeft_toLeftOf="parent"
-            fbutton:layout_constraintRight_toRightOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="Loading Questions\n Please Wait..."
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="30sp"
-            android:gravity="center_horizontal" />
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintLeft_toLeftOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--Q layout-->
@@ -40,28 +40,30 @@
             android:id="@+id/question_pic_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/question_pic_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="0.5"
+                android:autoSizeMaxTextSize="25sp"
+                android:autoSizeTextType="uniform"
                 android:gravity="center"
+                android:scrollHorizontally="false"
                 android:text="Question with pic text"
                 android:textColor="@color/grey"
                 android:textSize="25sp"
-                android:scrollHorizontally="false"
-                android:layout_weight="0.5"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="25sp"
                 fbutton:fontFamily="@font/karla"
                 fbutton:layout_constraintBottom_toBottomOf="parent"
+                fbutton:layout_constraintLeft_toRightOf="@id/question_picture"
                 fbutton:layout_constraintRight_toRightOf="parent"
-                fbutton:layout_constraintTop_toTopOf="parent"
-                fbutton:layout_constraintLeft_toRightOf="@id/question_picture"/>
+                fbutton:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/question_picture"
@@ -81,7 +83,6 @@
 
         <TextView
             android:id="@+id/question_text"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
@@ -89,6 +90,7 @@
             android:text="Question with just text"
             android:textColor="@color/grey"
             android:textSize="25sp"
+            android:visibility="visible"
             fbutton:fontFamily="@font/karla"
             fbutton:layout_constraintBottom_toBottomOf="parent"
             fbutton:layout_constraintRight_toRightOf="parent"
@@ -98,14 +100,14 @@
 
     <!--A layout-->
     <LinearLayout
+        android:id="@+id/textAnswersLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".5"
         android:background="#FFFFFF"
         android:gravity="center"
-        android:id="@+id/textAnswersLayout"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonA"
@@ -115,7 +117,7 @@
             android:onClick="buttonA"
             android:text=""
             android:textColor="@color/grey"
-            fbutton:buttonColor="@color/white"/>
+            fbutton:buttonColor="@color/white" />
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonB"
@@ -125,7 +127,7 @@
             android:onClick="buttonB"
             android:text=""
             android:textColor="@color/grey"
-            fbutton:buttonColor="@color/white"/>
+            fbutton:buttonColor="@color/white" />
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonC"
@@ -135,7 +137,7 @@
             android:onClick="buttonC"
             android:text=""
             android:textColor="@color/grey"
-            fbutton:buttonColor="@color/white"/>
+            fbutton:buttonColor="@color/white" />
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonD"
@@ -145,7 +147,7 @@
             android:onClick="buttonD"
             android:text=""
             android:textColor="@color/grey"
-            fbutton:buttonColor="@color/white"/>
+            fbutton:buttonColor="@color/white" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -154,51 +156,52 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#FFFFFF"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <ImageView
+            android:id="@+id/optAPic"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/optAPic"
-            fbutton:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            fbutton:layout_constraintBottom_toTopOf="@id/optCPic"
             fbutton:layout_constraintLeft_toLeftOf="parent"
             fbutton:layout_constraintRight_toLeftOf="@id/optBPic"
-            fbutton:layout_constraintBottom_toTopOf="@id/optCPic"
-            android:layout_margin="10dp"
-            android:background="#ddd"
-            />
+            fbutton:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
             android:id="@+id/optBPic"
-            fbutton:layout_constraintTop_toTopOf="parent"
-            fbutton:layout_constraintRight_toRightOf="parent"
-            fbutton:layout_constraintLeft_toRightOf="@id/optAPic"
-            fbutton:layout_constraintBottom_toTopOf="@id/optDPic"
-            android:layout_margin="10dp"
-            android:background="#ddd"
-            />
-        <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            fbutton:layout_constraintBottom_toTopOf="@id/optDPic"
+            fbutton:layout_constraintLeft_toRightOf="@id/optAPic"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
             android:id="@+id/optCPic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:background="#ddd"
             fbutton:layout_constraintBottom_toBottomOf="parent"
             fbutton:layout_constraintLeft_toLeftOf="parent"
-            fbutton:layout_constraintTop_toBottomOf="@id/optAPic"
             fbutton:layout_constraintRight_toLeftOf="@id/optDPic"
-            android:layout_margin="10dp"
-            android:background="#ddd"
-            />
+            fbutton:layout_constraintTop_toBottomOf="@id/optAPic" />
+
         <ImageView
+            android:id="@+id/optDPic"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/optDPic"
-            fbutton:layout_constraintBottom_toBottomOf="parent"
-            fbutton:layout_constraintRight_toRightOf="parent"
-            fbutton:layout_constraintLeft_toRightOf="@id/optCPic"
-            fbutton:layout_constraintTop_toBottomOf="@id/optBPic"
             android:layout_margin="10dp"
             android:background="#ddd"
-            />
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintLeft_toRightOf="@id/optCPic"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toBottomOf="@id/optBPic" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

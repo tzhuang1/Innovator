@@ -42,9 +42,8 @@ public class ReadingQuestions extends AppCompatActivity {
 
     private Typeface tb;
 
-    private View scrollViewPassage;
+    private TextView scrollViewPassage;
     private TextView questionText;
-    private TextView passageText;
 
     private FButton buttonA, buttonB, buttonC, buttonD;
 
@@ -69,7 +68,6 @@ public class ReadingQuestions extends AppCompatActivity {
         loadingScreen.setVisibility(View.VISIBLE);
 
         scrollViewPassage = findViewById(R.id.scrollView2);
-        passageText = findViewById(R.id.txtPassage);
         questionText = findViewById(R.id.textView2);
         buttonA = (FButton) findViewById(R.id.btnA);
         buttonB = (FButton) findViewById(R.id.btnB);
@@ -79,6 +77,7 @@ public class ReadingQuestions extends AppCompatActivity {
         tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
         //Setting typefaces for textview and buttons
+        scrollViewPassage.setTypeface(tb);
         questionText.setTypeface(tb);
         buttonA.setTypeface(tb);
         buttonB.setTypeface(tb);
@@ -156,6 +155,7 @@ public class ReadingQuestions extends AppCompatActivity {
         if(!hasQPic && !hasAPics){ //text only
             //Q
             questionText.setText(currentQuestion.getQuestion());
+            questionText.setMovementMethod(new ScrollingMovementMethod());
             questionText.setVisibility(View.VISIBLE);
             //A
             buttonA.setText(currentQuestion.getOptA());
@@ -166,6 +166,7 @@ public class ReadingQuestions extends AppCompatActivity {
             //Q
             questionText.setVisibility(GONE);
             questionText.setText(currentQuestion.getQuestion());
+            questionText.setMovementMethod(new ScrollingMovementMethod());
             //A
             buttonA.setText(currentQuestion.getOptA());
             buttonB.setText(currentQuestion.getOptB());
@@ -174,6 +175,7 @@ public class ReadingQuestions extends AppCompatActivity {
         }else if(!hasQPic && hasAPics){ //text question, pic answer
             //Q
             questionText.setText(currentQuestion.getQuestion());
+            questionText.setMovementMethod(new ScrollingMovementMethod());
             questionText.setVisibility(View.VISIBLE);
             //A
         }else{ //all pictures
@@ -181,7 +183,8 @@ public class ReadingQuestions extends AppCompatActivity {
             questionText.setVisibility(GONE);
             //A
         }
-        passageText.setText(currentQuestion.getPassage());
+        scrollViewPassage.setText(currentQuestion.getPassage());
+        scrollViewPassage.setMovementMethod(new ScrollingMovementMethod());
 
     }
     private void saveHistory(int questionID, String answerChosen, Question currentQuestion) {
