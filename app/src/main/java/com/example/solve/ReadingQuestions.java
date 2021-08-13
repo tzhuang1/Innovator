@@ -379,11 +379,7 @@ public class ReadingQuestions extends AppCompatActivity {
                 //This will dismiss the dialog
                 dialogComplete.dismiss();
                 //go home
-                setContentView(R.layout.angela_activity_main);
-                HomeFragment homeFragment = new HomeFragment();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_container, homeFragment);
-                ft.commit();
+                startActivity(new Intent(ReadingQuestions.this, MainMenuController.class));
 
             }
         });

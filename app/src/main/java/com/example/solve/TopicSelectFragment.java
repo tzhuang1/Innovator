@@ -1,8 +1,10 @@
 package com.example.solve;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,8 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.content.SharedPreferences;
+import android.widget.Toast;
 
 
 public class TopicSelectFragment extends Fragment {
@@ -48,6 +51,13 @@ public class TopicSelectFragment extends Fragment {
     //------------Start practice-----------
     private Button startPracticeButton;
 
+    //----grade sent from settings---------
+    private String grade = "3";
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable @Override public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.topic_select_fragment, container, false);
@@ -74,6 +84,10 @@ public class TopicSelectFragment extends Fragment {
         radioButtonReading = view.findViewById(R.id.radioReading);
         radioButtonMath = view.findViewById(R.id.radioMath);
         radioButtonMath.setChecked(true); //by default, math is selected
+        //------------------get grade from saved settings------------------------
+        SharedPreferences saved;
+        saved = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+        grade = saved.getString("grade", "3");
         //------------------------------listeners-----------------------------
         startPracticeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,21 +97,10 @@ public class TopicSelectFragment extends Fragment {
                 if(radioButtonReading.isChecked()) {
                     intent = new Intent(TopicSelectFragment.this.getActivity(),ReadingQuestions.class);
                 }
-                UserData u = InnovatorApplication.getUser();
-                if (u == null) {
-                    Toast.makeText(view.getContext(), "Please save grade level before starting topic", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (u.getGrade() == 3) {
-                        intent.putExtra("TOPIC", Topic.Grade3);
-                    } else if (u.getGrade() == 4) {
-                        intent.putExtra("TOPIC", Topic.Grade4);
-                    } else if (u.getGrade() == 5){
-                        intent.putExtra("TOPIC", Topic.Grade5);
-                    }else if(u.getGrade() == 6){
-                        intent.putExtra("TOPIC", Topic.Grade6);
-                    }
-                    startActivity(intent);
-                }
+
+                TopicManager.setDataLocations(grade);
+
+                startActivity(intent);
             }
         });
         leftButton.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +172,7 @@ public class TopicSelectFragment extends Fragment {
         tmpTopic.setMasteryPct(40);
         topicList.add(tmpTopic);
     }
+
 
 
 }

@@ -584,11 +584,13 @@ public class QuestionMainActivity extends AppCompatActivity {
                 //This will dismiss the dialog
                 dialogComplete.dismiss();
                 //go home
-                setContentView(R.layout.angela_activity_main);
-                HomeFragment homeFragment = new HomeFragment();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_container, homeFragment);
-                ft.commit();
+//                setContentView(R.layout.angela_activity_main);
+//                HomeFragment homeFragment = new HomeFragment();
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                ft.replace(R.id.fragment_container, homeFragment);
+//                ft.commit();
+                //getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, MainMenuController.class, null).commit();
+                startActivity(new Intent(QuestionMainActivity.this, MainMenuController.class));
 
             }
         });

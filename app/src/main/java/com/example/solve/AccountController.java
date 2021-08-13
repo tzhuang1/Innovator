@@ -1,5 +1,6 @@
 package com.example.solve;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -20,17 +21,11 @@ public class AccountController extends Fragment{
     public AccountController(){
 
         super(R.layout.account_fragment);
-
-
     }
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-       // TextView userName=getActivity().findViewById(R.id.userName);
-        //TextView userEmail=getActivity().findViewById(R.id.userEmail);
-
-        //TextView
     }
 
 
