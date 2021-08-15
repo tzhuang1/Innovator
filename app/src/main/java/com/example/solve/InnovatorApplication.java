@@ -7,6 +7,9 @@ public class InnovatorApplication extends Application {
 
     public static UserData getUser()
     {
+        if(currentUser==null){
+            return new UserData("", "","");
+        }
         return currentUser;
     }
     public static void setUser(UserData user)

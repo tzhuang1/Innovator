@@ -46,6 +46,7 @@ class MainMenuActivity : AppCompatActivity() {
             R.id.navigation_account -> { //ACCOUNT
                 //textMessage.setText(R.string.title_account)
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AccountFragment()).commit()
+                //supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AccountController()).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_progress -> { //PROGRESS
@@ -86,6 +87,8 @@ class MainMenuActivity : AppCompatActivity() {
         //updateUI(currentUser) //you log in as someone
     }
 
+    fun signIn(view: View) {}
 
 
 }
+

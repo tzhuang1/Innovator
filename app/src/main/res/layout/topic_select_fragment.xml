@@ -7,174 +7,186 @@
     android:layout_height="match_parent"
     tools:context="com.example.solve.TopicSelectFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Topics"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="35dp"
-        android:textColor="#19A0FB"
-        android:textSize="40sp"/>
     <!--app:fontFamily="@font/Karla-Regular"-->
 
     <!--app:fontFamily="@font/Karla-Regular"-->
-
-
-    <TextView
-        android:id="@+id/practice_title"
-        android:layout_width="wrap_content"
-        android:layout_height="47dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Rounding Numbers"
-        android:textAlignment="center"
-        android:textColor="#000"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/practice_start_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/image_view_constraint_layout"
-        android:layout_width="match_parent"
-        android:layout_height="216dp"
-        android:layout_marginTop="240dp"
-        app:layout_constraintTop_toTopOf="parent"
-        fbutton:layout_constraintBottom_toTopOf="@+id/constraintLayout">
-
-        <ImageButton
-            android:id="@+id/topic_left_ImageButton"
-            android:layout_width="50dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="27dp"
-            android:contentDescription="Left Button"
-            android:src="@drawable/ic_topicselect_imagebutton_left"
-            app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
-            app:layout_constraintRight_toLeftOf="@id/current_practice_ImageView"
-            app:layout_constraintTop_toTopOf="@id/current_practice_ImageView" />
-
-        <ImageButton
-            android:id="@+id/topic_right_ImageButton"
-            android:layout_width="50dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="27dp"
-            android:contentDescription="Right Button"
-            android:src="@drawable/ic_topicselect_imagebutton_right"
-            app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
-            app:layout_constraintLeft_toRightOf="@id/current_practice_ImageView"
-            app:layout_constraintTop_toTopOf="@id/current_practice_ImageView" />
-
-        <ImageView
-            android:id="@+id/left_practice_ImageView"
-            android:layout_width="190dp"
-            android:layout_height="150dp"
-            android:layout_marginRight="50dp"
-            android:contentDescription="Left ImageView"
-            app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
-            app:layout_constraintRight_toLeftOf="@id/current_practice_ImageView"
-            app:layout_constraintTop_toTopOf="@id/current_practice_ImageView" />
-
-        <ImageView
-            android:id="@+id/right_practice_ImageView"
-            android:layout_width="190dp"
-            android:layout_height="150dp"
-            android:layout_marginLeft="50dp"
-            android:contentDescription="Right ImageView"
-            app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
-            app:layout_constraintLeft_toRightOf="@id/current_practice_ImageView"
-            app:layout_constraintTop_toTopOf="@id/current_practice_ImageView" />
-
-        <ImageView
-            android:id="@+id/current_practice_ImageView"
-            android:layout_width="250dp"
-            android:layout_height="200dp"
-            android:contentDescription="Current ImageView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/practice_title"
-        app:layout_constraintTop_toBottomOf="@+id/image_view_constraint_layout"
-        app:layout_constraintVertical_bias="0.6">
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="300dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="24dp"
-            android:progress="30"
-            android:progressDrawable="@drawable/round_progress_bar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/progress_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:text="18% Mastered"
-            android:textColor="#000"
-            app:layout_constraintBottom_toBottomOf="@id/progressBar"
-            app:layout_constraintRight_toRightOf="@id/progressBar"
-            app:layout_constraintTop_toTopOf="@id/progressBar" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/practice_start_button"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginBottom="112dp"
-        android:background="#19A0FB"
-        android:text="Practice"
-        android:textAllCaps="false"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/practice_title" />
-
-    <RadioGroup
-        android:id="@+id/RadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:orientation="horizontal"
-        fbutton:layout_constraintEnd_toEndOf="parent"
-        fbutton:layout_constraintStart_toStartOf="parent"
+        fbutton:layout_constraintBottom_toBottomOf="parent"
         fbutton:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/radioMath"
-            android:paddingRight="80dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Math" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
+                android:text="Topics"
+                android:textColor="#19A0FB"
+                android:textSize="40sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/radioReading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Reading" />
-    </RadioGroup>
+            <TextView
+                android:id="@+id/practice_title"
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="Rounding Numbers"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toTopOf="@+id/practice_start_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/image_view_constraint_layout"
+                android:layout_width="match_parent"
+                android:layout_height="216dp"
+                android:layout_marginTop="200dp"
+                app:layout_constraintTop_toTopOf="parent"
+                fbutton:layout_constraintBottom_toTopOf="@+id/constraintLayout">
+
+                <ImageButton
+                    android:id="@+id/topic_left_ImageButton"
+                    android:layout_width="50dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="27dp"
+                    android:contentDescription="Left Button"
+                    android:src="@drawable/ic_topicselect_imagebutton_left"
+                    app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
+                    app:layout_constraintRight_toLeftOf="@id/current_practice_ImageView"
+                    app:layout_constraintTop_toTopOf="@id/current_practice_ImageView" />
+
+                <ImageButton
+                    android:id="@+id/topic_right_ImageButton"
+                    android:layout_width="50dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="27dp"
+                    android:contentDescription="Right Button"
+                    android:src="@drawable/ic_topicselect_imagebutton_right"
+                    app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
+                    app:layout_constraintLeft_toRightOf="@id/current_practice_ImageView"
+                    app:layout_constraintTop_toTopOf="@id/current_practice_ImageView" />
+
+                <ImageView
+                    android:id="@+id/left_practice_ImageView"
+                    android:layout_width="190dp"
+                    android:layout_height="150dp"
+                    android:layout_marginRight="50dp"
+                    android:contentDescription="Left ImageView"
+                    app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
+                    app:layout_constraintRight_toLeftOf="@id/current_practice_ImageView"
+                    app:layout_constraintTop_toTopOf="@id/current_practice_ImageView" />
+
+                <ImageView
+                    android:id="@+id/right_practice_ImageView"
+                    android:layout_width="190dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="50dp"
+                    android:contentDescription="Right ImageView"
+                    app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
+                    app:layout_constraintLeft_toRightOf="@id/current_practice_ImageView"
+                    app:layout_constraintTop_toTopOf="@id/current_practice_ImageView" />
+
+                <ImageView
+                    android:id="@+id/current_practice_ImageView"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"
+                    android:contentDescription="Current ImageView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/practice_title"
+                app:layout_constraintTop_toBottomOf="@+id/image_view_constraint_layout"
+                app:layout_constraintVertical_bias="0.6">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="300dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="24dp"
+                    android:progress="30"
+                    android:progressDrawable="@drawable/round_progress_bar"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/progress_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="18% Mastered"
+                    android:textColor="#000"
+                    app:layout_constraintBottom_toBottomOf="@id/progressBar"
+                    app:layout_constraintRight_toRightOf="@id/progressBar"
+                    app:layout_constraintTop_toTopOf="@id/progressBar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/practice_start_button"
+                android:layout_width="250dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="112dp"
+                android:background="#19A0FB"
+                android:text="Practice"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/practice_title" />
+
+            <RadioGroup
+                android:id="@+id/RadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:orientation="horizontal"
+                fbutton:layout_constraintEnd_toEndOf="parent"
+                fbutton:layout_constraintStart_toStartOf="parent"
+                fbutton:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/radioMath"
+                    android:paddingRight="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Math" />
+
+                <RadioButton
+                    android:id="@+id/radioReading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reading" />
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 
     <!--app:fontFamily="@font/Karla-Regular"-->
 

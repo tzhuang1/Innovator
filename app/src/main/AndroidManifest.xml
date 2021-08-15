@@ -22,9 +22,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".ReadingQuestions"></activity>
-        <activity android:name=".MainMenuActivity">
+        <activity android:name=".MainMenuController">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".DailyChallenge">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".PastProblems">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name=".QuestionMainActivity">

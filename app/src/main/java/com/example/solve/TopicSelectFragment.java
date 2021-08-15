@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -97,17 +98,21 @@ public class TopicSelectFragment extends Fragment {
                     intent = new Intent(TopicSelectFragment.this.getActivity(),ReadingQuestions.class);
                 }
                 UserData u = InnovatorApplication.getUser();
-
-                if(grade.equals("3"))
-                    intent.putExtra("TOPIC",Topic.Grade3);
-                else if(grade.equals("4"))
-                    intent.putExtra("TOPIC",Topic.Grade4);
-                else if(grade.equals("5"))
-                    intent.putExtra("TOPIC",Topic.Grade5);
-                else if(grade.equals("6"))
-                    intent.putExtra("TOPIC",Topic.Grade6);
-
-                startActivity(intent);
+              
+                if (u == null) {
+                    Toast.makeText(view.getContext(), "Please save grade level before starting topic", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (u.getGrade() == 3) {
+                        intent.putExtra("TOPIC", Topic.Grade3);
+                    } else if (u.getGrade() == 4) {
+                        intent.putExtra("TOPIC", Topic.Grade4);
+                    } else if (u.getGrade() == 5){
+                        intent.putExtra("TOPIC", Topic.Grade5);
+                    }else if(u.getGrade() == 6){
+                        intent.putExtra("TOPIC", Topic.Grade6);
+                    }
+                    startActivity(intent);
+                }
             }
         });
         leftButton.setOnClickListener(new View.OnClickListener() {

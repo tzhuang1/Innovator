@@ -48,7 +48,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:text="Question with pic text"
                 android:textColor="@color/grey"
@@ -62,19 +62,20 @@
                 fbutton:layout_constraintRight_toRightOf="parent"
                 fbutton:layout_constraintTop_toTopOf="parent"
                 fbutton:layout_constraintLeft_toRightOf="@id/question_picture"/>
+
             <ImageView
+                android:id="@+id/question_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/question_picture"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_weight="0.5"
                 fbutton:layout_constraintBottom_toBottomOf="parent"
-                fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
-                fbutton:layout_constraintTop_toTopOf="parent"
                 fbutton:layout_constraintLeft_toLeftOf="parent"
-                android:layout_weight="0.5"/>
+                fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
+                fbutton:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
 
@@ -82,7 +83,7 @@
             android:id="@+id/question_text"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:gravity="center"
             android:text="Question with just text"
@@ -99,12 +100,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight=".5"
         android:background="#FFFFFF"
         android:gravity="center"
         android:id="@+id/textAnswersLayout"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonA"

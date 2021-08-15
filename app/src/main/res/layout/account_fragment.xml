@@ -13,25 +13,36 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <Button
-            android:id="@+id/sign_out_button"
-            android:layout_width="wrap_content"
+            android:text="Sign In"
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign Out"
-            android:visibility="gone" />
+            android:onClick="initiateSignIn"
+            tools:ignore="OnClick" />
+
 
         <TextView
-                android:id="@+id/currentUser"
+                android:id="@+id/userName"
                 android:layout_width="173dp"
                 android:layout_height="72dp"
-                android:text="Account View" />
+                android:text="Account View"
+                android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/userEmail"
+            android:layout_width="173dp"
+            android:layout_height="72dp"
+            android:text="Account View"
+            android:gravity="center"/>
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="signOut"
+        android:text="Sign out" />
 
 </FrameLayout>
