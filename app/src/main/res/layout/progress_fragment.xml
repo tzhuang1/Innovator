@@ -64,34 +64,6 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/dailyGoalTableRow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/goalProgressTxtView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="Daily Goal Progress: "
-                        android:textSize="20sp"
-                        tools:layout_conversion_absoluteHeight="22dp"
-                        tools:layout_conversion_absoluteWidth="109dp"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="2dp"/>
-
-                    <TextView
-                        android:id="@+id/goalMetDisplay"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:importantForAutofill="no"
-                        android:padding="10dp"
-                        android:text="67%"
-                        android:textSize="20sp" />
-                </TableRow>
-
-                <TableRow
                     android:id="@+id/accuracyTableRow"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -121,87 +93,87 @@
 
             </TableLayout>
 
-            <TextView
-                android:id="@+id/weeklyTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:padding="10dp"
-                android:text="Weekly Progress"
-                android:textSize="26dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dailyTableLayout"
-                tools:layout_conversion_absoluteHeight="22dp"
-                tools:layout_conversion_absoluteWidth="109dp" />
+<!--            <TextView-->
+<!--                android:id="@+id/weeklyTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:padding="10dp"-->
+<!--                android:text="Weekly Progress"-->
+<!--                android:textSize="26dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/dailyTableLayout"-->
+<!--                tools:layout_conversion_absoluteHeight="22dp"-->
+<!--                tools:layout_conversion_absoluteWidth="109dp" />-->
 
-            <TableLayout
-                android:id="@+id/weeklyTableLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/weeklyTitle"
-                app:layout_constraintVertical_bias=".001">
+<!--            <TableLayout-->
+<!--                android:id="@+id/weeklyTableLayout"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/weeklyTitle"-->
+<!--                app:layout_constraintVertical_bias=".001">-->
 
-                <TableRow
-                    android:id="@+id/questionsCompletedWeeklyTableRow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <TableRow-->
+<!--                    android:id="@+id/questionsCompletedWeeklyTableRow"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <TextView
-                        android:id="@+id/questionsCompletedWeeklyTxtView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="Weekly Questions Completed: "
-                        android:textSize="20sp"
-                        tools:layout_conversion_absoluteHeight="22dp"
-                        tools:layout_conversion_absoluteWidth="109dp"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="2dp"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/questionsCompletedWeeklyTxtView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:text="Weekly Questions Completed: "-->
+<!--                        android:textSize="20sp"-->
+<!--                        tools:layout_conversion_absoluteHeight="22dp"-->
+<!--                        tools:layout_conversion_absoluteWidth="109dp"-->
+<!--                        tools:layout_editor_absoluteX="0dp"-->
+<!--                        tools:layout_editor_absoluteY="2dp"/>-->
 
-                    <TextView
-                        android:id="@+id/questionsCompletedWeeklyCount"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:importantForAutofill="no"
-                        android:padding="10dp"
-                        android:text="45"
-                        android:textSize="20sp" />
-                </TableRow>
+<!--                    <TextView-->
+<!--                        android:id="@+id/questionsCompletedWeeklyCount"-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:importantForAutofill="no"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:text="45"-->
+<!--                        android:textSize="20sp" />-->
+<!--                </TableRow>-->
 
-                <TableRow
-                    android:id="@+id/weeklyAccuracyTableRow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <TableRow-->
+<!--                    android:id="@+id/weeklyAccuracyTableRow"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <TextView
-                        android:id="@+id/weeklyAccuracyTxtView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="Weekly Question Accuracy: "
-                        android:textSize="20sp"
-                        tools:layout_conversion_absoluteHeight="22dp"
-                        tools:layout_conversion_absoluteWidth="109dp"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="2dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/weeklyAccuracyTxtView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:text="Weekly Question Accuracy: "-->
+<!--                        android:textSize="20sp"-->
+<!--                        tools:layout_conversion_absoluteHeight="22dp"-->
+<!--                        tools:layout_conversion_absoluteWidth="109dp"-->
+<!--                        tools:layout_editor_absoluteX="0dp"-->
+<!--                        tools:layout_editor_absoluteY="2dp" />-->
 
-                    <TextView
-                        android:id="@+id/weeklyAccuracyDisplay"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:importantForAutofill="no"
-                        android:padding="10dp"
-                        android:text="93%"
-                        android:textSize="20sp" />
-                </TableRow>
+<!--                    <TextView-->
+<!--                        android:id="@+id/weeklyAccuracyDisplay"-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:importantForAutofill="no"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:text="93%"-->
+<!--                        android:textSize="20sp" />-->
+<!--                </TableRow>-->
 
-            </TableLayout>
+<!--            </TableLayout>-->
 
             <TextView
                 android:id="@+id/overallTitle"
@@ -213,7 +185,7 @@
                 android:textSize="26dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/weeklyTableLayout"
+                app:layout_constraintTop_toBottomOf="@id/dailyTableLayout"
                 tools:layout_conversion_absoluteHeight="22dp"
                 tools:layout_conversion_absoluteWidth="109dp" />
 

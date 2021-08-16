@@ -6,7 +6,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -28,12 +30,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import info.hoang8f.widget.FButton;
 
@@ -64,6 +69,9 @@ public class ReadingQuestions extends AppCompatActivity {
     private FirebaseFirestore firestoreDB;
     private String currentUserID;
 
+    private String[] allCategories={"Reading Comprehension", "Word Analysis"};
+    private String currentCategory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         firestoreDB=FirebaseFirestore.getInstance();
@@ -76,6 +84,9 @@ public class ReadingQuestions extends AppCompatActivity {
         setContentView(R.layout.activity_reading_questions);
 
         //initializing variables
+
+        currentCategory=allCategories[new Random().nextInt(allCategories.length)];
+
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
 
@@ -114,7 +125,7 @@ public class ReadingQuestions extends AppCompatActivity {
     private void getFirebaseQuestionsList(){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Reading")
-                .child(TopicManager.getQuestionFolderName());
+                .child(TopicManager.getQuestionFolderName()).child(currentCategory);
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -163,7 +174,13 @@ public class ReadingQuestions extends AppCompatActivity {
     public void updateQueueAndOptions() {
         //sets visibility of layout according to what pictures are in the question
         //question has text even if it has pic
-        boolean hasQPic = (currentQuestion.getPicNumber() > -1);
+        boolean hasQPic = false;
+        if(currentQuestion==null){
+            hasQPic=false;
+        }
+        else{
+            hasQPic = (currentQuestion.getPicNumber() > -1);
+        }
         boolean hasAPics = (currentQuestion.getOptAPicNumber() > -1 || currentQuestion.getOptBPicNumber() > -1 || currentQuestion.getOptCPicNumber() > -1 || currentQuestion.getOptDPicNumber() > -1);
         if(!hasQPic && !hasAPics){ //text only
             //Q
@@ -226,7 +243,7 @@ public class ReadingQuestions extends AppCompatActivity {
             int questionNumber = answeredQuestionData.getQuestion().getId();
             String currentGrade=TopicManager.getGradeLevel();
             try{
-                firestoreDB.collection("User_"+currentUserID).document("Reading"+currentGrade+"_"+questionNumber).set(answeredQuestionData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                firestoreDB.collection("User_"+currentUserID).document("Reading"+currentGrade+"_"+questionNumber+"_"+currentCategory).set(answeredQuestionData).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         //Toast.makeText(QuestionMainActivity.this, "Question complete added to user", Toast.LENGTH_SHORT).show();
@@ -236,7 +253,16 @@ public class ReadingQuestions extends AppCompatActivity {
             catch(Exception e){
                 Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
             }
+            SharedPreferences completedProgress=getSharedPreferences("CompletedAmount", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editCompleted =completedProgress.edit();
 
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            String dateStr=formatter.format(date).substring(0,10);
+
+            int currentCompleted=completedProgress.getInt(dateStr+"_Completed",0) +1;
+            editCompleted.putInt(dateStr+"_Completed",currentCompleted);
+            editCompleted.commit();
 
         }
     }

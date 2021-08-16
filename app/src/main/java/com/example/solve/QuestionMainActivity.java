@@ -1,6 +1,8 @@
 package com.example.solve;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.text.method.ScrollingMovementMethod;
 
@@ -37,12 +39,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import info.hoang8f.widget.FButton;
 
@@ -77,6 +82,9 @@ public class QuestionMainActivity extends AppCompatActivity {
     private FirebaseFirestore firestoreDB;
     private String currentUserID;
 
+    private String[] allCategories={"Computation and Estimation", "Measurement and Geometry","Numbers and Number Sense","Patterns, Functions, Algebra", "Probability and Statistics"};
+    private String currentCategory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         currentUserID=InnovatorApplication.getUser().getId();
@@ -88,11 +96,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity_main);
 
-        //Intent intent = getIntent();
-
-
-
-        //Initializing variables
+        currentCategory=allCategories[new Random().nextInt(allCategories.length)];
 
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
@@ -158,7 +162,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             int questionNumber = currentAnsweredQuestion.getQuestion().getId();
             String currentGrade=TopicManager.getGradeLevel();
             try{
-               firestoreDB.collection("User_"+currentUserID).document("Math"+currentGrade+"_"+questionNumber).set(currentAnsweredQuestion).addOnSuccessListener(new OnSuccessListener<Void>() {
+               firestoreDB.collection("User_"+currentUserID).document("Math"+currentGrade+"_"+questionNumber+"_"+currentCategory).set(currentAnsweredQuestion).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                     public void onSuccess(Void unused) {
                     //Toast.makeText(QuestionMainActivity.this, "Question complete added to user", Toast.LENGTH_SHORT).show();
@@ -169,6 +173,17 @@ public class QuestionMainActivity extends AppCompatActivity {
                 Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
             }
 
+            SharedPreferences completedProgress=getSharedPreferences("CompletedAmount", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editCompleted =completedProgress.edit();
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            String dateStr=formatter.format(date).substring(0,10).replace('/','-');
+
+            int currentCompleted=completedProgress.getInt(dateStr+"_Completed",0) +1;
+            editCompleted.putInt(dateStr+"_Completed",currentCompleted);
+            editCompleted.commit();
+
 
         }
     }
@@ -176,7 +191,7 @@ public class QuestionMainActivity extends AppCompatActivity {
     private void getFirebaseQuestionsList(){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Math")
-                .child(TopicManager.getQuestionFolderName());
+                .child(TopicManager.getQuestionFolderName()).child(currentCategory);
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -187,12 +202,10 @@ public class QuestionMainActivity extends AppCompatActivity {
                     Map<String, Object> entry = listOfQuestions.get(i);
                     try{
                         if(entry != null) {
-                            if(retrieveDataPoints(entry)){
-                                Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
-                                                 entry.get("answer")+"", entry.get("explanation")+"", entry.get("category")+"", Integer.parseInt(entry.get("questionPicNumber")+""), Integer.parseInt(entry.get("explanationPicNumber")+""));
-                                newQuestion.setId(i);
-                                questionsList.add(newQuestion);
-                            }
+                            Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
+                                    entry.get("answer")+"", entry.get("explanation")+"", entry.get("category")+"", Integer.parseInt(entry.get("questionPicNumber")+""), Integer.parseInt(entry.get("explanationPicNumber")+""));
+                            newQuestion.setId(i);
+                            questionsList.add(newQuestion);
                         }
                     }
                     catch (Exception ex) {
