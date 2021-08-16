@@ -92,15 +92,25 @@ public class TopicSelectFragment extends Fragment {
         startPracticeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Transition to another activity, bla bla bla
                 Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
                 if(radioButtonReading.isChecked()) {
                     intent = new Intent(TopicSelectFragment.this.getActivity(),ReadingQuestions.class);
                 }
-
-                TopicManager.setDataLocations(grade);
-
-                startActivity(intent);
+                UserData u = InnovatorApplication.getUser();
+                if (u == null) {
+                    Toast.makeText(view.getContext(), "Please save grade level before starting topic", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (u.getGrade() == 3) {
+                        intent.putExtra("TOPIC", Topic.Grade3);
+                    } else if (u.getGrade() == 4) {
+                        intent.putExtra("TOPIC", Topic.Grade4);
+                    } else if (u.getGrade() == 5){
+                        intent.putExtra("TOPIC", Topic.Grade5);
+                    }else if(u.getGrade() == 6){
+                        intent.putExtra("TOPIC", Topic.Grade6);
+                    }
+                    startActivity(intent);
+                }
             }
         });
         leftButton.setOnClickListener(new View.OnClickListener() {
