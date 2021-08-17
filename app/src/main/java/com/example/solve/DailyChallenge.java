@@ -53,6 +53,13 @@ public class DailyChallenge extends AppCompatActivity{
 
     private Map<String, Object> currentQuestionData;
 
+    private String mathCategory;
+    private String readingCategory;
+
+    private String[] mathCategories={"Computation and Estimation", "Measurement and Geometry","Numbers and Number Sense","Patterns, Functions, Algebra", "Probability and Statistics"};
+    private String[] readingCategories={"Reading Comprehension", "Word Analysis"};
+
+
     @Override
     protected void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
@@ -61,6 +68,8 @@ public class DailyChallenge extends AppCompatActivity{
         auth=FirebaseAuth.getInstance();
         userDatabase= FirebaseDatabase.getInstance().getReference();
 
+        mathCategory=mathCategories[new Random().nextInt(mathCategories.length)];
+        readingCategory=readingCategories[new Random().nextInt(readingCategories.length)];
     }
 
     public void returnToHome(View view){
@@ -111,7 +120,7 @@ public class DailyChallenge extends AppCompatActivity{
 
     private int generateQuestionIndex(){
         Random rand=new Random();
-        int questionIndex=rand.nextInt(59)+1;
+        int questionIndex=rand.nextInt(15)+1;
         return questionIndex;
 
     }
@@ -131,28 +140,55 @@ public class DailyChallenge extends AppCompatActivity{
             questionIndex=generateQuestionIndex();
         }
 
-        userDatabase.child(category).child("Grade_"+challengeGradeLevel).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    List<Object> questionsList= (List<Object>)task.getResult().getValue();
-                    DailyChallengeManager.setCurrentType(category+""+challengeGradeLevel);
-                    DailyChallengeManager.setCurrentQuestionData((Map<String, Object>)questionsList.get(questionIndex));
-                    if(!retrieveDataPoints((Map<String, Object>)questionsList.get(questionIndex))){
-                        questionIndex=generateQuestionIndex();
-                        populateQuestionMap();
-                        return;
-                    }
-                    loadChallenge();
-                    if(DailyChallengeManager.getCurrentQuestionData().get("questionPicNumber")==null){
-                        generateImage(-1);
-                    }
-                    else{
-                        generateImage((long)DailyChallengeManager.getCurrentQuestionData().get("questionPicNumber"));
+        if(category.equals("Reading")){
+            userDatabase.child(category).child("Grade_"+challengeGradeLevel).child(readingCategory).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+                    if(task.isSuccessful()){
+                        List<Object> questionsList= (List<Object>)task.getResult().getValue();
+                        DailyChallengeManager.setCurrentType(category+""+challengeGradeLevel);
+                        DailyChallengeManager.setCurrentQuestionData((Map<String, Object>)questionsList.get(questionIndex));
+                        if(!retrieveDataPoints((Map<String, Object>)questionsList.get(questionIndex))){
+                            questionIndex=generateQuestionIndex();
+                            populateQuestionMap();
+                            return;
+                        }
+                        loadChallenge();
+                        if(DailyChallengeManager.getCurrentQuestionData().get("questionPicNumber")==null){
+                            generateImage(-1);
+                        }
+                        else{
+                            generateImage((long)DailyChallengeManager.getCurrentQuestionData().get("questionPicNumber"));
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+        if(category.equals("Math")){
+            userDatabase.child(category).child("Grade_"+challengeGradeLevel).child(mathCategory).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+                    if(task.isSuccessful()){
+                        List<Object> questionsList= (List<Object>)task.getResult().getValue();
+                        DailyChallengeManager.setCurrentType(category+""+challengeGradeLevel);
+                        DailyChallengeManager.setCurrentQuestionData((Map<String, Object>)questionsList.get(questionIndex));
+                        if(!retrieveDataPoints((Map<String, Object>)questionsList.get(questionIndex))){
+                            questionIndex=generateQuestionIndex();
+                            populateQuestionMap();
+                            return;
+                        }
+                        loadChallenge();
+                        if(DailyChallengeManager.getCurrentQuestionData().get("questionPicNumber")==null){
+                            generateImage(-1);
+                        }
+                        else{
+                            generateImage((long)DailyChallengeManager.getCurrentQuestionData().get("questionPicNumber"));
+                        }
+                    }
+                }
+            });
+        }
+
 
     }
 

@@ -82,9 +82,6 @@ public class QuestionMainActivity extends AppCompatActivity {
     private FirebaseFirestore firestoreDB;
     private String currentUserID;
 
-    private String[] allCategories={"Computation and Estimation", "Measurement and Geometry","Numbers and Number Sense","Patterns, Functions, Algebra", "Probability and Statistics"};
-    private String currentCategory;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         currentUserID=InnovatorApplication.getUser().getId();
@@ -92,11 +89,10 @@ public class QuestionMainActivity extends AppCompatActivity {
 
         answeredQuestionList=new ArrayList<AnsweredQuestionData>();
 
+        qid=0;
         //------------------------------------------------------------------view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity_main);
-
-        currentCategory=allCategories[new Random().nextInt(allCategories.length)];
 
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
@@ -159,10 +155,15 @@ public class QuestionMainActivity extends AppCompatActivity {
     private void savePerUserFirebaseQuestionsList(AnsweredQuestionData currentAnsweredQuestion) {
         //get current userID, if userID is empty, then don't save anything
         if(InnovatorApplication.getUser() != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            String dateStr=formatter.format(date).substring(0,10).replace('/','-');
+
+
             int questionNumber = currentAnsweredQuestion.getQuestion().getId();
             String currentGrade=TopicManager.getGradeLevel();
             try{
-               firestoreDB.collection("User_"+currentUserID).document("Math"+currentGrade+"_"+questionNumber+"_"+currentCategory).set(currentAnsweredQuestion).addOnSuccessListener(new OnSuccessListener<Void>() {
+               firestoreDB.collection("User_"+currentUserID).document(dateStr+":Math"+currentGrade+"_"+questionNumber+"_"+TopicManager.getCategory()).set(currentAnsweredQuestion).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                     public void onSuccess(Void unused) {
                     //Toast.makeText(QuestionMainActivity.this, "Question complete added to user", Toast.LENGTH_SHORT).show();
@@ -173,25 +174,16 @@ public class QuestionMainActivity extends AppCompatActivity {
                 Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
             }
 
-            SharedPreferences completedProgress=getSharedPreferences("CompletedAmount", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editCompleted =completedProgress.edit();
-
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = new Date();
-            String dateStr=formatter.format(date).substring(0,10).replace('/','-');
-
-            int currentCompleted=completedProgress.getInt(dateStr+"_Completed",0) +1;
-            editCompleted.putInt(dateStr+"_Completed",currentCompleted);
-            editCompleted.commit();
 
 
         }
     }
 
+
     private void getFirebaseQuestionsList(){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Math")
-                .child(TopicManager.getQuestionFolderName()).child(currentCategory);
+                .child(TopicManager.getQuestionFolderName()).child(TopicManager.getCategory());
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -468,6 +460,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
             correctDialog();
+
         }
         //User ans is wrong then just navigate him to the PlayAgain activity
         else {
@@ -484,6 +477,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
             correctDialog();
+
         } else { // in place of PlayAgain activity to be implemented later? test to pull up incorrect dialog
             incorrectDialog();
         }
@@ -498,6 +492,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
             correctDialog();
+
         } else {
             incorrectDialog();
         }
@@ -512,6 +507,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
             correctDialog();
+
         } else {
             incorrectDialog();
         }
@@ -597,12 +593,6 @@ public class QuestionMainActivity extends AppCompatActivity {
                 //This will dismiss the dialog
                 dialogComplete.dismiss();
                 //go home
-//                setContentView(R.layout.angela_activity_main);
-//                HomeFragment homeFragment = new HomeFragment();
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                ft.replace(R.id.fragment_container, homeFragment);
-//                ft.commit();
-                //getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, MainMenuController.class, null).commit();
                 startActivity(new Intent(QuestionMainActivity.this, MainMenuController.class));
 
             }

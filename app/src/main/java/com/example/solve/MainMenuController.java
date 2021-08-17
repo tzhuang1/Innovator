@@ -47,10 +47,13 @@ public class MainMenuController extends AppCompatActivity {
     private GoogleSignInClient signInClient;
     private GoogleSignInAccount googleAccount;
 
+
     private boolean isUserSignedIn(){
         FirebaseUser user=auth.getCurrentUser();
         if(user!=null){
             instantiateUserData();
+
+
             return true;
         }
         return false;
@@ -60,6 +63,7 @@ public class MainMenuController extends AppCompatActivity {
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.angela_activity_main);
+
 
         auth=FirebaseAuth.getInstance();
 

@@ -63,9 +63,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/questionDisplay"
-                android:text="Quesiton"
+                android:text="Question"
                 android:layout_below="@+id/passageText"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/karla"
+                android:textStyle="bold"/>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -81,7 +83,9 @@
                 android:id="@+id/explanation"
                 android:layout_below="@+id/questionPic"
                 android:layout_marginTop="22dp"
-                />
+                android:textSize="13dp"
+                android:fontFamily="@font/karla"
+                android:textStyle="bold"/>
         </RelativeLayout>
 
     </ScrollView>

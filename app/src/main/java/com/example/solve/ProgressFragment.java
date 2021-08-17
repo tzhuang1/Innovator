@@ -95,7 +95,11 @@ private int questionsCompletedToday;
         calendar=Calendar.getInstance();
 
         questionsCompleted=new ArrayList<AnsweredQuestionData>();
+
         totalCorrect=0;
+        completedToday=0;
+        correctToday=0;
+
         setValuesToNone();
         obtainOverallStatistics();
     }
@@ -138,7 +142,7 @@ private int questionsCompletedToday;
 
     public void setValuesToNone(){
         questionsCompletedOverallCount.setText("0");
-        overallAccuracyDisplay.setText("0");
+        overallAccuracyDisplay.setText("0%");
 
         questionsCompletedTodayCount.setText("0");
         dailyAccuracyDisplay.setText("0%");
@@ -148,13 +152,16 @@ private int questionsCompletedToday;
     }
 
     private void obtainOverallStatistics(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String dateStr=formatter.format(date).substring(0,10).replace('/','-');
+
         if(InnovatorApplication.getUser()!=null){
             firestoreDB.collection("User_"+InnovatorApplication.getUser().getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     if(queryDocumentSnapshots.isEmpty()){
                         setValuesToNone();
                     }
-
                     if(!queryDocumentSnapshots.isEmpty()){
                         List<DocumentSnapshot> dataList=queryDocumentSnapshots.getDocuments();
                         for(DocumentSnapshot d : dataList){
@@ -166,6 +173,12 @@ private int questionsCompletedToday;
 
                             if(selectedAnswer.substring(selectedAnswer.length()-1).equals(questionData.get("answer").toString())){
                                 totalCorrect++;
+                                if(d.getId().substring(0,10).equals(dateStr)){
+                                    correctToday++;
+                                }
+                            }
+                            if(d.getId().substring(0,10).equals(dateStr)){
+                                completedToday++;
                             }
                         }
                         setDataValues();
@@ -176,60 +189,13 @@ private int questionsCompletedToday;
     }
 
     private void setDataValues() {
-
-
         questionsCompletedOverallCount.setText(""+questionsCompleted.size());
         double overallAccuracy= 1.0*totalCorrect/questionsCompleted.size();
         overallAccuracyDisplay.setText(""+(Math.round(overallAccuracy*100))+"%");
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        String dateStr=formatter.format(date).substring(0,10).replace('/','-');
-
-        getFirebaseStats(dateStr);
-
-        SharedPreferences completedProgress = getActivity().getSharedPreferences("CompletedAmount", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editPref=completedProgress.edit();
-
-        questionsCompletedTodayCount.setText((completedProgress.getInt(dateStr+"_Completed",0)+completedToday)+"");
-
-        Map<String, Object> todayData=new HashMap<String, Object>();
-        todayData.put("total", completedProgress.getInt(dateStr+"_Completed",0)+completedToday);
-        todayData.put("correct",0);
-
-        firestoreDB.collection(InnovatorApplication.getUser().getId()+"_Statistics").document(dateStr+"_Completed").set(todayData).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-
-            }
-        });
-
-        completedProgress.edit().remove(dateStr+"_Completed");
-        completedProgress.edit().commit();
-
-
-
-
-    }
-
-    private void getFirebaseStats(String dateStr) {
-        firestoreDB.collection(InnovatorApplication.getUser().getId() + "_Statistics").document(dateStr + "_Completed").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(!documentSnapshot.exists()){
-                    completedToday=0;
-                    correctToday=0;
-                    return;
-                }
-
-                long currentTotal=(long)documentSnapshot.get("total");
-                long currentCorrect=(long)documentSnapshot.get("correct");
-
-                completedToday=(int)currentTotal;
-                correctToday=(int)currentCorrect;
-
-            }
-        });
+        questionsCompletedTodayCount.setText(""+completedToday);
+        double todayAccuracy=100*(1.0*correctToday/completedToday);
+        dailyAccuracyDisplay.setText(Math.round(todayAccuracy)+"%");
 
 
     }

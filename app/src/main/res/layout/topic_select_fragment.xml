@@ -32,14 +32,14 @@
 
             <TextView
                 android:id="@+id/practice_title"
-                android:layout_width="wrap_content"
-                android:layout_height="47dp"
+                android:layout_width="338dp"
+                android:layout_height="65dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:text="Rounding Numbers"
                 android:textAlignment="center"
                 android:textColor="#000"
-                android:textSize="35sp"
+                android:textSize="23sp"
                 app:layout_constraintBottom_toTopOf="@+id/practice_start_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -175,13 +175,13 @@
                     android:paddingRight="80dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Math" />
+                    android:text="Math"/>
 
                 <RadioButton
                     android:id="@+id/radioReading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Reading" />
+                    android:text="Reading"/>
             </RadioGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

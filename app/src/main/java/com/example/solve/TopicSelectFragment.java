@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class TopicSelectFragment extends Fragment {
     private TextView practiceTitle;
     private RadioButton radioButtonReading;
     private RadioButton radioButtonMath;
+    private RadioGroup radioGroup;
 
     //-------------progress bar------------
     private ProgressBar progress;
@@ -54,6 +56,10 @@ public class TopicSelectFragment extends Fragment {
     //----grade sent from settings---------
     private String grade = "3";
 
+
+    private String[] mathCategories={"Computation and Estimation", "Measurement and Geometry","Numbers and Number Sense","Patterns, Functions, Algebra", "Probability and Statistics"};
+    private String[] readingCategories={"Reading Comprehension", "Word Analysis"};
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +70,7 @@ public class TopicSelectFragment extends Fragment {
     }
 
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        generateTestTopicList();
+
         topicIdx = 0;
         //------------------------------find views---------------------------
         leftButton = view.findViewById(R.id.topic_left_ImageButton);
@@ -81,9 +87,11 @@ public class TopicSelectFragment extends Fragment {
 
         startPracticeButton = view.findViewById(R.id.practice_start_button);
 
+        radioGroup=view.findViewById(R.id.RadioGroup);
         radioButtonReading = view.findViewById(R.id.radioReading);
         radioButtonMath = view.findViewById(R.id.radioMath);
         radioButtonMath.setChecked(true); //by default, math is selected
+        generateTestTopicList();
         //------------------get grade from saved settings------------------------
         SharedPreferences saved;
         saved = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
@@ -107,14 +115,31 @@ public class TopicSelectFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 updateTopicView(--topicIdx);
+                if(radioButtonMath.isChecked()){
+                    TopicManager.setCategory(mathCategories[topicIdx]);
+                }
             }
         });
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateTopicView(++topicIdx);
+                if(radioButtonMath.isChecked()){
+                    TopicManager.setCategory(mathCategories[topicIdx]);
+                }
             }
         });
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                topicIdx=0;
+
+                generateTestTopicList();
+                updateTopicView(topicIdx);
+            }
+        });
+
 
 
 
@@ -158,20 +183,35 @@ public class TopicSelectFragment extends Fragment {
     }
 
     private void generateTestTopicList(){//initiates 4 examples for debugging only
-        topicList = new ArrayList<TopicSelect>(4);
-        TopicSelect tmpTopic = new TopicSelect("Topic one title", R.drawable.ic_topic_test_one, null);
-        tmpTopic.setMasteryPct(10);
-        topicList.add(tmpTopic);
-        tmpTopic = new TopicSelect("Topic two title", R.drawable.ic_topic_test_two, null);
-        tmpTopic.setMasteryPct(20);
-        topicList.add(tmpTopic);
-        tmpTopic = new TopicSelect("Topic three title", R.drawable.ic_topic_test_three, null);
-        tmpTopic.setMasteryPct(30);
-        topicList.add(tmpTopic);
-        tmpTopic = new TopicSelect("Topic four title", R.drawable.ic_topic_test_four, null);
-        tmpTopic.setMasteryPct(40);
-        topicList.add(tmpTopic);
+        if(radioButtonMath.isChecked()){
+            topicList=new ArrayList<TopicSelect>(5);
+            TopicSelect tmpTopic = new TopicSelect("Computation and Estimation", R.drawable.ic_topic_test_one, null);
+            tmpTopic.setMasteryPct(0);
+            topicList.add(tmpTopic);
+            tmpTopic = new TopicSelect("Measurement and Geometry", R.drawable.ic_topic_test_two, null);
+            tmpTopic.setMasteryPct(0);
+            topicList.add(tmpTopic);
+            tmpTopic = new TopicSelect("Numbers and Number Sense", R.drawable.ic_topic_test_three, null);
+            tmpTopic.setMasteryPct(0);
+            topicList.add(tmpTopic);
+            tmpTopic = new TopicSelect("Patterns, Functions, and Algebra", R.drawable.ic_topic_test_four, null);
+            tmpTopic.setMasteryPct(0);
+            topicList.add(tmpTopic);
+            tmpTopic=new TopicSelect("Probability and Statistics", R.drawable.ic_topic_test_five, null);
+            tmpTopic.setMasteryPct(0);
+            topicList.add(tmpTopic);
+        }
+        if(radioButtonReading.isChecked()){
+            topicList=new ArrayList<TopicSelect>(2);
+            TopicSelect tmpTopic=new TopicSelect(readingCategories[0],R.drawable.ic_topic_test_one, null);
+            tmpTopic.setMasteryPct(0);
+            topicList.add(tmpTopic);
+            tmpTopic=new TopicSelect(readingCategories[1],R.drawable.ic_topic_test_two,null);
+            tmpTopic.setMasteryPct(0);
+            topicList.add(tmpTopic);
+        }
     }
+
 
 
 

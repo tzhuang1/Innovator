@@ -10,6 +10,7 @@ public class TopicManager implements Serializable {
 
     private static String gradeLevel;
 
+    private static String category="Computation and Estimation";
 
     public static void setDataLocations(String level){
         gradeLevel=level;
@@ -36,5 +37,12 @@ public class TopicManager implements Serializable {
         return folderName;
     }
 
+    public static void setCategory(String val){
+        category=val;
+    }
+
+    public static String getCategory(){
+        return category;
+    }
 
 }

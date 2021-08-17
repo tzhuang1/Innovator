@@ -69,8 +69,6 @@ public class ReadingQuestions extends AppCompatActivity {
     private FirebaseFirestore firestoreDB;
     private String currentUserID;
 
-    private String[] allCategories={"Reading Comprehension", "Word Analysis"};
-    private String currentCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +82,6 @@ public class ReadingQuestions extends AppCompatActivity {
         setContentView(R.layout.activity_reading_questions);
 
         //initializing variables
-
-        currentCategory=allCategories[new Random().nextInt(allCategories.length)];
 
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
@@ -125,7 +121,7 @@ public class ReadingQuestions extends AppCompatActivity {
     private void getFirebaseQuestionsList(){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Reading")
-                .child(TopicManager.getQuestionFolderName()).child(currentCategory);
+                .child(TopicManager.getQuestionFolderName()).child(TopicManager.getCategory());
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -240,10 +236,14 @@ public class ReadingQuestions extends AppCompatActivity {
 
     private void savePerUserFirebaseQuestionsList(AnsweredQuestionData answeredQuestionData){
         if(InnovatorApplication.getUser() != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            String dateStr=formatter.format(date).substring(0,10);
+
             int questionNumber = answeredQuestionData.getQuestion().getId();
             String currentGrade=TopicManager.getGradeLevel();
             try{
-                firestoreDB.collection("User_"+currentUserID).document("Reading"+currentGrade+"_"+questionNumber+"_"+currentCategory).set(answeredQuestionData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                firestoreDB.collection("User_"+currentUserID).document(dateStr+":Reading"+currentGrade+"_"+questionNumber+"_"+TopicManager.getCategory()).set(answeredQuestionData).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         //Toast.makeText(QuestionMainActivity.this, "Question complete added to user", Toast.LENGTH_SHORT).show();
@@ -253,16 +253,6 @@ public class ReadingQuestions extends AppCompatActivity {
             catch(Exception e){
                 Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
             }
-            SharedPreferences completedProgress=getSharedPreferences("CompletedAmount", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editCompleted =completedProgress.edit();
-
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = new Date();
-            String dateStr=formatter.format(date).substring(0,10);
-
-            int currentCompleted=completedProgress.getInt(dateStr+"_Completed",0) +1;
-            editCompleted.putInt(dateStr+"_Completed",currentCompleted);
-            editCompleted.commit();
 
         }
     }
