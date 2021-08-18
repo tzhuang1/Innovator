@@ -1,6 +1,8 @@
 package com.example.solve;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +33,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,16 +54,18 @@ public class DailyChallenge extends AppCompatActivity{
     private FirebaseAuth auth;
     private DatabaseReference userDatabase;
 
-    private int questionIndex=-1;
+    private int questionIndex=0;
+    private int questionCount=0;
 
     private Map<String, Object> currentQuestionData;
 
     private String mathCategory;
     private String readingCategory;
 
-    private String[] mathCategories={"Computation and Estimation", "Measurement and Geometry","Numbers and Number Sense","Patterns, Functions, Algebra", "Probability and Statistics"};
+    private String[] mathCategories={"Computation and Estimation", "Measurement and Geometry","Numbers and Number Sense","Patterns, Functions, and Algebra", "Probability and Statistics"};
     private String[] readingCategories={"Reading Comprehension", "Word Analysis"};
 
+    private String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstance){
@@ -68,8 +75,55 @@ public class DailyChallenge extends AppCompatActivity{
         auth=FirebaseAuth.getInstance();
         userDatabase= FirebaseDatabase.getInstance().getReference();
 
-        mathCategory=mathCategories[new Random().nextInt(mathCategories.length)];
-        readingCategory=readingCategories[new Random().nextInt(readingCategories.length)];
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        currentDate=formatter.format(date).substring(0,10).replace('/','-');
+
+        selectCategory();
+    }
+
+    public void selectCategory(){
+        SharedPreferences pastCategories=getSharedPreferences("PastCategories", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editPastQuestions=pastCategories.edit();
+
+        String dateStr=currentDate;
+
+        if(!pastCategories.contains(dateStr+"_PastCategory_Math")){
+            mathCategory=mathCategories[new Random().nextInt(mathCategories.length)];
+            editPastQuestions.putString(dateStr+"_PastCategory_Math",mathCategory);
+            editPastQuestions.commit();
+        }
+        else{
+            mathCategory=pastCategories.getString(dateStr+"_PastCategory_Math", "Computation and Estimation");
+        }
+        if(!pastCategories.contains(dateStr+"_PastCategory_Reading")){
+            readingCategory=readingCategories[new Random().nextInt(readingCategories.length)];
+            editPastQuestions.putString(dateStr+"_PastCategory_Reading", readingCategory);
+            editPastQuestions.commit();
+        }
+        else{
+            readingCategory=pastCategories.getString(dateStr+"_PastCategory_Reading", "Reading Comprehension");
+        }
+    }
+
+    public int getQuestionIndex(String grade, String category){
+        SharedPreferences pastQuestions=getSharedPreferences("PastQuestions", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editPastQuestions= pastQuestions.edit();
+
+        if(category.equals("Math")){
+            if(!pastQuestions.contains(currentDate+"_Grade_"+grade+"_PastQuestion_Math")){
+                editPastQuestions.putInt(currentDate+"_Grade_"+grade+"_PastQuestion_Math", new Random().nextInt(questionCount));
+                editPastQuestions.commit();
+            }
+            return pastQuestions.getInt(currentDate+"_Grade_"+grade+"_PastQuestion_Math",0);
+        }
+        else{
+            if(!pastQuestions.contains(currentDate+"_Grade_"+grade+"_PastQuestions_Reading")){
+                editPastQuestions.putInt(currentDate+"_Grade_"+grade+"_PastQuestion_Reading", new Random().nextInt(questionCount));
+                editPastQuestions.commit();
+            }
+            return pastQuestions.getInt(currentDate+"_Grade_"+grade+"_PastQuestion_Reading",0);
+        }
     }
 
     public void returnToHome(View view){
@@ -86,7 +140,13 @@ public class DailyChallenge extends AppCompatActivity{
         category=categoryStr;
         challengeGradeLevel=gradeLevel;
 
-        populateQuestionMap();
+        //populateQuestionMap();
+        if(category.equals("Math")){
+            getQuestionCount(challengeGradeLevel, category, mathCategory);
+        }
+        else{
+            getQuestionCount(challengeGradeLevel, category, readingCategory);
+        }
     }
 
 
@@ -103,10 +163,10 @@ public class DailyChallenge extends AppCompatActivity{
         currentQuestionData=DailyChallengeManager.getCurrentQuestionData();
 
         questionDisplay.setText("Question: "+(String)currentQuestionData.get("question"));
-        choiceA.setText("A. "+(String)currentQuestionData.get("optA"));
-        choiceB.setText("B. "+(String)currentQuestionData.get("optB"));
-        choiceC.setText("C. "+(String)currentQuestionData.get("optC"));
-        choiceD.setText("D. "+(String)currentQuestionData.get("optD"));
+        choiceA.setText("A. "+currentQuestionData.get("optA"));
+        choiceB.setText("B. "+currentQuestionData.get("optB"));
+        choiceC.setText("C. "+currentQuestionData.get("optC"));
+        choiceD.setText("D. "+currentQuestionData.get("optD"));
 
         if(category.equals("Reading")){
             if(DailyChallengeManager.getCurrentQuestionData().get("passage")!=null){
@@ -117,28 +177,22 @@ public class DailyChallenge extends AppCompatActivity{
 
     }
 
-
-    private int generateQuestionIndex(){
-        Random rand=new Random();
-        int questionIndex=rand.nextInt(15)+1;
-        return questionIndex;
-
+    public void getQuestionCount(String grade, String category, String topic){
+        userDatabase.child(category).child("Grade_"+grade).child(topic).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    List<Object> questionsList=(List<Object>)task.getResult().getValue();
+                    questionCount=questionsList.size();
+                    populateQuestionMap();
+                }
+            }
+        });
     }
-
 
     private void populateQuestionMap(){
 
-        Calendar calendar=Calendar.getInstance();
-        int minutes=calendar.get(Calendar.MINUTE);
-        int hour = calendar.get(Calendar.HOUR);
-        int AMvalue=calendar.get(Calendar.AM);
-
-        if(minutes==0&&hour==12&&AMvalue==1){
-            questionIndex=generateQuestionIndex();
-        }
-        if(questionIndex==-1){
-            questionIndex=generateQuestionIndex();
-        }
+        questionIndex=getQuestionIndex(challengeGradeLevel, category);
 
         if(category.equals("Reading")){
             userDatabase.child(category).child("Grade_"+challengeGradeLevel).child(readingCategory).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -148,11 +202,6 @@ public class DailyChallenge extends AppCompatActivity{
                         List<Object> questionsList= (List<Object>)task.getResult().getValue();
                         DailyChallengeManager.setCurrentType(category+""+challengeGradeLevel);
                         DailyChallengeManager.setCurrentQuestionData((Map<String, Object>)questionsList.get(questionIndex));
-                        if(!retrieveDataPoints((Map<String, Object>)questionsList.get(questionIndex))){
-                            questionIndex=generateQuestionIndex();
-                            populateQuestionMap();
-                            return;
-                        }
                         loadChallenge();
                         if(DailyChallengeManager.getCurrentQuestionData().get("questionPicNumber")==null){
                             generateImage(-1);
@@ -172,11 +221,11 @@ public class DailyChallenge extends AppCompatActivity{
                         List<Object> questionsList= (List<Object>)task.getResult().getValue();
                         DailyChallengeManager.setCurrentType(category+""+challengeGradeLevel);
                         DailyChallengeManager.setCurrentQuestionData((Map<String, Object>)questionsList.get(questionIndex));
-                        if(!retrieveDataPoints((Map<String, Object>)questionsList.get(questionIndex))){
-                            questionIndex=generateQuestionIndex();
-                            populateQuestionMap();
-                            return;
-                        }
+//                        if(!retrieveDataPoints((Map<String, Object>)questionsList.get(questionIndex))){
+//                            questionIndex=generateQuestionIndex();
+//                            populateQuestionMap();
+//                            return;
+//                        }
                         loadChallenge();
                         if(DailyChallengeManager.getCurrentQuestionData().get("questionPicNumber")==null){
                             generateImage(-1);
