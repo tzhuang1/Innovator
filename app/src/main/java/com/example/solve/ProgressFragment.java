@@ -1,26 +1,49 @@
 package com.example.solve;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.*;
+
+import org.bson.Document;
 
 
 public class ProgressFragment extends Fragment {
-
-    //daily stats
-    private int questionsCompletedToday;
+//
+private int questionsCompletedToday;
     private int questionsCorrectToday = 0;
     protected int questionsGoal;
-    private int goalMetPercentage;
+
     private int dailyAccuracyPercentage = 100;
     //weekly stats
     private int questionsCompletedWeekly;
@@ -33,12 +56,19 @@ public class ProgressFragment extends Fragment {
 
     //UIs
     private TextView questionsCompletedTodayCount;
-    private TextView goalMetDisplay;
     private TextView dailyAccuracyDisplay;
-    private TextView questionsCompletedWeeklyCount;
-    private TextView weeklyAccuracyDisplay;
+//    private TextView questionsCompletedWeeklyCount;
+//    private TextView weeklyAccuracyDisplay;
     private TextView questionsCompletedOverallCount;
     private TextView overallAccuracyDisplay;
+
+    private FirebaseFirestore firestoreDB;
+    private List<AnsweredQuestionData> questionsCompleted;
+    private int totalCorrect;
+    private int completedToday;
+    private int correctToday;
+
+    private Calendar calendar;
 
 
     @Nullable
@@ -49,23 +79,35 @@ public class ProgressFragment extends Fragment {
 
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //UIs initialization
+        firestoreDB=FirebaseFirestore.getInstance();
+
         questionsCompletedTodayCount = view.findViewById(R.id.questionsCompletedTodayCount);
-        goalMetDisplay = view.findViewById(R.id.goalMetDisplay);
         dailyAccuracyDisplay = view.findViewById(R.id.dailyAccuracyDisplay);
 
-        questionsCompletedWeeklyCount = view.findViewById(R.id.questionsCompletedWeeklyCount);
-        weeklyAccuracyDisplay = view.findViewById(R.id.questionsCompletedWeeklyCount);
+//        questionsCompletedWeeklyCount = view.findViewById(R.id.questionsCompletedWeeklyCount);
+//        weeklyAccuracyDisplay = view.findViewById(R.id.weeklyAccuracyDisplay);
 
         questionsCompletedOverallCount = view.findViewById(R.id.questionsCompletedOverallCount);
         overallAccuracyDisplay = view.findViewById(R.id.overallAccuracyDisplay);
 
         super.onViewCreated(view, savedInstanceState);
+
+        calendar=Calendar.getInstance();
+
+        questionsCompleted=new ArrayList<AnsweredQuestionData>();
+
+        totalCorrect=0;
+        completedToday=0;
+        correctToday=0;
+
+        setValuesToNone();
+        obtainOverallStatistics();
     }
 
 
     /*  adds questions to the statistics, and updates values depending on if it was correct or not.
-    *   Correct is list of correctness of all questions entered, each element must be either
-    *   "CORRECT" or "INCORRECT"    */
+     *   Correct is list of correctness of all questions entered, each element must be either
+     *   "CORRECT" or "INCORRECT"    */
     public void addQuestions(ArrayList<String> questions) {
         int numQuestions = questions.size();
         //updates completed questions
@@ -74,7 +116,7 @@ public class ProgressFragment extends Fragment {
         questionsCompletedOverall += numQuestions;
 
         questionsCompletedTodayCount.setText(questionsCompletedToday);
-        questionsCompletedWeeklyCount.setText(questionsCompletedWeekly);
+        //questionsCompletedWeeklyCount.setText(questionsCompletedWeekly);
         questionsCompletedOverallCount.setText(questionsCompletedWeekly);
 
         //calculates and updates the number of correct questions
@@ -89,13 +131,72 @@ public class ProgressFragment extends Fragment {
         questionsCorrectOverall += numCorrect;
 
         //updates the percentages
-        goalMetPercentage = (int)(100 * questionsCorrectToday/questionsGoal);
+        //goalMetPercentage = (int)(100 * questionsCorrectToday/questionsGoal);
         dailyAccuracyPercentage = (int)(100 * questionsCorrectToday/questionsCompletedToday);
         weeklyAccuracyPercentage = (int)(100 * questionsCorrectWeekly/questionsCompletedWeekly);
 
-        goalMetDisplay.setText(goalMetPercentage + "%");
         dailyAccuracyDisplay.setText(dailyAccuracyPercentage + "%");
-        weeklyAccuracyDisplay.setText(weeklyAccuracyPercentage + "%");
+        //weeklyAccuracyDisplay.setText(weeklyAccuracyPercentage + "%");
     }
 
+
+    public void setValuesToNone(){
+        questionsCompletedOverallCount.setText("0");
+        overallAccuracyDisplay.setText("0%");
+
+        questionsCompletedTodayCount.setText("0");
+        dailyAccuracyDisplay.setText("0%");
+
+//        questionsCompletedWeeklyCount.setText("0");
+//        weeklyAccuracyDisplay.setText("0%");
+    }
+
+    private void obtainOverallStatistics(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String dateStr=formatter.format(date).substring(0,10).replace('/','-');
+
+        if(InnovatorApplication.getUser()!=null){
+            firestoreDB.collection("User_"+InnovatorApplication.getUser().getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    if(queryDocumentSnapshots.isEmpty()){
+                        setValuesToNone();
+                    }
+                    if(!queryDocumentSnapshots.isEmpty()){
+                        List<DocumentSnapshot> dataList=queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot d : dataList){
+                            String selectedAnswer = d.get("answer").toString();
+
+                            Map<String, Object> questionData=(Map<String, Object>)d.get("question");
+                            Question currentQuestion=new Question(questionData.get("question").toString(), null, null, null, null, questionData.get("answer").toString(), null, null);
+                            questionsCompleted.add(new AnsweredQuestionData(currentQuestion, selectedAnswer));
+
+                            if(selectedAnswer.substring(selectedAnswer.length()-1).equals(questionData.get("answer").toString())){
+                                totalCorrect++;
+                                if(d.getId().substring(0,10).equals(dateStr)){
+                                    correctToday++;
+                                }
+                            }
+                            if(d.getId().substring(0,10).equals(dateStr)){
+                                completedToday++;
+                            }
+                        }
+                        setDataValues();
+                    }
+                }
+            });
+        }
+    }
+
+    private void setDataValues() {
+        questionsCompletedOverallCount.setText(""+questionsCompleted.size());
+        double overallAccuracy= 1.0*totalCorrect/questionsCompleted.size();
+        overallAccuracyDisplay.setText(""+(Math.round(overallAccuracy*100))+"%");
+
+        questionsCompletedTodayCount.setText(""+completedToday);
+        double todayAccuracy=100*(1.0*correctToday/completedToday);
+        dailyAccuracyDisplay.setText(Math.round(todayAccuracy)+"%");
+
+
+    }
 }

@@ -1,6 +1,8 @@
 package com.example.solve;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.text.method.ScrollingMovementMethod;
 
@@ -37,12 +39,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import info.hoang8f.widget.FButton;
 
@@ -84,15 +89,10 @@ public class QuestionMainActivity extends AppCompatActivity {
 
         answeredQuestionList=new ArrayList<AnsweredQuestionData>();
 
+        qid=0;
         //------------------------------------------------------------------view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity_main);
-
-        //Intent intent = getIntent();
-
-
-
-        //Initializing variables
 
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
@@ -155,10 +155,15 @@ public class QuestionMainActivity extends AppCompatActivity {
     private void savePerUserFirebaseQuestionsList(AnsweredQuestionData currentAnsweredQuestion) {
         //get current userID, if userID is empty, then don't save anything
         if(InnovatorApplication.getUser() != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            String dateStr=formatter.format(date).substring(0,10).replace('/','-');
+
+
             int questionNumber = currentAnsweredQuestion.getQuestion().getId();
             String currentGrade=TopicManager.getGradeLevel();
             try{
-               firestoreDB.collection("User_"+currentUserID).document("Math"+currentGrade+"_"+questionNumber).set(currentAnsweredQuestion).addOnSuccessListener(new OnSuccessListener<Void>() {
+               firestoreDB.collection("User_"+currentUserID).document(dateStr+":Math"+currentGrade+"_"+questionNumber+"_"+TopicManager.getCategory()).set(currentAnsweredQuestion).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                     public void onSuccess(Void unused) {
                     //Toast.makeText(QuestionMainActivity.this, "Question complete added to user", Toast.LENGTH_SHORT).show();
@@ -170,13 +175,15 @@ public class QuestionMainActivity extends AppCompatActivity {
             }
 
 
+
         }
     }
+
 
     private void getFirebaseQuestionsList(){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Math")
-                .child(TopicManager.getQuestionFolderName());
+                .child(TopicManager.getQuestionFolderName()).child(TopicManager.getCategory());
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -187,12 +194,10 @@ public class QuestionMainActivity extends AppCompatActivity {
                     Map<String, Object> entry = listOfQuestions.get(i);
                     try{
                         if(entry != null) {
-                            if(retrieveDataPoints(entry)){
-                                Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
-                                                 entry.get("answer")+"", entry.get("explanation")+"", entry.get("category")+"", Integer.parseInt(entry.get("questionPicNumber")+""), Integer.parseInt(entry.get("explanationPicNumber")+""));
-                                newQuestion.setId(i);
-                                questionsList.add(newQuestion);
-                            }
+                            Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
+                                    entry.get("answer")+"", entry.get("explanation")+"", entry.get("category")+"", Integer.parseInt(entry.get("questionPicNumber")+""), Integer.parseInt(entry.get("explanationPicNumber")+""));
+                            newQuestion.setId(i);
+                            questionsList.add(newQuestion);
                         }
                     }
                     catch (Exception ex) {
@@ -455,6 +460,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
             correctDialog();
+
         }
         //User ans is wrong then just navigate him to the PlayAgain activity
         else {
@@ -471,6 +477,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
             correctDialog();
+
         } else { // in place of PlayAgain activity to be implemented later? test to pull up incorrect dialog
             incorrectDialog();
         }
@@ -485,6 +492,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
             correctDialog();
+
         } else {
             incorrectDialog();
         }
@@ -499,6 +507,7 @@ public class QuestionMainActivity extends AppCompatActivity {
             //TODO: when on last question and success, the success dialog does not show
             disableButton();
             correctDialog();
+
         } else {
             incorrectDialog();
         }
@@ -584,12 +593,6 @@ public class QuestionMainActivity extends AppCompatActivity {
                 //This will dismiss the dialog
                 dialogComplete.dismiss();
                 //go home
-//                setContentView(R.layout.angela_activity_main);
-//                HomeFragment homeFragment = new HomeFragment();
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                ft.replace(R.id.fragment_container, homeFragment);
-//                ft.commit();
-                //getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, MainMenuController.class, null).commit();
                 startActivity(new Intent(QuestionMainActivity.this, MainMenuController.class));
 
             }

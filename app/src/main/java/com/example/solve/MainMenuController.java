@@ -1,41 +1,23 @@
 package com.example.solve;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.AuthCredential;
@@ -46,7 +28,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mongodb.*;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
+import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
 public class MainMenuController extends AppCompatActivity {
@@ -61,10 +47,13 @@ public class MainMenuController extends AppCompatActivity {
     private GoogleSignInClient signInClient;
     private GoogleSignInAccount googleAccount;
 
+
     private boolean isUserSignedIn(){
         FirebaseUser user=auth.getCurrentUser();
         if(user!=null){
             instantiateUserData();
+
+
             return true;
         }
         return false;
@@ -74,6 +63,7 @@ public class MainMenuController extends AppCompatActivity {
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.angela_activity_main);
+
 
         auth=FirebaseAuth.getInstance();
 
@@ -92,6 +82,7 @@ public class MainMenuController extends AppCompatActivity {
 
         establishNavBarTask();
         configureSignIn();
+        //addToMongoDB();
     }
 
     // OnClick listeners
@@ -259,5 +250,6 @@ public class MainMenuController extends AppCompatActivity {
             userDatabase.child("UserData").child("Profile").child(InnovatorApplication.getUser().getId()).child(categories[i]).setValue(queryData[i]);
         }
     }
+
 
 }
