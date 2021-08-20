@@ -55,8 +55,7 @@ public class TopicSelectFragment extends Fragment {
 
     //----grade sent from settings---------
     private String grade = "3";
-
-
+  
     private String[] mathCategories={"Computation and Estimation", "Measurement and Geometry","Numbers and Number Sense","Patterns, Functions, Algebra", "Probability and Statistics"};
     private String[] readingCategories={"Reading Comprehension", "Word Analysis"};
 
@@ -91,6 +90,7 @@ public class TopicSelectFragment extends Fragment {
         radioButtonReading = view.findViewById(R.id.radioReading);
         radioButtonMath = view.findViewById(R.id.radioMath);
         radioButtonMath.setChecked(true); //by default, math is selected
+
         generateTestTopicList();
         //------------------get grade from saved settings------------------------
         SharedPreferences saved;
@@ -105,6 +105,7 @@ public class TopicSelectFragment extends Fragment {
                     intent = new Intent(TopicSelectFragment.this.getActivity(),ReadingQuestions.class);
                 }
                 UserData u = InnovatorApplication.getUser();
+              
                 if (u == null) {
                     Toast.makeText(view.getContext(), "Please save grade level before starting topic", Toast.LENGTH_SHORT).show();
                 } else {

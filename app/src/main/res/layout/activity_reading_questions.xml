@@ -6,129 +6,221 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="visible">
 
+    <!-- Loading Screen Constraint Layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loading_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/loading_screen"
-        android:visibility="gone"
         android:background="@color/blue"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
-            fbutton:layout_constraintTop_toTopOf="parent"
-            fbutton:layout_constraintBottom_toBottomOf="parent"
-            fbutton:layout_constraintLeft_toLeftOf="parent"
-            fbutton:layout_constraintRight_toRightOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="Loading Questions\n Please Wait..."
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="30sp"
-            android:gravity="center_horizontal" />
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintLeft_toLeftOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.example.solve.ReadingQuestions">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        fbutton:layout_constraintGuide_percent="0.5" />
-
-    <info.hoang8f.widget.FButton
-        android:id="@+id/btnA"
+    <!-- Questions Screen Layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="buttonA"
-        android:backgroundTint="@color/blue"
-        android:text="Button"
-        fbutton:layout_constraintEnd_toEndOf="@+id/textView2"
-        fbutton:layout_constraintStart_toStartOf="@+id/textView2"
-        fbutton:layout_constraintTop_toBottomOf="@+id/textView2" />
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context="com.example.solve.ReadingQuestions">
 
-    <info.hoang8f.widget.FButton
-        android:id="@+id/btnB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="buttonB"
-        android:text="Button"
-        android:backgroundTint="@color/blue"
-        fbutton:layout_constraintEnd_toEndOf="@+id/btnA"
-        fbutton:layout_constraintStart_toStartOf="@+id/btnA"
-        fbutton:layout_constraintTop_toBottomOf="@+id/btnA" />
-
-    <info.hoang8f.widget.FButton
-        android:id="@+id/btnC"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="buttonC"
-        android:text="Button"
-        android:backgroundTint="@color/blue"
-        fbutton:layout_constraintEnd_toEndOf="@+id/btnB"
-        fbutton:layout_constraintStart_toStartOf="@+id/btnB"
-        fbutton:layout_constraintTop_toBottomOf="@+id/btnB" />
-
-    <info.hoang8f.widget.FButton
-        android:id="@+id/btnD"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="buttonD"
-        android:text="Button"
-        android:backgroundTint="@color/blue"
-        fbutton:layout_constraintEnd_toEndOf="@+id/btnC"
-        fbutton:layout_constraintStart_toStartOf="@+id/btnC"
-        fbutton:layout_constraintTop_toBottomOf="@+id/btnC" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Question"
-        android:textSize="20sp"
-        fbutton:layout_constraintEnd_toEndOf="parent"
-        fbutton:layout_constraintStart_toStartOf="parent"
-        fbutton:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        android:gravity="center"
-        />
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="408dp"
-        android:layout_height="247dp"
-        fbutton:layout_constraintBottom_toTopOf="@+id/guideline"
-        fbutton:layout_constraintEnd_toEndOf="parent"
-        fbutton:layout_constraintStart_toStartOf="parent"
-        fbutton:layout_constraintTop_toTopOf="parent"
-        fbutton:layout_constraintVertical_bias="0.0">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Reading Practice"
+            android:textSize="25dp"
+            android:textColor="@color/blue"
+            fbutton:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            fbutton:layout_constraintEnd_toEndOf="parent"
+            fbutton:layout_constraintStart_toStartOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txtPassage"
+        <Button
+            android:id="@+id/homeButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:drawableStart="@drawable/ic_home_black_24dp"
+            fbutton:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            fbutton:layout_constraintEnd_toStartOf="@+id/titleText"
+            fbutton:layout_constraintStart_toStartOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="8dp"
+            android:background="@drawable/button_border"
+            android:foreground="@drawable/click_ripple"/>
+
+        <!-- maybe another button on right -->
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            fbutton:layout_constraintGuide_percent="0.5" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="wrap_content"
+            android:layout_height="295dp"
+            android:layout_marginTop="70dp"
+            android:fadeScrollbars="false"
+            fbutton:layout_constraintBottom_toTopOf="@+id/guideline"
+            fbutton:layout_constraintEnd_toEndOf="parent"
+            fbutton:layout_constraintHorizontal_bias="1.0"
+            fbutton:layout_constraintStart_toStartOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtPassage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Read the following passage:\nIsabella woke up one morning hearing her mother shouting, “Come on Isabella, you’re going to be late for summer camp!” \nHer mother had signed her up for a camp without her knowledge, and Isabella had been anxious ever since she had known. The camp, her mother said, was one for adolescents to explore the outdoors. Isabella read over the activity list that day and one thing in particular caught her eye while she skimmed through the pamphlet. Rock Climbing. Ever since she was young, she had an immense fear of heights. Even looking out the window on a high floor made her feel uneasy inside.\nHer thoughts were interrupted when her mother called for her once more. She didn’t want to, but Isabella had no choice but to get out of bed and prepare herself for whatever the camp had to bring."
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/txtQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="10dp"
+            android:text="Which best describes the reason why Isabella doesn’t want to go to summer camp?"
+            android:textSize="19sp"
+            fbutton:layout_constraintEnd_toEndOf="parent"
+            fbutton:layout_constraintStart_toStartOf="parent"
+            fbutton:layout_constraintTop_toTopOf="@+id/guideline" />
+
+        <ScrollView
+            android:id="@+id/scrollView3"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:fadeScrollbars="false"
+            android:paddingTop="10dp"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintEnd_toEndOf="parent"
+            fbutton:layout_constraintHorizontal_bias="0.0"
+            fbutton:layout_constraintStart_toStartOf="parent"
+            fbutton:layout_constraintTop_toBottomOf="@+id/txtQuestion">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"/>
-        </RelativeLayout>
-    </ScrollView>
+                android:layout_marginHorizontal="10dp"
+                android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/txtA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/btnA"
+                    android:layout_alignBottom="@id/btnA"
+                    android:gravity="center_vertical"
+                    android:text="A)"
+                    android:textColor="@color/blue"
+                    android:textSize="25dp"></TextView>
+
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/btnA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:backgroundTint="@color/blue"
+                    android:onClick="buttonA"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla efficitur placerat diam a imperdiet. Curabitur lectus urna, sollicitudin ut mattis ac, tempor eu metus." />
+
+                <TextView
+                    android:id="@+id/txtB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/btnB"
+                    android:layout_alignBottom="@id/btnB"
+                    android:gravity="center_vertical"
+                    android:text="B)"
+                    android:textColor="@color/blue"
+                    android:textSize="25dp"></TextView>
+
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/btnB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnA"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="15dp"
+                    android:backgroundTint="@color/blue"
+                    android:onClick="buttonB"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla efficitur placerat diam a imperdiet. Curabitur lectus urna, sollicitudin ut mattis ac, tempor eu metus." />
+
+                <TextView
+                    android:id="@+id/txtC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/btnC"
+                    android:layout_alignBottom="@id/btnC"
+                    android:gravity="center_vertical"
+                    android:text="C)"
+                    android:textColor="@color/blue"
+                    android:textSize="25dp"></TextView>
+
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/btnC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnB"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="15dp"
+                    android:backgroundTint="@color/blue"
+                    android:onClick="buttonC"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla efficitur placerat diam a imperdiet. Curabitur lectus urna, sollicitudin ut mattis ac, tempor eu metus." />
+
+                <TextView
+                    android:id="@+id/txtD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/btnD"
+                    android:layout_alignBottom="@id/btnD"
+                    android:gravity="center_vertical"
+                    android:text="D)"
+                    android:textColor="@color/blue"
+                    android:textSize="25dp"></TextView>
+
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/btnD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnC"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="@color/blue"
+                    android:onClick="buttonD"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla efficitur placerat diam a imperdiet. Curabitur lectus urna, sollicitudin ut mattis ac, tempor eu metus." />
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

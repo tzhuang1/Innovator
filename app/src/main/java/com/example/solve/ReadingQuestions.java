@@ -44,6 +44,7 @@ import info.hoang8f.widget.FButton;
 
 import static android.view.View.GONE;
 import static com.example.solve.R.id.btnA;
+import static com.example.solve.R.id.homeButton;
 
 public class ReadingQuestions extends AppCompatActivity {
 
@@ -55,6 +56,7 @@ public class ReadingQuestions extends AppCompatActivity {
     private TextView questionText;
     private TextView passageText;
 
+    private Button homeButton;
     private FButton buttonA, buttonB, buttonC, buttonD;
 
     //ImageView explanationPic;    TODO: ask CD if there are explanation pics
@@ -86,9 +88,11 @@ public class ReadingQuestions extends AppCompatActivity {
         loadingScreen = findViewById(R.id.loading_screen);
         loadingScreen.setVisibility(View.VISIBLE);
 
+        homeButton = findViewById(R.id.homeButton);
+
         scrollViewPassage = findViewById(R.id.scrollView2);
         passageText = findViewById(R.id.txtPassage);
-        questionText = findViewById(R.id.textView2);
+        questionText = findViewById(R.id.txtQuestion);
         buttonA = (FButton) findViewById(R.id.btnA);
         buttonB = (FButton) findViewById(R.id.btnB);
         buttonC = (FButton) findViewById(R.id.btnC);
@@ -106,8 +110,16 @@ public class ReadingQuestions extends AppCompatActivity {
 
         //TODO: From database get all values
 
-        getFirebaseQuestionsList();
+        getFirebaseQuestionsList(currentTopic);
 
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Switch back to home activity
+                Intent intent = new Intent(ReadingQuestions.this, MainMenuActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private int checkIfNull(Map<String, Object> entry, String key){
@@ -138,7 +150,7 @@ public class ReadingQuestions extends AppCompatActivity {
 
                             Question newQuestion = new Question(entry.get("question").toString(), entry.get("optA").toString(), entry.get("optB").toString(), entry.get("optC").toString(), entry.get("optD").toString(),
                                     entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), pictureNum, explanationNum,
-                                    entry.get("passage").toString());
+                                    (String) entry.get("passage"));
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
                         }
