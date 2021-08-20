@@ -105,93 +105,6 @@
         <TextView
             android:id="@+id/txtQuestion"
             android:layout_width="wrap_content"
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.example.solve.ReadingQuestions">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        fbutton:layout_constraintGuide_percent="0.5" />
-
-    <info.hoang8f.widget.FButton
-        android:id="@+id/btnA"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="buttonA"
-        android:backgroundTint="@color/blue"
-        android:text="Button"
-        fbutton:layout_constraintEnd_toEndOf="@+id/textView2"
-        fbutton:layout_constraintStart_toStartOf="@+id/textView2"
-        fbutton:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <info.hoang8f.widget.FButton
-        android:id="@+id/btnB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="buttonB"
-        android:text="Button"
-        android:backgroundTint="@color/blue"
-        fbutton:layout_constraintEnd_toEndOf="@+id/btnA"
-        fbutton:layout_constraintStart_toStartOf="@+id/btnA"
-        fbutton:layout_constraintTop_toBottomOf="@+id/btnA" />
-
-    <info.hoang8f.widget.FButton
-        android:id="@+id/btnC"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="buttonC"
-        android:text="Button"
-        android:backgroundTint="@color/blue"
-        fbutton:layout_constraintEnd_toEndOf="@+id/btnB"
-        fbutton:layout_constraintStart_toStartOf="@+id/btnB"
-        fbutton:layout_constraintTop_toBottomOf="@+id/btnB" />
-
-    <info.hoang8f.widget.FButton
-        android:id="@+id/btnD"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="buttonD"
-        android:text="Button"
-        android:backgroundTint="@color/blue"
-        fbutton:layout_constraintEnd_toEndOf="@+id/btnC"
-        fbutton:layout_constraintStart_toStartOf="@+id/btnC"
-        fbutton:layout_constraintTop_toBottomOf="@+id/btnC" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Question"
-        android:textSize="20sp"
-        fbutton:layout_constraintEnd_toEndOf="parent"
-        fbutton:layout_constraintStart_toStartOf="parent"
-        fbutton:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        android:gravity="center"
-        />
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="408dp"
-        android:layout_height="247dp"
-        fbutton:layout_constraintBottom_toTopOf="@+id/guideline"
-        fbutton:layout_constraintEnd_toEndOf="parent"
-        fbutton:layout_constraintStart_toStartOf="parent"
-        fbutton:layout_constraintTop_toTopOf="parent"
-        fbutton:layout_constraintVertical_bias="0.0">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:paddingHorizontal="10dp"
@@ -250,7 +163,7 @@
                     android:text="B)"
                     android:textColor="@color/blue"
                     android:textSize="25dp"></TextView>
-              
+
                 <info.hoang8f.widget.FButton
                     android:id="@+id/btnB"
                     android:layout_width="match_parent"
