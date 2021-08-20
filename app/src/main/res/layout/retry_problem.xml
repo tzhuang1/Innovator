@@ -27,19 +27,6 @@
             app:layout_constraintHorizontal_bias="0.063"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/retryBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.984"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.4"
-            android:text="Retry"
-            android:onClick="retryCurrentQuestion"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -102,39 +89,43 @@
         android:layout_marginTop="30dp">
 
         <Button
-            android:id="@+id/pastAnswerA"
+            android:id="@+id/retryAnswerA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="A."
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp" />
+            tools:layout_editor_absoluteY="571dp"
+            android:onClick="clickedA"/>
 
         <Button
-            android:id="@+id/pastAnswerB"
+            android:id="@+id/retryAnswerB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pastAnswerA"
+            android:layout_below="@+id/retryAnswerA"
             android:text="B."
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp" />
+            tools:layout_editor_absoluteY="571dp"
+            android:onClick="clickedB"/>
 
         <Button
-            android:id="@+id/pastAnswerC"
+            android:id="@+id/retryAnswerC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pastAnswerB"
+            android:layout_below="@+id/retryAnswerB"
             android:text="C."
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp" />
+            tools:layout_editor_absoluteY="571dp"
+            android:onClick="clickedC"/>
 
         <Button
-            android:id="@+id/pastAnswerD"
+            android:id="@+id/retryAnswerD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pastAnswerC"
+            android:layout_below="@+id/retryAnswerC"
             android:text="D."
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="571dp" />
+            tools:layout_editor_absoluteY="571dp"
+            android:onClick="clickedD"/>
 
     </RelativeLayout>
 
