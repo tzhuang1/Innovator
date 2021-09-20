@@ -63,7 +63,7 @@ public class ReadingQuestions extends AppCompatActivity {
 
     private Question currentQuestion;
     private UserData currentUser;
-    //private Topic currentTopic;
+    private Topic currentTopic;
     private List<Question> questionsList;
     private List<AnsweredQuestionData> answeredQuestionList;
     private int qid = 0;
@@ -110,7 +110,7 @@ public class ReadingQuestions extends AppCompatActivity {
 
         //TODO: From database get all values
 
-        getFirebaseQuestionsList(currentTopic);
+        getFirebaseQuestionsList();
 
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +150,7 @@ public class ReadingQuestions extends AppCompatActivity {
 
                             Question newQuestion = new Question(entry.get("question").toString(), entry.get("optA").toString(), entry.get("optB").toString(), entry.get("optC").toString(), entry.get("optD").toString(),
                                     entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), pictureNum, explanationNum,
-                                    (String) entry.get("passage"));
+                                    entry.get("passage").toString());
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
                         }
