@@ -4,13 +4,14 @@ import java.io.Serializable;
 
 public class TopicManager implements Serializable {
 
-    private static String folderName;
-    private static String picRootFolderName;
-    private static String picNamePrefix;
+    //set defaults so qListRef in ReadingQuestions.java doesn't crash
+    private static String folderName = "Grade_3";
+    private static String picRootFolderName = "Grade_3_Questions";
+    private static String picNamePrefix = "grade_3";
 
-    private static String gradeLevel;
+    private static String gradeLevel = "3";
 
-    private static String category="Computation and Estimation";
+    private static String category = "Computation and Estimation";
 
     public static void setDataLocations(String level){
         gradeLevel=level;

@@ -102,6 +102,7 @@ public class TopicSelectFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
                 if(radioButtonReading.isChecked()) {
+                    TopicManager.setCategory(readingCategories[topicIdx]);
                     intent = new Intent(TopicSelectFragment.this.getActivity(),ReadingQuestions.class);
                 }
                 UserData u = InnovatorApplication.getUser();
@@ -129,6 +130,9 @@ public class TopicSelectFragment extends Fragment {
                 if(radioButtonMath.isChecked()){
                     TopicManager.setCategory(mathCategories[topicIdx]);
                 }
+                else{
+                    TopicManager.setCategory(readingCategories[topicIdx]);
+                }
             }
         });
         rightButton.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +142,9 @@ public class TopicSelectFragment extends Fragment {
                 if(radioButtonMath.isChecked()){
                     TopicManager.setCategory(mathCategories[topicIdx]);
                 }
+                else{
+                    TopicManager.setCategory(readingCategories[topicIdx]);
+                }
             }
         });
 
@@ -145,6 +152,12 @@ public class TopicSelectFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 topicIdx=0;
+                if(radioButtonMath.isChecked()){
+                    TopicManager.setCategory(mathCategories[topicIdx]);
+                }
+                else{
+                    TopicManager.setCategory(readingCategories[topicIdx]);
+                }
 
                 generateTestTopicList();
                 updateTopicView(topicIdx);

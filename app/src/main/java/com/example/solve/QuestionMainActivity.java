@@ -181,28 +181,44 @@ public class QuestionMainActivity extends AppCompatActivity {
 
 
     private void getFirebaseQuestionsList(){
+        Log.e("tag",TopicManager.getCategory());
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
-                .child("Math")
-                .child(TopicManager.getQuestionFolderName()).child(TopicManager.getCategory());
+                .child("Math").child((String)TopicManager.getQuestionFolderName())
+                .child((String)TopicManager.getCategory());
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Object myData = dataSnapshot.getValue();
                 questionsList = new ArrayList<Question>();
                 List<Map<String, Object>> listOfQuestions = (List<Map<String, Object>>)(dataSnapshot.getValue());
+
                 for(int i = 0; i < listOfQuestions.size(); i++) {
                     Map<String, Object> entry = listOfQuestions.get(i);
-                    try{
-                        if(entry != null) {
+                    //try{
+                        if(entry.get("explanationPicNumber") != null) {
                             Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
-                                    entry.get("answer")+"", entry.get("explanation")+"", entry.get("category")+"", Integer.parseInt(entry.get("questionPicNumber")+""), Integer.parseInt(entry.get("explanationPicNumber")+""));
+                                    entry.get("answer")+"",
+                                    entry.get("explanation")+"",
+                                    entry.get("category")+"",
+                                    Integer.parseInt(entry.get("questionPicNumber")+""),
+                                    Integer.parseInt(entry.get("explanationPicNumber")+""));
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
                         }
-                    }
-                    catch (Exception ex) {
-                        Log.e("LoadQuestion", ex.toString());
-                    }
+                        else{
+                            Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
+                                    entry.get("answer")+"",
+                                    entry.get("explanation")+"",
+                                    entry.get("category")+"",
+                                    Integer.parseInt(entry.get("questionPicNumber")+""),
+                                    -1);
+                            newQuestion.setId(i);
+                            questionsList.add(newQuestion);
+                        }
+                    //}
+                    //catch (Exception ex) {
+                    //    Log.e("LoadQuestion", ex.toString());
+                    //}
                 }
 
                 //questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Question>>() {});//stops here Failed to convert value of type java.lang.Long to String

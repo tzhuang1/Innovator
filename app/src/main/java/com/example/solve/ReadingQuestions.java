@@ -63,7 +63,7 @@ public class ReadingQuestions extends AppCompatActivity {
 
     private Question currentQuestion;
     private UserData currentUser;
-    //private Topic currentTopic;
+    private Topic currentTopic;
     private List<Question> questionsList;
     private List<AnsweredQuestionData> answeredQuestionList;
     private int qid = 0;
@@ -110,7 +110,7 @@ public class ReadingQuestions extends AppCompatActivity {
 
         //TODO: From database get all values
 
-        getFirebaseQuestionsList(currentTopic);
+        getFirebaseQuestionsList();
 
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +132,9 @@ public class ReadingQuestions extends AppCompatActivity {
 
     private void getFirebaseQuestionsList(){
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
-                .child("Reading")
-                .child(TopicManager.getQuestionFolderName()).child(TopicManager.getCategory());
+                .child("Reading").child((String)TopicManager.getQuestionFolderName())
+                .child((String)TopicManager.getCategory());
+
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -141,6 +142,7 @@ public class ReadingQuestions extends AppCompatActivity {
                 questionsList = new ArrayList<Question>();
                 Toast.makeText(ReadingQuestions.this, ""+dataSnapshot.getValue().getClass().toString(), Toast.LENGTH_SHORT).show();
                 List<Map<String, Object>> listOfQuestions = (List<Map<String, Object>>)dataSnapshot.getValue();
+
                 for(int i = 0; i < listOfQuestions.size(); i++) {
                     Map<String, Object> entry = listOfQuestions.get(i);
                     try{
@@ -149,7 +151,8 @@ public class ReadingQuestions extends AppCompatActivity {
                             int explanationNum=checkIfNull(entry, "explanationPicNumber");
 
                             Question newQuestion = new Question(entry.get("question").toString(), entry.get("optA").toString(), entry.get("optB").toString(), entry.get("optC").toString(), entry.get("optD").toString(),
-                                    entry.get("answer").toString(), entry.get("explanation").toString(), entry.get("category").toString(), pictureNum, explanationNum,
+                                    entry.get("answer").toString(), entry.get("explanation").toString(),
+                                    (String) entry.get("category"), pictureNum, explanationNum,
                                     (String) entry.get("passage"));
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
@@ -183,44 +186,44 @@ public class ReadingQuestions extends AppCompatActivity {
         //sets visibility of layout according to what pictures are in the question
         //question has text even if it has pic
         boolean hasQPic = false;
-        if(currentQuestion==null){
-            hasQPic=false;
-        }
-        else{
-            hasQPic = (currentQuestion.getPicNumber() > -1);
-        }
-        boolean hasAPics = (currentQuestion.getOptAPicNumber() > -1 || currentQuestion.getOptBPicNumber() > -1 || currentQuestion.getOptCPicNumber() > -1 || currentQuestion.getOptDPicNumber() > -1);
-        if(!hasQPic && !hasAPics){ //text only
-            //Q
-            questionText.setText(currentQuestion.getQuestion());
-            questionText.setVisibility(View.VISIBLE);
-            //A
-            buttonA.setText(currentQuestion.getOptA());
-            buttonB.setText(currentQuestion.getOptB());
-            buttonC.setText(currentQuestion.getOptC());
-            buttonD.setText(currentQuestion.getOptD());
-        }else if(hasQPic && !hasAPics){ //pic question, text answer
-            //Q
-            questionText.setVisibility(GONE);
-            questionText.setText(currentQuestion.getQuestion());
-            //A
-            buttonA.setText(currentQuestion.getOptA());
-            buttonB.setText(currentQuestion.getOptB());
-            buttonC.setText(currentQuestion.getOptC());
-            buttonD.setText(currentQuestion.getOptD());
-        }else if(!hasQPic && hasAPics){ //text question, pic answer
-            //Q
-            questionText.setText(currentQuestion.getQuestion());
-            questionText.setVisibility(View.VISIBLE);
-            //A
-        }else{ //all pictures
-            //Q
-            questionText.setVisibility(GONE);
-            //A
-        }
-        passageText.setText(currentQuestion.getPassage());
+        boolean hasAPics = false;
 
+        if (currentQuestion != null) {
+            hasQPic = (currentQuestion.getPicNumber() > -1);
+            hasAPics = (currentQuestion.getOptAPicNumber() > -1 || currentQuestion.getOptBPicNumber() > -1 || currentQuestion.getOptCPicNumber() > -1 || currentQuestion.getOptDPicNumber() > -1);
+
+            if (!hasQPic && !hasAPics) { //text only
+                //Q
+                questionText.setText(currentQuestion.getQuestion());
+                questionText.setVisibility(View.VISIBLE);
+                //A
+                buttonA.setText(currentQuestion.getOptA());
+                buttonB.setText(currentQuestion.getOptB());
+                buttonC.setText(currentQuestion.getOptC());
+                buttonD.setText(currentQuestion.getOptD());
+            } else if (hasQPic && !hasAPics) { //pic question, text answer
+                //Q
+                questionText.setVisibility(GONE);
+                questionText.setText(currentQuestion.getQuestion());
+                //A
+                buttonA.setText(currentQuestion.getOptA());
+                buttonB.setText(currentQuestion.getOptB());
+                buttonC.setText(currentQuestion.getOptC());
+                buttonD.setText(currentQuestion.getOptD());
+            } else if (!hasQPic && hasAPics) { //text question, pic answer
+                //Q
+                questionText.setText(currentQuestion.getQuestion());
+                questionText.setVisibility(View.VISIBLE);
+                //A
+            } else { //all pictures
+                //Q
+                questionText.setVisibility(GONE);
+                //A
+            }
+            passageText.setText(currentQuestion.getPassage());
+        }
     }
+
     private void saveHistory(int questionID, String answerChosen, Question currentQuestion) {
         if(answeredQuestionList != null)
         {
