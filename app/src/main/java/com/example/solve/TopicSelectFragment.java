@@ -152,6 +152,12 @@ public class TopicSelectFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 topicIdx=0;
+                if(radioButtonMath.isChecked()){
+                    TopicManager.setCategory(mathCategories[topicIdx]);
+                }
+                else{
+                    TopicManager.setCategory(readingCategories[topicIdx]);
+                }
 
                 generateTestTopicList();
                 updateTopicView(topicIdx);
