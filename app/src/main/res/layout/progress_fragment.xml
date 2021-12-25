@@ -93,6 +93,21 @@
 
             </TableLayout>
 
+            <!--<TextView
+                android:id="@+id/dailyMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="380dp"
+                android:padding="20dp"
+                android:text="You didn't meet your practice goal yet today! Keep practicing!"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="22dp"
+                tools:layout_conversion_absoluteWidth="109dp" /> -->
+
 <!--            <TextView-->
 <!--                android:id="@+id/weeklyTitle"-->
 <!--                android:layout_width="wrap_content"-->
@@ -256,19 +271,6 @@
                 </TableRow>
             </TableLayout>
 
-            <Button
-                android:id="@+id/achievementsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:importantForAutofill="no"
-                android:padding="10dp"
-                android:text="If Achievements Implemented"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/overallTableLayout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

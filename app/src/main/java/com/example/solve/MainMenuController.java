@@ -71,13 +71,14 @@ public class MainMenuController extends AppCompatActivity {
         userDatabase=FirebaseDatabase.getInstance().getReference();
         isUserSignedIn();
 
+
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, HomeController.class, null).commit();
 
         if(googleAccount!=null){
-            Toast.makeText(this, "Already signed in", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Already signed in", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(this, "Not yet signed in", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Not yet signed in", Toast.LENGTH_SHORT).show();
         }
 
         establishNavBarTask();
