@@ -15,17 +15,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
-
-        <TextView
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="250dp"
             android:layout_margin="50dp"
             android:gravity="center"
-            android:text="Home"
-            android:textColor="@color/grey"
-            android:textSize="50dp"
-            fbutton:fontFamily="@font/karla" />
+            fbutton:srcCompat="@mipmap/ic_solve_logo" />
 
         <info.hoang8f.widget.FButton
             android:id="@+id/dailyChallengeButton"
@@ -45,7 +41,7 @@
             android:onClick="seePastProblems"
             android:text="Past Problems"
             android:textColor="@color/white"
-            fbutton:buttonColor="@color/blue"/>
+            fbutton:buttonColor="@color/blue" />
 
     </LinearLayout>
 

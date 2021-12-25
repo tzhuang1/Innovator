@@ -59,8 +59,6 @@ public class ReadingQuestions extends AppCompatActivity {
     private Button homeButton;
     private FButton buttonA, buttonB, buttonC, buttonD;
 
-    //ImageView explanationPic;    TODO: ask CD if there are explanation pics
-
     private Question currentQuestion;
     private UserData currentUser;
     private Topic currentTopic;
@@ -140,7 +138,7 @@ public class ReadingQuestions extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Object myData = dataSnapshot.getValue();
                 questionsList = new ArrayList<Question>();
-                Toast.makeText(ReadingQuestions.this, ""+dataSnapshot.getValue().getClass().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ReadingQuestions.this, ""+dataSnapshot.getValue().getClass().toString(), Toast.LENGTH_SHORT).show();
                 List<Map<String, Object>> listOfQuestions = (List<Map<String, Object>>)dataSnapshot.getValue();
 
                 for(int i = 0; i < listOfQuestions.size(); i++) {

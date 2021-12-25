@@ -183,4 +183,8 @@ class SettingsFragment : Fragment() {
             notificationManager!!.createNotificationChannel(channel)
         }
     }
+
+    fun getGoal(): String? {
+        return actPerDayStr
+    }
 }

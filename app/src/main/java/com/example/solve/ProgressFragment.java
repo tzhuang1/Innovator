@@ -102,6 +102,7 @@ private int questionsCompletedToday;
 
         setValuesToNone();
         obtainOverallStatistics();
+
     }
 
 
@@ -196,7 +197,5 @@ private int questionsCompletedToday;
         questionsCompletedTodayCount.setText(""+completedToday);
         double todayAccuracy=100*(1.0*correctToday/completedToday);
         dailyAccuracyDisplay.setText(Math.round(todayAccuracy)+"%");
-
-
     }
 }
