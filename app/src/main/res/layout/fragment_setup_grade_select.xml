@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.solve.SetupGradeSelectFragment">
+    tools:context="com.example.solve.com.innovator.solve.SetupGradeSelectFragment">
 
     <Button
         android:id="@+id/gradeSelectRightBtn"

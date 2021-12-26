@@ -7,7 +7,7 @@
     tools:ignore="ExtraText"
     android:padding="16dp"
     android:background="@drawable/branchoutlogoexample"
-    tools:context="com.example.solve.ProgressBarActivity">
+    tools:context="com.example.solve.com.innovator.solve.ProgressBarActivity">
 
     <TextView
         android:id="@+id/text_view"

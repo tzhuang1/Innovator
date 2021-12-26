@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:313186435301:android:44fc7a118890fade",
         "android_client_info": {
-          "package_name": "com.example.innovatorsetup"
+          "package_name": "com.innovator.solve"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "313186435301-v0njtg4igpojp6601kp5jkrhv6d0fj52.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.innovatorsetup",
+            "package_name": "com.innovator.solve",
             "certificate_hash": "2d2e847c0a65911be412206471caddeba69893bf"
           }
         },
@@ -26,7 +26,7 @@
           "client_id": "313186435301-jvm72ollf0v5llpnnllq8cldkbadc28o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.innovatorsetup",
+            "package_name": "com.innovator.solve",
             "certificate_hash": "0f45ffcc63b853c438702fc0c8a09d23f2c53495"
           }
         },
