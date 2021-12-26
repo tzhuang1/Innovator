@@ -3,16 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/debug/res/drawable-anydpi/ic_topic_test_one.xml" value="0.1" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/drawable-anydpi/ic_back_arrow_white.xml" value="0.1" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/drawable-anydpi/ic_topic_test_four.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/drawable-anydpi/ic_topic_test_one.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/drawable-anydpi/ic_topic_test_three.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/drawable-anydpi/ic_topic_test_two.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.17291666666666666" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.17291666666666666" />
         <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/activity_reading_questions.xml" value="0.1" />
         <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/fragment_home.xml" value="0.25025641025641027" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/fragment_setup_activity_select.xml" value="0.18796296296296297" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/fragment_setup_grade_select.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/loading_screen.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/progress_fragment.xml" value="0.264" />
         <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/question_activity_main.xml" value="0.264" />
         <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/settings_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/setup_activity_main.xml" value="0.18796296296296297" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/single_past_problem.xml" value="0.18796296296296297" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/layout/topic_select_activity.xml" value="0.18796296296296297" />
+        <entry key="..\:/Users/bloon/AndroidStudioProjects/SOLve/app/src/main/res/mipmap-anydpi-v26/ic_solve_logo.xml" value="0.1265625" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

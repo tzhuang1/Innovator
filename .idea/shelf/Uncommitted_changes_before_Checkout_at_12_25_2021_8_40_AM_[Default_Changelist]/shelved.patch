@@ -1,0 +1,18 @@
+Index: local.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>## This file must *NOT* be checked into Version Control Systems,\r\n# as it contains information specific to your local configuration.\r\n#\r\n# Location of the SDK. This is only used by Gradle.\r\n# For customization when using a Version Control System, please read the\r\n# header note.\r\n#Tue Aug 10 10:02:59 EDT 2021\r\nsdk.dir=C\\:\\\\Users\\\\ehu94\\\\AppData\\\\Local\\\\Android\\\\Sdk\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+diff --git a/local.properties b/local.properties
+--- a/local.properties	(revision c9645b04db484a3957b8b55eb7e5a5a097a5acda)
++++ b/local.properties	(date 1640439530556)
+@@ -4,5 +4,5 @@
+ # Location of the SDK. This is only used by Gradle.
+ # For customization when using a Version Control System, please read the
+ # header note.
+-#Tue Aug 10 10:02:59 EDT 2021
+-sdk.dir=C\:\\Users\\ehu94\\AppData\\Local\\Android\\Sdk
++#Sat Dec 25 08:38:50 EST 2021
++sdk.dir=C\:\\Users\\bloon\\AppData\\Local\\Android\\Sdk
