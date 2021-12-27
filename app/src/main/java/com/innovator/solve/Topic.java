@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public enum Topic implements Serializable {
     Grade3("Grade_3_Questions", "grade_3","Grade_3"), Grade4("Grade_4_Questions", "grade_4","Grade_4"),
-    Grade5("Grade_5_Questions", "grade_5","Grade_5"), Grade6("Grade_6_Questions","grade_6", "Grade_6");
+    Grade5("Grade_5_Questions", "grade_5","Grade_5"), Grade6("Grade_6_Questions","grade_6", "Grade_6"),
+    Grade7("Grade_7_Questions" , "grade_7","Grade_7"),Grade8("Grade_8_Questions" , "grade_8","Grade_8"),
+    Grade9("Grade_9_Questions" , "grade_9","Grade_9");
     private String picRootFolderName, picNamePrefix, questionFolderName;
 
     Topic(String picRootFolderName, String picNamePrefix, String questionFolderName) {
