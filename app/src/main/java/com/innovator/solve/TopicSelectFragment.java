@@ -24,6 +24,8 @@ import java.util.List;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import android.util.Log;
+
 import com.innovator.solve.R;
 
 
@@ -55,9 +57,9 @@ public class TopicSelectFragment extends Fragment {
     private Button startPracticeButton;
 
     //----grade sent from settings---------
-    private String grade = "3";
+    private String grade;
   
-    private String[] mathCategories={"Computation and Estimation", "Measurement and Geometry","Numbers and Number Sense","Patterns, Functions, Algebra", "Probability and Statistics"};
+    private String[] mathCategories={"Computation and Estimation", "Measurement and Geometry","Numbers and Number Sense","Patterns, Functions, and Algebra", "Probability and Statistics"};
     private String[] readingCategories={"Reading Comprehension", "Word Analysis"};
 
     @Override
@@ -93,34 +95,47 @@ public class TopicSelectFragment extends Fragment {
         radioButtonMath.setChecked(true); //by default, math is selected
 
         generateTestTopicList();
-        //------------------get grade from saved settings------------------------
+        //------------------get grade from saved settings and set grade------------------------
         SharedPreferences saved;
         saved = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-        grade = saved.getString("grade", "3");
+        grade = saved.getString("grade", "9");
+        TopicManager.setDataLocations(grade);
         //------------------------------listeners-----------------------------
         startPracticeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TopicSelectFragment.this.getActivity(),QuestionMainActivity.class);
-                if(radioButtonReading.isChecked()) {
-                    TopicManager.setCategory(readingCategories[topicIdx]);
-                    intent = new Intent(TopicSelectFragment.this.getActivity(),ReadingQuestions.class);
-                }
-                UserData u = InnovatorApplication.getUser();
-              
-                if (u == null) {
-                    Toast.makeText(view.getContext(), "Please save grade level before starting topic", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (u.getGrade() == 3) {
-                        intent.putExtra("TOPIC", Topic.Grade3);
-                    } else if (u.getGrade() == 4) {
-                        intent.putExtra("TOPIC", Topic.Grade4);
-                    } else if (u.getGrade() == 5){
-                        intent.putExtra("TOPIC", Topic.Grade5);
-                    }else if(u.getGrade() == 6){
-                        intent.putExtra("TOPIC", Topic.Grade6);
+                if (!(grade.equals("9") && radioButtonReading.isChecked())) {
+                    Intent intent = new Intent(TopicSelectFragment.this.getActivity(), QuestionMainActivity.class);
+                    if (radioButtonReading.isChecked()) {
+                        TopicManager.setCategory(readingCategories[topicIdx]);
+                        intent = new Intent(TopicSelectFragment.this.getActivity(), ReadingQuestions.class);
                     }
-                    startActivity(intent);
+                    UserData u = InnovatorApplication.getUser();
+
+                    //u.getGrade() is returning grade of 0, so using locally saved grade for now
+                    if (grade == null) {
+                        Toast.makeText(view.getContext(), "Please save grade level before starting topic", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (grade == "3") {
+                            intent.putExtra("TOPIC", Topic.Grade3);
+                        } else if (grade == "4") {
+                            intent.putExtra("TOPIC", Topic.Grade4);
+                        } else if (grade == "5") {
+                            intent.putExtra("TOPIC", Topic.Grade5);
+                        } else if (grade == "6") {
+                            intent.putExtra("TOPIC", Topic.Grade6);
+                        } else if (grade == "7") {
+                            intent.putExtra("TOPIC", Topic.Grade7);
+                        } else if (grade == "8") {
+                            intent.putExtra("TOPIC", Topic.Grade8);
+                        } else if (grade == "9") {
+                            intent.putExtra("TOPIC", Topic.Grade9);
+                        }
+                        startActivity(intent);
+                    }
+                }
+                else{
+                    Toast.makeText(view.getContext(), "Unfortunately, there are no Grade 9 reading questions at this time.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

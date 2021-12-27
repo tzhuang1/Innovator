@@ -175,7 +175,6 @@ public class QuestionMainActivity extends AppCompatActivity {
 
 
     private void getFirebaseQuestionsList(){
-        Log.e("tag",TopicManager.getCategory());
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Math").child((String)TopicManager.getQuestionFolderName())
                 .child((String)TopicManager.getCategory());

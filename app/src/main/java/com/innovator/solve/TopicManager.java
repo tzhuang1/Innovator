@@ -5,17 +5,16 @@ import java.io.Serializable;
 public class TopicManager implements Serializable {
 
     //set defaults so qListRef in ReadingQuestions.java doesn't crash
-    private static String folderName = "Grade_3";
-    private static String picRootFolderName = "Grade_3_Questions";
-    private static String picNamePrefix = "grade_3";
+    private static String folderName = "Grade_9";
+    private static String picRootFolderName = "Grade_9_Questions";
+    private static String picNamePrefix = "grade_9";
 
-    private static String gradeLevel = "3";
+    private static String gradeLevel = "9";
 
-    private static String category = "Computation and Estimation";
+    private static String category = "Probability and Statistics";
 
     public static void setDataLocations(String level){
         gradeLevel=level;
-
         folderName="Grade_"+gradeLevel;
         picRootFolderName="Grade_"+gradeLevel+"_Questions";
         picNamePrefix="grade_"+gradeLevel;
