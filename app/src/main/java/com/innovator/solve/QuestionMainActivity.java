@@ -426,7 +426,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         if(optBID > -1){
             StorageReference optBImageRef = storageReference
                     .child(TopicManager.getPicRootFolderName())
-                    .child("Answer_Pics")
+                    .child("Answer")
                     .child(TopicManager.getPicNamePrefix()+"_a_"+optBID+".PNG");   //but what if it doesn't exist?
             optBImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
@@ -446,7 +446,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         if(optCID > -1){
             StorageReference optCImageRef = storageReference
                     .child(TopicManager.getPicRootFolderName())
-                    .child("Answer_Pics")
+                    .child("Answer")
                     .child(TopicManager.getPicNamePrefix()+"_a_"+optCID+".PNG");   //but what if it doesn't exist?
             optCImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
@@ -466,7 +466,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         if(optDID > -1){
             StorageReference optDImageRef = storageReference
                     .child(TopicManager.getPicRootFolderName())
-                    .child("Answer_Pics")
+                    .child("Answer")
                     .child(TopicManager.getPicNamePrefix()+"_a_"+optDID+".PNG");   //but what if it doesn't exist?
             optDImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
