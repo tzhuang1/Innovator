@@ -33,6 +33,23 @@ public class Question {
         explanationPicNumber = -1;
     }
 
+    public Question(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber, int optAPicNumber, int optBPicNumber, int optCPicNumber, int optDPicNumber) {
+        this.question = question;
+        this.optA = opta;
+        this.optB = optb;
+        this.optC = optc;
+        this.optD = optd;
+        this.answer = answer;
+        this.explanation = explanation;
+        this.category = category;
+        this.questionPicNumber = picNumber;
+        this.explanationPicNumber = exPicNumber;
+        this.optAPicNumber = optAPicNumber;
+        this.optBPicNumber = optBPicNumber;
+        this.optCPicNumber = optCPicNumber;
+        this.optDPicNumber = optDPicNumber;
+    }
+
     public Question(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber) {
         this.question = question;
         this.optA = opta;
@@ -167,11 +184,15 @@ public class Question {
         category = ca;
     }
 
-    public void setExPicNumber(int expic) {
-        explanationPicNumber = expic;
-    }
-
     public void setQuestionNumber(int i){
         questionNumber=i;
+    }
+
+    public void setPicNumber(int picNum) {
+        questionPicNumber = picNum;
+    }
+
+    public void setExPicNumber(int expic) {
+        explanationPicNumber = expic;
     }
 }

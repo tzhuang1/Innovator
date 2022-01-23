@@ -31,8 +31,8 @@
     <!--Q layout-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="13dp"
-        android:layout_weight=".5"
+        android:layout_height="60dp"
+        android:layout_weight="1"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -69,19 +69,17 @@
                     fbutton:layout_constraintLeft_toRightOf="@id/question_picture"/>
             </ScrollView>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/question_picture"
-                fbutton:layout_constraintBottom_toBottomOf="parent"
-                fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
-                fbutton:layout_constraintTop_toTopOf="parent"
-                fbutton:layout_constraintLeft_toLeftOf="parent"
-                android:layout_weight="0.5"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/question_picture"
+                    fbutton:layout_constraintBottom_toBottomOf="parent"
+                    fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
+                    fbutton:layout_constraintTop_toTopOf="parent"
+                    fbutton:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_weight="0.5"/>
         </LinearLayout>
 
 

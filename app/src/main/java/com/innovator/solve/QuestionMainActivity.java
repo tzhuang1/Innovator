@@ -188,13 +188,41 @@ public class QuestionMainActivity extends AppCompatActivity {
                 for(int i = 0; i < listOfQuestions.size(); i++) {
                     Map<String, Object> entry = listOfQuestions.get(i);
                     //try{
-                        if(entry.get("explanationPicNumber") != null) {
+                        if(entry.get("explanationPicNumber") != null  && entry.get("optAPicNumber") != null) {
                             Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
                                     entry.get("answer")+"",
                                     entry.get("explanation")+"",
                                     entry.get("category")+"",
-                                    Integer.parseInt(entry.get("questionPicNumber")+""),
-                                    Integer.parseInt(entry.get("explanationPicNumber")+""));
+                                    Integer.parseInt((String) entry.get("questionPicNumber")),
+                                    Integer.parseInt((String) entry.get("explanationPicNumber")),
+                                    Integer.parseInt((String) entry.get("optAPicNumber")),
+                                    Integer.parseInt((String) entry.get("optBPicNumber")),
+                                    Integer.parseInt((String) entry.get("optCPicNumber")),
+                                    Integer.parseInt((String) entry.get("optDPicNumber")));
+                            newQuestion.setId(i);
+                            questionsList.add(newQuestion);
+                        }
+                        else if (entry.get("explanationPicNumber") != null) {
+                            Question newQuestion = new Question("" + entry.get("question"), entry.get("optA") + "", entry.get("optB") + "", entry.get("optC") + "", entry.get("optD") + "",
+                                    entry.get("answer") + "",
+                                    entry.get("explanation") + "",
+                                    entry.get("category") + "",
+                                    Integer.parseInt((String) entry.get("questionPicNumber")),
+                                    Integer.parseInt((String) entry.get("explanationPicNumber")));
+                            newQuestion.setId(i);
+                            questionsList.add(newQuestion);
+                        }
+                        else if (entry.get("optAPicNumber") != null){
+                            Question newQuestion = new Question(""+entry.get("question"), entry.get("optA")+"", entry.get("optB")+"", entry.get("optC")+"", entry.get("optD")+"",
+                                    entry.get("answer")+"",
+                                    entry.get("explanation")+"",
+                                    entry.get("category")+"",
+                                    Integer.parseInt((String) entry.get("questionPicNumber")),
+                                    -1,
+                                    Integer.parseInt((String) entry.get("optAPicNumber")),
+                                    Integer.parseInt((String) entry.get("optBPicNumber")),
+                                    Integer.parseInt((String) entry.get("optCPicNumber")),
+                                    Integer.parseInt((String) entry.get("optDPicNumber")));
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
                         }
@@ -328,9 +356,10 @@ public class QuestionMainActivity extends AppCompatActivity {
 
     private void loadQuestionPic(int questionPicID){
         if(questionPicID < 0)return;
+        Log.e("PICNAME",TopicManager.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
         StorageReference qImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
                 .child(TopicManager.getPicRootFolderName())
-                .child("Question_Pics")
+                .child("Question")
                 .child(TopicManager.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
 
         qImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -353,7 +382,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         if(explanationPicID < 0)return;
         StorageReference eImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
                 .child(topic.getPicRootFolderName())
-                .child("Explanation_Pics")
+                .child("Explanation")
                 .child(topic.getPicNamePrefix()+"_e_"+explanationPicID+".PNG");
 
         eImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -377,7 +406,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         if(optAID > -1){
             StorageReference optAImageRef = storageReference
                     .child(TopicManager.getPicRootFolderName())
-                    .child("Answer_Pics")
+                    .child("Answer")
                     .child(TopicManager.getPicNamePrefix()+"_a_"+optAID+".PNG");   //but what if it doesn't exist?
             optAImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
