@@ -36,6 +36,11 @@ class QuestionsHelper extends SQLiteOpenHelper {
     private static final String ANSWER = "ANSWER";
     //Explanation
     private static final String EXPLANATION = "EXPLANATION";
+    //Question Pic
+    private static final String QUESTIONPIC = "QUESTIONPIC";
+    //Explanation Pic
+    private static final String EXPLANATIONPIC = "EXPLANATIONPIC";
+
 
     private static final String CATEGORY = "CATEGORY";
     //So basically we are now creating table with first column-id , sec column-question , third column -option A, fourth column -option B , Fifth column -option C , sixth column -option D , seventh column - answer(i.e ans of  question), eighth column - explanation
@@ -99,6 +104,9 @@ class QuestionsHelper extends SQLiteOpenHelper {
                 values.put(ANSWER, question.getAnswer());
                 values.put(EXPLANATION, question.getExplanation());
                 values.put(CATEGORY, question.getCategory());
+                values.put(QUESTIONPIC, question.getPicNumber());
+                values.put(EXPLANATIONPIC, question.getExPicNumber());
+                values.put(CATEGORY, question.getCategory());
                 db.insert(TABLE_NAME, null, values);
             }
             db.setTransactionSuccessful();
@@ -109,7 +117,7 @@ class QuestionsHelper extends SQLiteOpenHelper {
     }
 
 
-    List<Question> getAllOfTheQuestions() {
+    public List<Question> getAllOfTheQuestions() {
 
         List<Question> questionsList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
@@ -129,6 +137,8 @@ class QuestionsHelper extends SQLiteOpenHelper {
             question.setAnswer(cursor.getString(6));
             question.setExplanation(cursor.getString(7));
             question.setCategory(cursor.getString(8));
+            question.setPicNumber(cursor.getInt(9));
+            question.setExPicNumber(cursor.getInt(10));
             questionsList.add(question);
         }
 
