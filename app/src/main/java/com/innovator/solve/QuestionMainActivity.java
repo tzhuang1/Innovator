@@ -193,12 +193,12 @@ public class QuestionMainActivity extends AppCompatActivity {
                                     entry.get("answer")+"",
                                     entry.get("explanation")+"",
                                     entry.get("category")+"",
-                                    Integer.parseInt((String) entry.get("questionPicNumber")),
-                                    Integer.parseInt((String) entry.get("explanationPicNumber")),
-                                    Integer.parseInt((String) entry.get("optAPicNumber")),
-                                    Integer.parseInt((String) entry.get("optBPicNumber")),
-                                    Integer.parseInt((String) entry.get("optCPicNumber")),
-                                    Integer.parseInt((String) entry.get("optDPicNumber")));
+                                    Integer.parseInt(String.valueOf(entry.get("questionPicNumber"))),
+                                    Integer.parseInt(String.valueOf(entry.get("explanationPicNumber"))),
+                                    Integer.parseInt(String.valueOf(entry.get("optAPicNumber"))),
+                                    Integer.parseInt(String.valueOf(entry.get("optBPicNumber"))),
+                                    Integer.parseInt(String.valueOf(entry.get("optCPicNumber"))),
+                                    Integer.parseInt(String.valueOf(entry.get("optDPicNumber"))));
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
                         }
@@ -217,12 +217,12 @@ public class QuestionMainActivity extends AppCompatActivity {
                                     entry.get("answer")+"",
                                     entry.get("explanation")+"",
                                     entry.get("category")+"",
-                                    Integer.parseInt((String) entry.get("questionPicNumber")),
+                                    Integer.parseInt(String.valueOf(entry.get("questionPicNumber"))),
                                     -1,
-                                    Integer.parseInt((String) entry.get("optAPicNumber")),
-                                    Integer.parseInt((String) entry.get("optBPicNumber")),
-                                    Integer.parseInt((String) entry.get("optCPicNumber")),
-                                    Integer.parseInt((String) entry.get("optDPicNumber")));
+                                    Integer.parseInt(String.valueOf(entry.get("optAPicNumber"))),
+                                    Integer.parseInt(String.valueOf(entry.get("optBPicNumber"))),
+                                    Integer.parseInt(String.valueOf(entry.get("optCPicNumber"))),
+                                    Integer.parseInt(String.valueOf(entry.get("optDPicNumber"))));
                             newQuestion.setId(i);
                             questionsList.add(newQuestion);
                         }
@@ -281,6 +281,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         //question has text even if it has pic
         boolean hasQPic = (currentQuestion.getPicNumber() > -1);
         boolean hasAPics = (currentQuestion.getOptAPicNumber() > -1 || currentQuestion.getOptBPicNumber() > -1 || currentQuestion.getOptCPicNumber() > -1 || currentQuestion.getOptDPicNumber() > -1);
+        Log.e("PICNAME_queue",TopicManager.getPicNamePrefix()+"_q_"+currentQuestion.getPicNumber()+".PNG");
         if(!hasQPic && !hasAPics){ //text only
             //Q
             questionText.setText(currentQuestion.getQuestion());
@@ -355,11 +356,11 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     private void loadQuestionPic(int questionPicID){
-        if(questionPicID < 0)return;
+        if(questionPicID < 0) {return;}
         Log.e("PICNAME",TopicManager.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
         StorageReference qImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
                 .child(TopicManager.getPicRootFolderName())
-                .child("Question")
+                .child("Question_Pics")
                 .child(TopicManager.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
 
         qImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -372,6 +373,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                             .into(questionPic);
                 }
                 else {
+                    Log.e("error", TopicManager.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
                     Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -379,11 +381,11 @@ public class QuestionMainActivity extends AppCompatActivity {
     }
 
     private void loadExplanationPic(Topic topic, int explanationPicID){
-        if(explanationPicID < 0)return;
+        if(explanationPicID < 0) {return;}
         StorageReference eImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
-                .child(topic.getPicRootFolderName())
-                .child("Explanation")
-                .child(topic.getPicNamePrefix()+"_e_"+explanationPicID+".PNG");
+                .child(TopicManager.getPicRootFolderName())
+                .child("Explanation_Pics")
+                .child(TopicManager.getPicNamePrefix()+"_e_"+explanationPicID+".PNG");
 
         eImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
@@ -395,6 +397,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                             .into(explanationPic);
                 }
                 else {
+                    Log.e("error", TopicManager.getPicNamePrefix()+"_e_"+explanationPicID+".PNG");
                     Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -406,7 +409,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         if(optAID > -1){
             StorageReference optAImageRef = storageReference
                     .child(TopicManager.getPicRootFolderName())
-                    .child("Answer")
+                    .child("Answer_Pics")
                     .child(TopicManager.getPicNamePrefix()+"_a_"+optAID+".PNG");   //but what if it doesn't exist?
             optAImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
@@ -418,6 +421,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                                 .into(optAPic);
                     }
                     else {
+                        Log.e("error", TopicManager.getPicNamePrefix()+"_a_"+optAID+".PNG");
                         Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -438,6 +442,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                                 .into(optBPic);
                     }
                     else {
+                        Log.e("error", TopicManager.getPicNamePrefix()+"_a_"+optBID+".PNG");
                         Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -458,6 +463,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                                 .into(optCPic);
                     }
                     else {
+                        Log.e("error", TopicManager.getPicNamePrefix()+"_a_"+optCID+".PNG");
                         Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -478,6 +484,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                                 .into(optDPic);
                     }
                     else {
+                        Log.e("error", TopicManager.getPicNamePrefix()+"_a_"+optDID+".PNG");
                         Toast.makeText(QuestionMainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
