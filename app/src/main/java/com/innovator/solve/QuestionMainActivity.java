@@ -178,6 +178,7 @@ public class QuestionMainActivity extends AppCompatActivity {
         DatabaseReference qListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Math").child((String)TopicManager.getQuestionFolderName())
                 .child((String)TopicManager.getCategory());
+
         qListRef.addValueEventListener(new ValueEventListener() {//This retrieves the data once
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -217,6 +218,7 @@ public class QuestionMainActivity extends AppCompatActivity {
                 //questionsList = dataSnapshot.getValue(new GenericTypeIndicator<List<Question>>() {});//stops here Failed to convert value of type java.lang.Long to String
                 Log.i("FB getList", "Firebase data fetched");
                 Collections.shuffle(questionsList);
+
                 //currentQuestion will hold the que, 4 option and ans for particular id
                 currentQuestion = questionsList.get(qid);
                 updateQueueAndOptions();

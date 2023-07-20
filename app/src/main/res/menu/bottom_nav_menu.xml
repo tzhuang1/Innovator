@@ -12,17 +12,23 @@
             android:title="@string/title_explore"/>
 
     <item
+            android:id="@+id/navigation_mock"
+            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:title="@string/full_tests"/>
+
+    <item
             android:id="@+id/navigation_notifications"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/title_settings"/>
-    <item
-            android:id="@+id/navigation_account"
-            android:icon="@drawable/ic_person_black_24dp"
-            android:title="@string/title_account" />
+
+<!--    <item-->
+<!--            android:id="@+id/navigation_account"-->
+<!--            android:icon="@drawable/ic_person_black_24dp"-->
+<!--            android:title="@string/title_account" />-->
 
     <item
-        android:id="@+id/navigation_progress"
-        android:icon="@drawable/ic_progress_black_24dp"
-        android:title="@string/title_progress" />
+            android:id="@+id/navigation_progress"
+            android:icon="@drawable/ic_progress_black_24dp"
+            android:title="@string/title_progress" />
 
 </menu>
