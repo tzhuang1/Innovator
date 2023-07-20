@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +28,8 @@ public class ProgressBarActivity extends AppCompatActivity {
 
         progressBar.setMax(100);
         progressBar.setScaleY(3f);
+
+        Log.d("Main Activity", "This ran!!");
 
         progressAnimation();
     }

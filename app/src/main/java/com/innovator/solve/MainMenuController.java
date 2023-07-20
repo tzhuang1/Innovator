@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 
 import com.innovator.solve.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -180,13 +181,17 @@ public class MainMenuController extends AppCompatActivity {
                 if(selectedItemID==R.id.navigation_home){
                     getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, HomeController.class, null).commit();
                 }
-                if(selectedItemID==R.id.navigation_account){
-                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, AccountController.class, null).commit();
-                    if(isUserSignedIn())
-                        setUserInfo(googleAccount.getDisplayName(), googleAccount.getEmail());
-                    else
-                        setUserInfo("Not signed in", "Not signed in");
+                if(selectedItemID==R.id.navigation_mock){
+                    Log.d("MainMenu", "Boop!");
+                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, MockSelectFragment.class, null).commit();
                 }
+//                if(selectedItemID==R.id.navigation_account){
+//                    getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, AccountController.class, null).commit();
+//                    if(isUserSignedIn())
+//                        setUserInfo(googleAccount.getDisplayName(), googleAccount.getEmail());
+//                    else
+//                        setUserInfo("Not signed in", "Not signed in");
+//                }
                 if(selectedItemID==R.id.navigation_dashboard){
                     getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, TopicSelectFragment.class, null).commit();
                 }
