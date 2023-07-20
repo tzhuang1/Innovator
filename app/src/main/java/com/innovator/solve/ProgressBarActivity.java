@@ -29,8 +29,6 @@ public class ProgressBarActivity extends AppCompatActivity {
         progressBar.setMax(100);
         progressBar.setScaleY(3f);
 
-        Log.d("Main Activity", "This ran!!");
-
         progressAnimation();
     }
 
