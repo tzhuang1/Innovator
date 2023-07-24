@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+    <!--loading screen-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Loading Questions\n Please Wait..."
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintLeft_toLeftOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Q layout-->
+
+    <!--A layout-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="365dp"
+        android:layout_weight=".5"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/question_text"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="101dp"
+            android:gravity="center"
+            android:text="Question with just text"
+            android:textColor="@color/grey"
+            android:textSize="20sp"
+            fbutton:fontFamily="@font/karla"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintStart_toStartOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="413dp"
+        android:layout_height="373dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/box1"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@color/blue"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box9_container"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/box9"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@color/blue"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box10_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/box10"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@color/blue"
+                android:orientation="vertical"></LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="Drag and Drop:" />
+
+        <LinearLayout
+            android:id="@+id/box2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/box4"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnDrag"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text="Option A" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/box5"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnDrag1"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Option B" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/box6"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnDrag2"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Option C" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/box7"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnDrag3"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Option D" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/clearOpt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonClear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="buttonClear"
+            android:text="Clear Choice"
+            android:textColor="@color/white"
+            fbutton:buttonColor="@color/blue" />
+    </LinearLayout>
+
+</LinearLayout>

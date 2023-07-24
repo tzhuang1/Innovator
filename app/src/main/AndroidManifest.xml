@@ -27,11 +27,6 @@
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.innovator.solve.MainMenuActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name="com.innovator.solve.DailyChallenge">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT"/>
@@ -63,6 +58,12 @@
 <!--            </intent-filter>-->
 <!--        </activity>-->
         <activity android:name="com.innovator.solve.TopicSelectActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.innovator.solve.TestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>

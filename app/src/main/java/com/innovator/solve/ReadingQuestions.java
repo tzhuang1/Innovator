@@ -107,7 +107,7 @@ public class ReadingQuestions extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Switch back to home activity
-                Intent intent = new Intent(ReadingQuestions.this, MainMenuActivity.class);
+                Intent intent = new Intent(ReadingQuestions.this, MainMenuController.class);
                 startActivity(intent);
             }
         });

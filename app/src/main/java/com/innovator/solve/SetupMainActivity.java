@@ -63,7 +63,7 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         //showSetup = true; //uncomment to test setup screen
 
         if (!showSetup) {
-            Intent mainMenuIntent = new Intent(me, MainMenuActivity.class);
+            Intent mainMenuIntent = new Intent(me, MainMenuController.class);
             startActivity(mainMenuIntent);
             finish();
         }
@@ -84,14 +84,14 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
         gradeSelect = 1;
         activitySelect = 1;
 
-        if (findViewById(R.id.setupFragmentFrameLayout) != null) {
-//            SetupGradeSelectFragment gradeFragment = SetupGradeSelectFragment.newInstance(1);
-//            gradeFragment.setArguments(getIntent().getExtras());
-//            fragTran1.add(R.id.setupFragmentFrameLayout, gradeFragment);
+//        if (findViewById(R.id.setupFragmentFrameLayout) != null) {
+////            SetupGradeSelectFragment gradeFragment = SetupGradeSelectFragment.newInstance(1);
+////            gradeFragment.setArguments(getIntent().getExtras());
+////            fragTran1.add(R.id.setupFragmentFrameLayout, gradeFragment);
+////            fragTran1.commit();
+//            fragTran1.add(R.id.setupFragmentFrameLayout, new AccountFragment());
 //            fragTran1.commit();
-            fragTran1.add(R.id.setupFragmentFrameLayout, new AccountFragment());
-            fragTran1.commit();
-        }
+//        }
 
         currSetupPage = 0;
 
@@ -107,7 +107,7 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
                     currSetupPage++;
                 switch (currSetupPage) {
                     case 0:
-                        fragTran2.replace(R.id.setupFragmentFrameLayout, new AccountFragment());
+                        //fragTran2.replace(R.id.setupFragmentFrameLayout, new AccountFragment());
                         setupTxt.setText(getString(R.string.sign_In_Google));
                         fragTran2.addToBackStack(null); //user can reverse transaction of replacing the setupFragmentFrameLayout
                         fragTran2.commit();
@@ -133,7 +133,7 @@ public class SetupMainActivity extends AppCompatActivity implements SetupActivit
                          Remove println when done, used for debug
                          */
                         System.out.println(settings.getAll());
-                        Intent mainMenuIntent = new Intent(me, MainMenuActivity.class);
+                        Intent mainMenuIntent = new Intent(me, MainMenuController.class);
                         startActivity(mainMenuIntent);
                         finish();
                         break;
