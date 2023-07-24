@@ -35,8 +35,6 @@ class SettingsFragment : Fragment() {
         fun newInstance() = SettingsFragment()
     }
 
-    private lateinit var viewModel: SettingsViewModel
-
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -46,7 +44,6 @@ class SettingsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
 
         createNotificationChannel()
 
@@ -168,7 +165,6 @@ class SettingsFragment : Fragment() {
             }
         })
 
-        // TODO: Use the ViewModel
         // TODO: Change notification message based on how many questions left to do and don't send it if goal is met
     }
 

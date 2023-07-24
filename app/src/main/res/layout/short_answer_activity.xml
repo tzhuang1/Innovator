@@ -1,0 +1,159 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+    <!--loading screen-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Loading Questions\n Please Wait..."
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintLeft_toLeftOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Q layout-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="203dp"
+        android:layout_weight=".5"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/question_pic_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                android:orientation="vertical">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="137dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="35dp"
+                    android:verticalScrollbarPosition="right">
+
+                    <TextView
+                        android:id="@+id/question_pic_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_weight="0.5"
+                        android:autoSizeMaxTextSize="20sp"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center"
+                        android:scrollHorizontally="false"
+                        android:text="Question with pic text"
+                        android:textColor="@color/grey"
+                        android:textSize="25sp"
+                        fbutton:fontFamily="@font/karla"
+                        fbutton:layout_constraintBottom_toBottomOf="parent"
+                        fbutton:layout_constraintLeft_toRightOf="@id/question_picture"
+                        fbutton:layout_constraintRight_toRightOf="parent"
+                        fbutton:layout_constraintTop_toTopOf="parent" />
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/question_picture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="0.5"
+                    fbutton:layout_constraintBottom_toBottomOf="parent"
+                    fbutton:layout_constraintLeft_toLeftOf="parent"
+                    fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
+                    fbutton:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/question_text"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Question with just text"
+            android:textColor="@color/grey"
+            android:textSize="20sp"
+            fbutton:fontFamily="@font/karla"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--A layout-->
+    <LinearLayout
+        android:id="@+id/textAnswersLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/textAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Start Typing Here"
+            android:inputType="text|textMultiLine">
+
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="buttonSubmit"
+            android:text="Submit"
+            android:textColor="@color/grey"
+            fbutton:buttonColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

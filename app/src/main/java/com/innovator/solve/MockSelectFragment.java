@@ -164,8 +164,8 @@ public class MockSelectFragment extends Fragment {
     }
 
     private void startTest() {
-        Intent intent = new Intent(MockSelectFragment.this.getActivity(), QuestionMainActivity.class);
-
+        Intent intent = new Intent(MockSelectFragment.this.getActivity(), TestActivity.class);
+        intent.putExtra("NUMQUESTIONS", 60);
         UserData u = InnovatorApplication.getUser();
         intent.putExtra("TestID", activeSelection);
 

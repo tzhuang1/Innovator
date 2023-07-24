@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/FormulaSheetTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="101dp"
+        android:ems="10"
+        android:inputType="text"
+        android:rotationX="-360"
+        android:text="Formula Sheet"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="424dp"
+        android:layout_height="53dp"
+        android:background="@android:color/black">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:onClick="returnToTestPage"
+            android:src="@drawable/ic_back_arrow_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.063"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/TriangleFormula"
+        android:layout_width="117dp"
+        android:layout_height="171dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/SquareFormula"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FormulaSheetTitle"
+        app:srcCompat="@drawable/triangle" />
+
+    <ImageView
+        android:id="@+id/SquareFormula"
+        android:layout_width="119dp"
+        android:layout_height="151dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/RhombusFormula"
+        app:layout_constraintEnd_toStartOf="@+id/RectangleFormula"
+        app:layout_constraintStart_toEndOf="@+id/TriangleFormula"
+        app:layout_constraintTop_toBottomOf="@+id/FormulaSheetTitle"
+        app:srcCompat="@drawable/square" />
+
+    <ImageView
+        android:id="@+id/RectangleFormula"
+        android:layout_width="131dp"
+        android:layout_height="141dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/TrapezoidFormula"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SquareFormula"
+        app:layout_constraintTop_toBottomOf="@+id/FormulaSheetTitle"
+        app:srcCompat="@drawable/rectangle" />
+
+    <ImageView
+        android:id="@+id/CircleFormula"
+        android:layout_width="98dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/RectangularPrismFormula"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TriangleFormula"
+        app:srcCompat="@drawable/circle" />
+
+    <ImageView
+        android:id="@+id/RhombusFormula"
+        android:layout_width="105dp"
+        android:layout_height="144dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/RectangularPrismFormula"
+        app:layout_constraintEnd_toStartOf="@+id/TrapezoidFormula"
+        app:layout_constraintStart_toEndOf="@+id/CircleFormula"
+        app:layout_constraintTop_toBottomOf="@+id/SquareFormula"
+        app:srcCompat="@drawable/rhombus" />
+
+    <ImageView
+        android:id="@+id/TrapezoidFormula"
+        android:layout_width="124dp"
+        android:layout_height="152dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/RectangularPrismFormula"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SquareFormula"
+        app:layout_constraintTop_toBottomOf="@+id/RectangleFormula"
+        app:srcCompat="@drawable/trapezoid" />
+
+    <ImageView
+        android:id="@+id/TriangularPrismFormula"
+        android:layout_width="127dp"
+        android:layout_height="168dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/SphereFormula"
+        app:layout_constraintEnd_toStartOf="@+id/ConeFormula"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CircleFormula"
+        app:srcCompat="@drawable/trianglularprism" />
+
+    <ImageView
+        android:id="@+id/RectangularPrismFormula"
+        android:layout_width="155dp"
+        android:layout_height="129dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/PyramidFormula"
+        app:layout_constraintEnd_toStartOf="@+id/CylinderFormula"
+        app:layout_constraintStart_toEndOf="@+id/TriangularPrismFormula"
+        app:srcCompat="@drawable/rectangularprism" />
+
+    <ImageView
+        android:id="@+id/CylinderFormula"
+        android:layout_width="134dp"
+        android:layout_height="139dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/PyramidFormula"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TrapezoidFormula"
+        app:srcCompat="@drawable/cylinder" />
+
+    <ImageView
+        android:id="@+id/SphereFormula"
+        android:layout_width="125dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ConeFormula"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TriangularPrismFormula"
+        app:srcCompat="@drawable/sphere" />
+
+    <ImageView
+        android:id="@+id/ConeFormula"
+        android:layout_width="133dp"
+        android:layout_height="152dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/PyramidFormula"
+        app:layout_constraintStart_toEndOf="@+id/TriangularPrismFormula"
+        app:layout_constraintTop_toBottomOf="@+id/RectangularPrismFormula"
+        app:srcCompat="@drawable/cone" />
+
+    <ImageView
+        android:id="@+id/PyramidFormula"
+        android:layout_width="111dp"
+        android:layout_height="172dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/pyramid" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

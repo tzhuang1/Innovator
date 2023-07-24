@@ -1,0 +1,276 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+    <!--loading screen-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loading_screen"
+        android:visibility="gone"
+        android:background="@color/blue"
+        android:orientation="vertical">
+
+        <TextView
+            fbutton:layout_constraintTop_toTopOf="parent"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintLeft_toLeftOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading Questions\n Please Wait..."
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:gravity="center_horizontal" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Q layout-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="13dp"
+        android:layout_weight=".5"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/question_pic_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="35dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/question_pic_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="0.5"
+                    android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center"
+                    android:scrollHorizontally="false"
+                    android:text="Question with pic text"
+                    android:textColor="@color/grey"
+                    android:textSize="25sp"
+                    fbutton:fontFamily="@font/karla"
+                    fbutton:layout_constraintBottom_toBottomOf="parent"
+                    fbutton:layout_constraintLeft_toRightOf="@id/question_picture"
+                    fbutton:layout_constraintRight_toRightOf="parent"
+                    fbutton:layout_constraintTop_toTopOf="parent" />
+            </ScrollView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/question_picture"
+                fbutton:layout_constraintBottom_toBottomOf="parent"
+                fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
+                fbutton:layout_constraintTop_toTopOf="parent"
+                fbutton:layout_constraintLeft_toLeftOf="parent"
+                android:layout_weight="0.5"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/question_text"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Question with just text"
+            android:textColor="@color/grey"
+            android:textSize="20sp"
+            fbutton:fontFamily="@font/karla"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--A layout-->
+    <LinearLayout
+        android:id="@+id/textAnswersLayout"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ms_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select all answers that apply:" />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonA"
+            android:text="Option A"
+            android:textColor="@color/grey"
+            fbutton:buttonColor="@color/white" />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonB"
+            android:text="Option B"
+            android:textColor="@color/grey"
+            fbutton:buttonColor="@color/white" />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonC"
+            android:text="Option C"
+            android:textColor="@color/grey"
+            fbutton:buttonColor="@color/white" />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonD"
+            android:text="Option D"
+            android:textColor="@color/grey"
+            fbutton:buttonColor="@color/white" />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonE"
+            android:text="Option E"
+            android:textColor="@color/grey"
+            android:visibility="gone"
+            fbutton:buttonColor="@color/white" />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonF"
+            android:text="Option F"
+            android:textColor="@color/grey"
+            android:visibility="gone"
+            fbutton:buttonColor="@color/white" />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonG"
+            android:text="Option G"
+            android:textColor="@color/grey"
+            android:visibility="gone"
+            fbutton:buttonColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/picAnswersLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/optAPic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            fbutton:layout_constraintBottom_toTopOf="@id/optCPic"
+            fbutton:layout_constraintLeft_toLeftOf="parent"
+            fbutton:layout_constraintRight_toLeftOf="@id/optBPic"
+            fbutton:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/optBPic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            fbutton:layout_constraintBottom_toTopOf="@id/optDPic"
+            fbutton:layout_constraintLeft_toRightOf="@id/optAPic"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/optCPic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintLeft_toLeftOf="parent"
+            fbutton:layout_constraintRight_toLeftOf="@id/optDPic"
+            fbutton:layout_constraintTop_toBottomOf="@id/optAPic" />
+
+        <ImageView
+            android:id="@+id/optDPic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:background="#ddd"
+            fbutton:layout_constraintBottom_toBottomOf="parent"
+            fbutton:layout_constraintLeft_toRightOf="@id/optCPic"
+            fbutton:layout_constraintRight_toRightOf="parent"
+            fbutton:layout_constraintTop_toBottomOf="@id/optBPic" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="buttonSubmit"
+            android:text="Submit"
+            android:textColor="@color/grey"
+            fbutton:buttonColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>
