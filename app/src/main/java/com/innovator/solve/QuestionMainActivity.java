@@ -219,8 +219,6 @@ public class QuestionMainActivity extends AppCompatActivity {
                 Log.i("FB getList", "Firebase data fetched");
                 Collections.shuffle(questionsList);
 
-                Log.d("UASDASDASD", String.valueOf(questionsList.size()));
-
                 //currentQuestion will hold the que, 4 option and ans for particular id
                 currentQuestion = questionsList.get(qid);
                 updateQueueAndOptions();
