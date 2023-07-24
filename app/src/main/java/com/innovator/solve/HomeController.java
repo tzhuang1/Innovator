@@ -12,11 +12,7 @@ import android.widget.Toast;
 import com.innovator.solve.R;
 
 public class HomeController extends Fragment{
-
     public HomeController(){
         super(R.layout.fragment_home);
     }
-
-
-
 }
