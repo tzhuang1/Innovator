@@ -4,7 +4,9 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@color/white"
     android:orientation="vertical">
     <!--loading screen-->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,8 +34,8 @@
     <!--Q layout-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="203dp"
-        android:layout_weight=".5"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -46,12 +48,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="183dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="137dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="35dp"
                     android:verticalScrollbarPosition="right">
@@ -105,10 +107,10 @@
         <TextView
             android:id="@+id/question_text"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:gravity="center"
-            android:text="Question with just text"
+            android:text="Short Answer"
             android:textColor="@color/grey"
             android:textSize="20sp"
             fbutton:fontFamily="@font/karla"
@@ -122,8 +124,9 @@
     <LinearLayout
         android:id="@+id/textAnswersLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:background="#FFFFFF"
         android:gravity="center"
         android:orientation="vertical">
@@ -131,7 +134,7 @@
         <EditText
             android:id="@+id/textAnswer"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:hint="Start Typing Here"
             android:inputType="text|textMultiLine">
 

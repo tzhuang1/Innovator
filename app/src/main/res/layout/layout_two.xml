@@ -35,7 +35,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout13"
-            android:layout_width="424dp"
+            android:layout_width="match_parent"
             android:layout_height="53dp"
             android:background="@android:color/black">
 
@@ -203,15 +203,17 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
-            android:layout_width="424dp"
-            android:layout_height="53dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -221,35 +223,36 @@
                 android:id="@+id/backButton"
                 android:layout_width="29dp"
                 android:layout_height="29dp"
+
                 android:onClick="returnToHome"
                 android:src="@drawable/ic_home_white_24dp"
+
+                android:layout_marginStart="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.063"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                />
 
             <Button
                 android:id="@+id/FormulaSheetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="223dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="3dp"
+                android:layout_marginEnd="10dp"
                 android:onClick="goToFormulaSheet"
                 android:text="Formula Sheet"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/backButton"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="425dp"
-            android:layout_height="61dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="#43000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -258,7 +261,8 @@
             <ImageButton
                 android:id="@+id/leftButton"
                 android:layout_width="80dp"
-                android:layout_height="66dp"
+                android:layout_height="match_parent"
+
                 android:layout_marginStart="20dp"
                 android:onClick="pageLeft"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -270,7 +274,7 @@
             <ImageButton
                 android:id="@+id/rightButton"
                 android:layout_width="80dp"
-                android:layout_height="66dp"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="20dp"
                 android:onClick="pageRight"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -282,23 +286,27 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:layout_width="380dp"
-            android:layout_height="599dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+            >
 
             <FrameLayout
                 android:id="@+id/question_fragment"
                 android:name="com.innovator.solve.DragAndDropFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="0.5" />
         </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
