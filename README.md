@@ -34,7 +34,7 @@ task prepareKotlinBuildScriptModel {
 ```
 
 ### SDK location not found
-Find the file local.properties. If it doesn't exist, create it.
+Find the file local.properties. If it doesn't exist, create it in the "Innovator" folder. 
 
 Inside, ensure that the uncommented line looks like this, where [YOUR PC USERNAME] is your PC username. This is for Windows. Path might be somewhat different for other OS. 
 ```
