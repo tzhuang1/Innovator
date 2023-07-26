@@ -12,7 +12,7 @@ After downloading Android Studio, open the "app" folder (**NOT "innovator"**) to
 
 Gradle will attempt to build on open. You might encounter the issues listed below. After resolving each, click the reload icon at the bottom left to rerun Gradle build.
 
-## Caused by: org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+### Caused by: org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
 Try rebuilding? Not too much documentation on this error yet.
 
 ### Unsupported class file major version 61  
