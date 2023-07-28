@@ -2,6 +2,10 @@ package com.innovator.solve;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
+
 @IgnoreExtraProperties
 public class Question {
     private int id;
@@ -14,11 +18,38 @@ public class Question {
     private String category;
     private int explanationPicNumber;
     private String passage;
-
     private int questionPicNumber;
-
     private int questionNumber;
 
+    //ADVANCED SETTINGS - MOCK SPECIFIC
+    public boolean mock = false; //is this question a mock question (advanced format)
+    private String questionType; //drag drop, mcq, etc.
+    //Multiple-Choice-X
+    //Multiple-Select-X
+    //Drag-Drop-X
+    //Short-Answer
+
+
+    private TreeMap<Character, String> choices; //for questions with more than 4 choices, use this
+
+
+    public Question(boolean mock, String questionType, String question, TreeMap<Character, String> choices, String answer, String explanation, String category, int picNumber, int exPicNumber) {
+        if (!mock) {
+            //SHOULD ALWAYS BE TRUE
+            return;
+        }
+        this.mock = mock;
+        this.questionType = questionType;
+        this.question = question;
+        this.answer = answer;
+        this.explanation = explanation;
+        this.category = category;
+        this.questionPicNumber = picNumber;
+        this.explanationPicNumber = exPicNumber;
+
+        this.choices = choices;
+
+    }
 
     public Question(String q, String oa, String ob, String oc, String od, String ans, String ex, String ca) {
         question = q;
@@ -32,7 +63,6 @@ public class Question {
         questionPicNumber = -1;
         explanationPicNumber = -1;
     }
-
     public Question(String question, String opta, String optb, String optc, String optd, String answer, String explanation, String category, int picNumber, int exPicNumber) {
         this.question = question;
         this.optA = opta;
@@ -59,8 +89,6 @@ public class Question {
         this.explanationPicNumber = exPicNumber;
         passage = pass;
     }
-
-
 
     public Question() {
         id = 0;
@@ -174,4 +202,8 @@ public class Question {
     public void setQuestionNumber(int i){
         questionNumber=i;
     }
+
+    public String getQuestionType() { return this.questionType; }
+
+    public TreeMap<Character, String> getChoices() { return this.choices; }
 }

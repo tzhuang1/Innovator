@@ -24,6 +24,7 @@ public class TestActivity extends AppCompatActivity implements
     int[] qIds;
     ArrayList<AnswerFormatManager> answers = new ArrayList<>();
 
+    ArrayList<Question> qs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +34,39 @@ public class TestActivity extends AppCompatActivity implements
         rightButton = findViewById(R.id.rightButton);
         leftButton.setVisibility(View.GONE);
         lastPageNo = getIntent().getExtras().getInt("NUMQUESTIONS");
+
+        String testID = getIntent().getExtras().getString("TestID");
+        MockTestManager.MockTest m = MockTestManager.getTestByID(testID);
+        qs = m.questionList;
+
+
+        //0 --> MCQ/MCS
+        //1 --> Drag
+        //2 --> Free Response
+
         qIds = new int[lastPageNo];
         for (int i = 0; i < lastPageNo; i++) {
-            qIds[i] = (int)(Math.random()*3);
+            String questionType = qs.get(i).getQuestionType();
+            if (questionType.charAt(0) == 'M') {
+                qIds[i] = 0;
+            }
+            else if (questionType.charAt(0) == 'D') {
+                qIds[i] = 1;
+
+            }
+            else if (questionType.charAt(0) == 'S') {
+                qIds[i] = 2;
+            }
+            else {
+                Log.d("Error", "Not valid question type");
+            }
+//            qIds[i] = (int)(Math.random()*3);
         }
+
         for (int i = 0; i < lastPageNo; i++) {
             answers.add(i, new AnswerFormatManager(qIds[i]));
         }
-        chooseFormat(testQuestion(), qIds[page], R.anim.no_slide, R.anim.no_slide);
+        chooseFormat(qs.get(page), qIds[page], R.anim.no_slide, R.anim.no_slide);
 
     }
 
@@ -116,7 +142,9 @@ public class TestActivity extends AppCompatActivity implements
         else leftButton.setVisibility(View.VISIBLE);
         if (page == lastPageNo-1) rightButton.setVisibility(View.GONE);
         else rightButton.setVisibility(View.VISIBLE);
-        chooseFormat(testQuestion(), qIds[page], R.anim.slide_in_ltr, R.anim.slide_out_ltr);
+        //chooseFormat(testQuestion(), qIds[page], R.anim.slide_in_ltr, R.anim.slide_out_ltr);
+        chooseFormat(qs.get(page), qIds[page], R.anim.slide_in_ltr, R.anim.slide_out_ltr);
+
     }
 
     public void pageRight(View view) {
@@ -126,7 +154,7 @@ public class TestActivity extends AppCompatActivity implements
         else rightButton.setVisibility(View.VISIBLE);
         if (page == 0) leftButton.setVisibility(View.GONE);
         else leftButton.setVisibility(View.VISIBLE);
-        chooseFormat(testQuestion(), qIds[page], R.anim.slide_in_rtl, R.anim.slide_out_rtl);
+        chooseFormat(qs.get(page), qIds[page], R.anim.slide_in_rtl, R.anim.slide_out_rtl);
     }
 
     public void returnToHome(View view) {
