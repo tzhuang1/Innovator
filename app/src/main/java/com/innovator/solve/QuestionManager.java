@@ -3,12 +3,14 @@ package com.innovator.solve;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.TreeMap;
+
 public class QuestionManager {
     public QuestionManager() {
 
     }
 
-    public static Bundle compileData(Bundle i, Question q) {
+    public static Bundle compileData2(Bundle i, Question q) {
         i.putString("TEXT", q.getQuestion());
         i.putString("OPTA", q.getOptA());
         i.putString("OPTB", q.getOptB());
@@ -25,6 +27,15 @@ public class QuestionManager {
         i.putExtra("OPTC", q.getOptC());
         i.putExtra("OPTD", q.getOptD());
         i.putExtra("ID", q.getId());
+        return i;
+    }
+
+    public static Bundle compileData(Bundle i, Question q) {
+        TreeMap<Character, String> choices = q.getChoices();
+        i.putString("TEXT", q.getQuestion());
+        for (Character key:choices.keySet()) {
+            i.putString("OPT" + key, choices.get(key));
+        }
         return i;
     }
 
@@ -57,4 +68,5 @@ public class QuestionManager {
         }
         return q;
     }
+
 }

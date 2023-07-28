@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,29 +105,67 @@ public class MockSelectFragment extends Fragment {
             }
         });
 
+        awaitLoad(0);
+
         //this is triggered soon after OCV above.
         //any view setup here (view lookups, view listener attach)
         super.onViewCreated(view, savedInstanceState);
-        renderCarousel();
     }
+
+    private boolean cutWait = false; //terminate awaits if another request gets sent
+
+    private void awaitLoad(int depth) {
+        if (depth > 15) {
+            //Error message
+            Log.d("Error", "Not loaded");
+            return;
+        }
+        if (cutWait) {
+            //another render request was sent
+            return;
+        }
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (MockTestManager.loaded) {
+                    renderCarousel();
+                    cutWait = false;
+                }
+                else {
+                    awaitLoad(depth+1);
+                }
+            }
+        }, 250);
+    }
+
     private void renderCarousel() {
         //render the top
+        Log.d("Rendering", String.valueOf(subjectIndex));
+
+        cutWait = true;
+
         left.setText(subjects[(subjectIndex + NUM_SUBJECTS - 1)%NUM_SUBJECTS]);
         current.setText(subjects[(subjectIndex)%NUM_SUBJECTS]);
         right.setText(subjects[(subjectIndex+1)%NUM_SUBJECTS]);
 
+        ArrayList<MockTestManager.MockTest> mocks = MockTestManager.getTestBySubject(subjects[(subjectIndex)%NUM_SUBJECTS]);
+        int testCount = mocks.size();
         //fetch the bottom
         for (int i=0; i<10; i++) {
-            if (i < testCounts[subjectIndex]) {
+            if (i < testCount) {
                 tests[i].setVisibility(View.VISIBLE);
                 LinearLayout tst = (LinearLayout) tests[i].getChildAt(0);
-                ((TextView) tst.getChildAt(0)).setText("Grade " + (i+1));
 
+                MockTestManager.MockTest m = mocks.get(i);
+
+                ((TextView) tst.getChildAt(0)).setText("Grade " + (m.getGrade()));
+                ((TextView) tst.getChildAt(2)).setText((m.getQuestionCount()) + " Questions");
                 tests[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         TextView txt = (TextView) ((LinearLayout) ((ConstraintLayout) view).getChildAt(0)).getChildAt(0);
-                        popup(txt.getText().toString(), 0);
+                        popup(txt.getText().toString(), m);
                     }
                 });
             }
@@ -136,8 +175,8 @@ public class MockSelectFragment extends Fragment {
         }
     }
 
-    private int activeSelection;
-    private void popup(String testTitle, int testID) {
+    private MockTestManager.MockTest activeSelection;
+    private void popup(String testTitle, MockTestManager.MockTest mock) {
         popup.setVisibility(View.VISIBLE);
         LinearLayout container = ((LinearLayout) ((RelativeLayout) popup.getChildAt(0)).getChildAt(0));
         TextView txt = (TextView) container.getChildAt(0);
@@ -145,7 +184,7 @@ public class MockSelectFragment extends Fragment {
         LinearLayout buttons = (LinearLayout) container.getChildAt(1);
         Button b1 = (Button) buttons.getChildAt(0), b2 = (Button) buttons.getChildAt(1);
 
-        activeSelection = testID;
+        activeSelection = mock;
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,19 +204,36 @@ public class MockSelectFragment extends Fragment {
 
     private void startTest() {
         Intent intent = new Intent(MockSelectFragment.this.getActivity(), TestActivity.class);
-        intent.putExtra("NUMQUESTIONS", 60);
-        UserData u = InnovatorApplication.getUser();
-        intent.putExtra("TestID", activeSelection);
+        activeSelection.populateQuestions();
+        awaitStart(0, intent, activeSelection);
 
-        startActivity(intent);
 
+        //ISSUE WITH DOUBLE RENDERS?
+
+        //awaitStart
     }
 
-
-
-    private void fetchTests() {
-
+    private void awaitStart(int depth, Intent intent, MockTestManager.MockTest m) {
+        if (depth > 15) {
+            //Error message
+            Log.d("Error", "Questions could not be populated");
+            return;
+        }
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (m.populated) {
+                    intent.putExtra("NUMQUESTIONS", activeSelection.questionList.size());
+                    intent.putExtra("TestID", activeSelection.getID());
+                    startActivity(intent);
+                }
+                else {
+                    awaitStart(depth+1, intent, m);
+                }
+            }
+        }, 250);
     }
+
 }
 
 
