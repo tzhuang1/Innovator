@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:id = "@+id/gif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="left"
+        >
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:onClick="returnToHome"
+            android:src="@drawable/ic_back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.063"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="wrap_content"
+            android:layout_height="220dp"
+            android:layout_above="@+id/textView4"
+            android:layout_marginBottom="17dp"
+            android:src="@drawable/avatar_blueberries" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@id/Congrats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gif"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-1dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_marginBottom="30dp"
+            android:text=" Congratulations\!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:rotationX="0"
+            android:rotationY="0"
+            android:text=" You have finished\!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id = "@id/Section1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/Congrats"
+        android:gravity="center_horizontal"
+        >
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="Section 1:" />
+
+        <TextView
+            android:id="@+id/Section1Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id = "@id/Section2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Section1"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        >
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="Section 2:" />
+
+        <TextView
+            android:id="@+id/Section2Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id = "@+id/Section3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Section2"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+
+        >
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="Section 3:" />
+
+        <TextView
+            android:id="@+id/Section3Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Section3"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/id_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignParentStart="true"
+            android:text="Score"
+            android:layout_margin="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            android:id="@+id/review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignParentEnd="true"
+            android:onClick="goToReviewPage"
+            android:background="@drawable/button_border"
+            android:text="Review"
+            android:layout_margin="10dp"
+            tools:ignore="UsingOnClickInXml" />
+    </LinearLayout>
+
+</RelativeLayout>

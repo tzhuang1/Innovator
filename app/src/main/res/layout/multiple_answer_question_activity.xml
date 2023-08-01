@@ -30,87 +30,101 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--Q layout-->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="13dp"
+        android:layout_height="wrap_content"
         android:layout_weight=".5"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:fadeScrollbars="false">
 
         <LinearLayout
-            android:id="@+id/question_pic_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ScrollView
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="35dp"
-                android:visibility="gone">
+                android:layout_weight=".5"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/question_pic_text"
+                <LinearLayout
+                    android:id="@+id/question_pic_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_weight="0.5"
-                    android:autoSizeMaxTextSize="20sp"
-                    android:autoSizeTextType="uniform"
+                    android:orientation="vertical">
+
+                    <ScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="35dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/question_pic_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:autoSizeMaxTextSize="20sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:scrollHorizontally="false"
+                            android:text="Question with pic text"
+                            android:textColor="@color/grey"
+                            android:textSize="25sp"
+                            fbutton:fontFamily="@font/karla"
+                            fbutton:layout_constraintBottom_toBottomOf="parent"
+                            fbutton:layout_constraintLeft_toRightOf="@id/question_picture"
+                            fbutton:layout_constraintRight_toRightOf="parent"
+                            fbutton:layout_constraintTop_toTopOf="parent" />
+                    </ScrollView>
+
+                    <ImageView
+                        android:id="@+id/question_picture"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_weight="0.5"
+                        android:visibility="gone"
+                        fbutton:layout_constraintBottom_toBottomOf="parent"
+                        fbutton:layout_constraintLeft_toLeftOf="parent"
+                        fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
+                        fbutton:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/question_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
                     android:gravity="center"
-                    android:scrollHorizontally="false"
-                    android:text="Question with pic text"
+                    android:text="Question with just text"
                     android:textColor="@color/grey"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     fbutton:fontFamily="@font/karla"
                     fbutton:layout_constraintBottom_toBottomOf="parent"
-                    fbutton:layout_constraintLeft_toRightOf="@id/question_picture"
                     fbutton:layout_constraintRight_toRightOf="parent"
                     fbutton:layout_constraintTop_toTopOf="parent" />
-            </ScrollView>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/question_picture"
-                fbutton:layout_constraintBottom_toBottomOf="parent"
-                fbutton:layout_constraintRight_toLeftOf="@id/question_pic_text"
-                fbutton:layout_constraintTop_toTopOf="parent"
-                fbutton:layout_constraintLeft_toLeftOf="parent"
-                android:layout_weight="0.5"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/question_text"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_margin="20dp"
-            android:gravity="center"
-            android:text="Question with just text"
-            android:textColor="@color/grey"
-            android:textSize="20sp"
-            fbutton:fontFamily="@font/karla"
-            fbutton:layout_constraintBottom_toBottomOf="parent"
-            fbutton:layout_constraintRight_toRightOf="parent"
-            fbutton:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <!--A layout-->
     <LinearLayout
         android:id="@+id/textAnswersLayout"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:gravity="center"
         android:orientation="vertical">
@@ -125,7 +139,7 @@
             android:id="@+id/buttonA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:onClick="buttonA"
             android:text="Option A"
             android:textColor="@color/grey"
@@ -135,7 +149,7 @@
             android:id="@+id/buttonB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:onClick="buttonB"
             android:text="Option B"
             android:textColor="@color/grey"
@@ -145,7 +159,7 @@
             android:id="@+id/buttonC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:onClick="buttonC"
             android:text="Option C"
             android:textColor="@color/grey"
@@ -155,7 +169,7 @@
             android:id="@+id/buttonD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:onClick="buttonD"
             android:text="Option D"
             android:textColor="@color/grey"
@@ -165,42 +179,31 @@
             android:id="@+id/buttonE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:onClick="buttonE"
             android:text="Option E"
             android:textColor="@color/grey"
-            android:visibility="gone"
             fbutton:buttonColor="@color/white" />
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:onClick="buttonF"
             android:text="Option F"
             android:textColor="@color/grey"
-            android:visibility="gone"
             fbutton:buttonColor="@color/white" />
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:onClick="buttonG"
             android:text="Option G"
             android:textColor="@color/grey"
-            android:visibility="gone"
             fbutton:buttonColor="@color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#FFFFFF"
-        android:orientation="vertical">
-
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -8,6 +8,7 @@ import static androidx.core.content.ContextCompat.getSystemService;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ public class MockSelectFragment extends Fragment {
     private TextView left, current, right;
 
     private FrameLayout popup;
+    private String testName;
     private ConstraintLayout[] tests;
     private LinearLayout testContainer;
     private int[] IDs = {R.id.row1, R.id.row2, R.id.row3, R.id.row4, R.id.row5, R.id.row6, R.id.row7, R.id.row8, R.id.row9, R.id.row10};
@@ -181,11 +183,12 @@ public class MockSelectFragment extends Fragment {
         LinearLayout container = ((LinearLayout) ((RelativeLayout) popup.getChildAt(0)).getChildAt(0));
         TextView txt = (TextView) container.getChildAt(0);
         txt.setText("Start " + testTitle + " " + subjects[subjectIndex] + " SOL?");
+        testName = testTitle + " " + subjects[subjectIndex];
         LinearLayout buttons = (LinearLayout) container.getChildAt(1);
         Button b1 = (Button) buttons.getChildAt(0), b2 = (Button) buttons.getChildAt(1);
 
         activeSelection = mock;
-
+        b1.setText("Confirm");
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,7 +196,7 @@ public class MockSelectFragment extends Fragment {
                 startTest();
             }
         });
-
+        b2.setText("Cancel");
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,15 +205,46 @@ public class MockSelectFragment extends Fragment {
         });
     }
 
+    private void popup2(Intent intent, SharedPreferences sp) {
+        popup.setVisibility(View.VISIBLE);
+        LinearLayout container = ((LinearLayout) ((RelativeLayout) popup.getChildAt(0)).getChildAt(0));
+        TextView txt = (TextView) container.getChildAt(0);
+        txt.setText("It seems like you didn't completely finish this test last time. Would you like to resume?");
+        LinearLayout buttons = (LinearLayout) container.getChildAt(1);
+        Button b1 = (Button) buttons.getChildAt(0), b2 = (Button) buttons.getChildAt(1);
+        b1.setText("Yes");
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.setVisibility(View.GONE);
+                intent.putExtra("NUMQUESTIONS", sp.getInt("NUMQUESTIONS", 0));
+                intent.putExtra("FROMSAVEDSTATE", true);
+                awaitStart(0, intent, activeSelection);
+            }
+        });
+        b2.setText("No");
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.setVisibility(View.GONE);
+                intent.putExtra("FROMSAVEDSTATE", false);
+                awaitStart(0, intent, activeSelection);
+            }
+        });
+    }
+
     private void startTest() {
         Intent intent = new Intent(MockSelectFragment.this.getActivity(), TestActivity.class);
         activeSelection.populateQuestions();
-        awaitStart(0, intent, activeSelection);
-
-
-        //ISSUE WITH DOUBLE RENDERS?
-
-        //awaitStart
+        intent.putExtra("TestName", testName);
+        SharedPreferences sp = getActivity().getSharedPreferences(testName, Context.MODE_PRIVATE);
+        if (sp.contains("NUMQUESTIONS")) {
+            popup2(intent, sp);
+        }
+        else {
+            intent.putExtra("FROMSAVEDSTATE", false);
+            awaitStart(0, intent, activeSelection);
+        }
     }
 
     private void awaitStart(int depth, Intent intent, MockTestManager.MockTest m) {
@@ -234,7 +268,9 @@ public class MockSelectFragment extends Fragment {
         }, 250);
     }
 
+
+
+    private void fetchTests() {
+
+    }
 }
-
-
-

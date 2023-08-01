@@ -1,5 +1,7 @@
 package com.innovator.solve;
 
+import android.util.Log;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class Question {
     //Multiple-Select-X
     //Drag-Drop-X
     //Short-Answer
+    private boolean calcActive = true;
+    private boolean formulaActive = true;
 
 
     private TreeMap<Character, String> choices; //for questions with more than 4 choices, use this
@@ -38,6 +42,7 @@ public class Question {
             //SHOULD ALWAYS BE TRUE
             return;
         }
+        Log.d("YAS", picNumber + " " + questionType + " " + question);
         this.mock = mock;
         this.questionType = questionType;
         this.question = question;
@@ -194,7 +199,9 @@ public class Question {
     public void setCategory(String ca) {
         category = ca;
     }
-
+    public void setQuestionPicNumber(int pic) {
+        questionPicNumber = pic;
+    }
     public void setExPicNumber(int expic) {
         explanationPicNumber = expic;
     }
@@ -206,4 +213,7 @@ public class Question {
     public String getQuestionType() { return this.questionType; }
 
     public TreeMap<Character, String> getChoices() { return this.choices; }
+
+    public boolean isCalcActive() { return this.calcActive; }
+    public boolean isFormulaActive() { return this.formulaActive; }
 }
