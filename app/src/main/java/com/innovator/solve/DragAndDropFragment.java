@@ -26,6 +26,7 @@ public class DragAndDropFragment extends Fragment implements View.OnDragListener
 
     public interface OnAnswerSelected {
         public void onDndAnswerSelect(int[][] boxAndButton);
+        public void clearChoices();
     }
 
     OnAnswerSelected mCallback;
@@ -51,6 +52,7 @@ public class DragAndDropFragment extends Fragment implements View.OnDragListener
 
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         questionText = view.findViewById(R.id.question_text);
+        mCallback = (OnAnswerSelected)getActivity();
 
         //Find all views and set Tag to all draggable views
         buttonA = (Button) view.findViewById(R.id.btnDrag);
@@ -113,10 +115,15 @@ public class DragAndDropFragment extends Fragment implements View.OnDragListener
         for (int i = 0; i < numAns; i++) {
             setAnswer(requireArguments().getInt("BOX" + i), requireArguments().getInt("BUTTON" + i));
         }
-        mCallback = (OnAnswerSelected)getActivity();
     }
 
     public void onDestroy() {
+        updateChoices();
+        super.onDestroy();
+    }
+
+    public void updateChoices() {
+        mCallback.clearChoices();
         int[][] bnb = new int[choices.size()][2];
         int i = 0;
         for (int key: choices.keySet()) {
@@ -124,7 +131,6 @@ public class DragAndDropFragment extends Fragment implements View.OnDragListener
             bnb[i++][1] = buttons.indexOf(choices.get(key).getId());
         }
         mCallback.onDndAnswerSelect(bnb);
-        super.onDestroy();
     }
 
     public void setQuestion(Question q) {
@@ -195,6 +201,7 @@ public class DragAndDropFragment extends Fragment implements View.OnDragListener
                     clearOpt.setVisibility(View.VISIBLE);
                     choices.put(v.getId(), vw);
                     filled.put(v.getId(), true);
+                    updateChoices();
                 }
                 return true;
 

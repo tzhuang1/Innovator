@@ -107,6 +107,7 @@ public class ShortAnswerFragment extends Fragment {
             setAnswer(requireArguments().getString("ANSWER"));
         }
         setQuestion(QuestionManager.decompileData(requireArguments()));
+        displayQuestion(currentQuestion);
         mCallback = (OnAnswerSelected)getActivity();
     }
 
@@ -115,8 +116,7 @@ public class ShortAnswerFragment extends Fragment {
         super.onDestroy();
     }
 
-    private void setAnswer(String s)
-    {
+    private void setAnswer(String s) {
         textAnswer.setText(s);
     }
 

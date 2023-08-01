@@ -34,89 +34,104 @@
 
     <!--A layout-->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight=".5"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/question_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="101dp"
-            android:gravity="center"
-            android:text="Question with just text"
-            android:textColor="@color/grey"
-            android:textSize="20sp"
-            fbutton:fontFamily="@font/karla"
-            fbutton:layout_constraintBottom_toBottomOf="parent"
-            fbutton:layout_constraintRight_toRightOf="parent"
-            fbutton:layout_constraintStart_toStartOf="parent"
-            fbutton:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight=".5"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:fadeScrollbars="false">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/box1"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:background="@color/blue"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@color/white"
                 android:orientation="vertical">
 
-            </LinearLayout>
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/question_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="101dp"
+                    android:gravity="center"
+                    android:text="Question with just text"
+                    android:textColor="@color/grey"
+                    android:textSize="20sp"
+                    fbutton:fontFamily="@font/karla"
+                    fbutton:layout_constraintBottom_toBottomOf="parent"
+                    fbutton:layout_constraintRight_toRightOf="parent"
+                    fbutton:layout_constraintStart_toStartOf="parent"
+                    fbutton:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/box9_container"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:id="@+id/box9"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:background="@color/blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@color/white"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/box1"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:background="@color/blue"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/box9_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/box9"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:background="@color/blue"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/box10_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/box10"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:background="@color/blue"
+                        android:orientation="vertical"></LinearLayout>
+                </LinearLayout>
+
+
             </LinearLayout>
-
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/box10_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/box10"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:background="@color/blue"
-                android:orientation="vertical"></LinearLayout>
-        </LinearLayout>
-
-
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -56,6 +56,7 @@ import static android.view.View.GONE;
 public class MultipleAnswerFragment extends Fragment {
     public interface OnAnswerSelected {
         public void onMcqAnswerSelect(int[] answers);
+        public void clearChoices();
     }
     OnAnswerSelected mCallback;
     Typeface tb;
@@ -85,6 +86,7 @@ public class MultipleAnswerFragment extends Fragment {
 
     private FirebaseFirestore firestoreDB;
     private String currentUserID; */
+    private int[] buttonClicked;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,14 +101,23 @@ public class MultipleAnswerFragment extends Fragment {
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         //multipleSelect = (Boolean)requireArguments().getBoolean("MSALLOWED");
+        mCallback = (OnAnswerSelected)getActivity();
         numChoices = (Integer)requireArguments().getInt("NUMCHOICES");
         reqAnswers = (Integer)requireArguments().getInt("REQANSWERS");
-        if (reqAnswers > 1) {
+        if (reqAnswers == -1) {
+            reqAnswers = numChoices + 1;
             view.findViewById(R.id.ms_text).setVisibility(View.VISIBLE);
+
+        }
+        if (reqAnswers > 1) {
+            TextView ms_text = view.findViewById(R.id.ms_text);
+            ms_text.setVisibility(View.VISIBLE);
+            ms_text.setText("(Choose " + reqAnswers +" answers total)");
         }
         else {
             view.findViewById(R.id.ms_text).setVisibility(View.GONE);
         }
+        buttonClicked = new int[numChoices];
         this.view = view;
         questionPicLayout = view.findViewById(R.id.question_pic_layout);
         questionPicText = view.findViewById(R.id.question_pic_text);
@@ -123,58 +134,62 @@ public class MultipleAnswerFragment extends Fragment {
         buttonA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonA(view);
+                buttonA(true);
             }
         });
         buttonB = (FButton) view.findViewById(R.id.buttonB);
         buttonB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonB(view);
+                buttonB(true);
             }
         });
         buttonC = (FButton) view.findViewById(R.id.buttonC);
         buttonC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonC(view);
+                buttonC(true);
             }
         });
         buttonD = (FButton) view.findViewById(R.id.buttonD);
         buttonD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonD(view);
+                buttonD(true);
             }
         });
+        buttonE = (FButton) view.findViewById(R.id.buttonE);
         if (numChoices > 4) {
-            buttonE = (FButton) view.findViewById(R.id.buttonE);
+            view.findViewById(R.id.buttonE).setVisibility(View.VISIBLE);
             buttonE.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    buttonE(view);
+                    buttonE(true);
                 }
             });
         }
         else
             view.findViewById(R.id.buttonE).setVisibility(View.GONE);
+        buttonF = (FButton) view.findViewById(R.id.buttonF);
         if (numChoices > 5) {
-            buttonF = (FButton) view.findViewById(R.id.buttonF);
+            view.findViewById(R.id.buttonF).setVisibility(View.VISIBLE);
             buttonF.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    buttonF(view);
+                    buttonF(true);
                 }
             });
         }
         else
             view.findViewById(R.id.buttonF).setVisibility(View.GONE);
+        buttonG = (FButton) view.findViewById(R.id.buttonG);
         if (numChoices > 6) {
-            buttonG = (FButton) view.findViewById(R.id.buttonG);
+            view.findViewById(R.id.buttonG).setVisibility(View.VISIBLE);
+
             buttonG.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    buttonG(view);
+                    buttonG(true);
                 }
             });
         }
@@ -191,6 +206,9 @@ public class MultipleAnswerFragment extends Fragment {
         buttonB.setTypeface(tb);
         buttonC.setTypeface(tb);
         buttonD.setTypeface(tb);
+        buttonE.setTypeface(tb);
+        buttonG.setTypeface(tb);
+        buttonF.setTypeface(tb);
         resetColor();
         setQuestion(QuestionManager.decompileData(requireArguments()));
         displayQuestion();
@@ -199,10 +217,15 @@ public class MultipleAnswerFragment extends Fragment {
         for (int i = 0; i < numAns; i++) {
             setAnswer(requireArguments().getInt("ANSWER" + i));
         }
-        mCallback = (OnAnswerSelected)getActivity();
     }
 
     public void onDestroy() {
+        //updateChoices();
+        super.onDestroy();
+    }
+
+    public void updateChoices() {
+        mCallback.clearChoices();
         int[] answers = new int[sum()];
         int z = 0;
         for (int i = 0; i < buttonClicked.length; i++) {
@@ -210,7 +233,6 @@ public class MultipleAnswerFragment extends Fragment {
                 answers[z++] = i;
         }
         mCallback.onMcqAnswerSelect(answers);
-        super.onDestroy();
     }
 
     public void setQuestion(Question q)
@@ -224,29 +246,55 @@ public class MultipleAnswerFragment extends Fragment {
         buttonB.setText(currentQuestion.getOptB());
         buttonC.setText(currentQuestion.getOptC());
         buttonD.setText(currentQuestion.getOptD());
+        Log.d("YAS2", ""+currentQuestion.getPicNumber());
+        if (currentQuestion.getPicNumber() > -1) {
+            loadQuestionPic(currentQuestion.getPicNumber());
+        }
+    }
+
+    private void loadQuestionPic(int questionPicID){
+        Log.d("YAS", ""+questionPicID);
+        if(questionPicID < 0)return;
+        StorageReference qImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
+                .child(TopicManager.getPicRootFolderName())
+                .child("Question_Pics")
+                .child(TopicManager.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
+
+        qImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful())
+                {
+                    Glide.with(getActivity())
+                            .load(task.getResult())
+                            .into(questionPic);
+                }
+                else {
+
+                }
+            }
+        });
     }
 
     public void setAnswer(int i) {
         if (i == 0)
-            buttonA(null);
+            buttonA(false);
         if (i == 1)
-            buttonB(null);
+            buttonB(false);
         if (i == 2)
-            buttonC(null);
+            buttonC(false);
         if (i == 3)
-            buttonD(null);
+            buttonD(false);
         if (i == 4)
-            buttonE(null);
+            buttonE(false);
         if (i == 5)
-            buttonF(null);
+            buttonF(false);
         if (i == 6)
-            buttonG(null);
+            buttonG(false);
     }
 
 
     //--------------------------------------------------------UI stuff---------------------------------------------
-    private int[] buttonClicked = new int[numChoices];
-    //Onclick listener for first button
     private int sum() {
         int i = 0;
         for (int ii: buttonClicked)
@@ -256,24 +304,26 @@ public class MultipleAnswerFragment extends Fragment {
         return i;
     }
 
-    public void updateButtons() {
+    public void updateButtons(boolean notOnCreate) {
+        if (notOnCreate)
+            updateChoices();
         buttonA.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[0] == 1)?R.color.blue:R.color.white));
         buttonB.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[1] == 1)?R.color.blue:R.color.white));
         buttonC.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[2] == 1)?R.color.blue:R.color.white));
         buttonD.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.blue:R.color.white));
-        if (numChoices > 4) buttonE.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.blue:R.color.white));
-        if (numChoices > 5) buttonF.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.blue:R.color.white));
-        if (numChoices > 6) buttonG.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.blue:R.color.white));
+        if (numChoices > 4) buttonE.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[4] == 1)?R.color.blue:R.color.white));
+        if (numChoices > 5) buttonF.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[5] == 1)?R.color.blue:R.color.white));
+        if (numChoices > 6) buttonG.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[6] == 1)?R.color.blue:R.color.white));
         buttonA.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[0] == 1)?R.color.white:R.color.grey));
         buttonB.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[1] == 1)?R.color.white:R.color.grey));
         buttonC.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[2] == 1)?R.color.white:R.color.grey));
         buttonD.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.white:R.color.grey));
-        if (numChoices > 4) buttonE.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.white:R.color.grey));
-        if (numChoices > 5) buttonF.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.white:R.color.grey));
-        if (numChoices > 6) buttonG.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.white:R.color.grey));
+        if (numChoices > 4) buttonE.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[4] == 1)?R.color.white:R.color.grey));
+        if (numChoices > 5) buttonF.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[5] == 1)?R.color.white:R.color.grey));
+        if (numChoices > 6) buttonG.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[6] == 1)?R.color.white:R.color.grey));
     }
 
-    public void buttonA(View view) {
+    public void buttonA(boolean notOnCreate) {
         if (buttonClicked[0] == 1) {
             buttonClicked[0] = 0;
         }
@@ -281,11 +331,10 @@ public class MultipleAnswerFragment extends Fragment {
             if (reqAnswers == 1) buttonClicked = new int[numChoices];
             if (sum() < reqAnswers) buttonClicked[0] = 1;
         }
-        updateButtons();
+        updateButtons(notOnCreate);
     }
 
-    //Onclick listener for sec button
-    public void buttonB(View view) {
+    public void buttonB(boolean notOnCreate) {
         if (buttonClicked[1] == 1) {
             buttonClicked[1] = 0;
         }
@@ -293,11 +342,10 @@ public class MultipleAnswerFragment extends Fragment {
             if (reqAnswers == 1) buttonClicked = new int[numChoices];
             if (sum() < reqAnswers) buttonClicked[1] = 1;
         }
-        updateButtons();
+        updateButtons(notOnCreate);
     }
 
-    //Onclick listener for third button
-    public void buttonC(View view) {
+    public void buttonC(boolean notOnCreate) {
         if (buttonClicked[2] == 1) {
             buttonClicked[2] = 0;
         }
@@ -305,11 +353,10 @@ public class MultipleAnswerFragment extends Fragment {
             if (reqAnswers == 1) buttonClicked = new int[numChoices];
             if (sum() < reqAnswers) buttonClicked[2] = 1;
         }
-        updateButtons();
+        updateButtons(notOnCreate);
     }
 
-    //Onclick listener for fourth button
-    public void buttonD(View view) {
+    public void buttonD(boolean notOnCreate) {
         if (buttonClicked[3] == 1) {
             buttonClicked[3] = 0;
         }
@@ -317,10 +364,10 @@ public class MultipleAnswerFragment extends Fragment {
             if (reqAnswers == 1) buttonClicked = new int[numChoices];
             if (sum() < reqAnswers) buttonClicked[3] = 1;
         }
-        updateButtons();
+        updateButtons(notOnCreate);
     }
 
-    public void buttonE(View view) {
+    public void buttonE(boolean notOnCreate) {
         if (buttonClicked[4] == 1) {
             buttonClicked[4] = 0;
         }
@@ -328,10 +375,10 @@ public class MultipleAnswerFragment extends Fragment {
             if (reqAnswers == 1) buttonClicked = new int[numChoices];
             if (sum() < reqAnswers) buttonClicked[4] = 1;
         }
-        updateButtons();
+        updateButtons(notOnCreate);
     }
 
-    public void buttonF(View view) {
+    public void buttonF(boolean notOnCreate) {
         if (buttonClicked[5] == 1) {
             buttonClicked[5] = 0;
         }
@@ -339,10 +386,10 @@ public class MultipleAnswerFragment extends Fragment {
             if (reqAnswers == 1) buttonClicked = new int[numChoices];
             if (sum() < reqAnswers) buttonClicked[5] = 1;
         }
-        updateButtons();
+        updateButtons(notOnCreate);
     }
 
-    public void buttonG(View view) {
+    public void buttonG(boolean notOnCreate) {
         if (buttonClicked[6] == 1) {
             buttonClicked[6] = 0;
         }
@@ -350,35 +397,9 @@ public class MultipleAnswerFragment extends Fragment {
             if (reqAnswers == 1) buttonClicked = new int[numChoices];
             if (sum() < reqAnswers) buttonClicked[6] = 1;
         }
-        updateButtons();
+        updateButtons(notOnCreate);
     }
-    public void buttonSubmit(View view) {
-        String ansString = "";
-        String shortenedAns = "";
-        int ASCII = 65;
-        for (int ans: buttonClicked) {
-            if (ans == 1) {
-                ansString += "Option " + (char)ASCII + " ";
-                shortenedAns += (char)ASCII + " ";
-            }
-            ASCII++;
-        }
-        if (ansString.equals("")) {
-            return;
-        }
-        buttonClicked = new int[4];
-        ansString = ansString.substring(0, ansString.length()-1);
-        shortenedAns = shortenedAns.substring(0, shortenedAns.length()-1);
-        //saveHistory(qid, ansString, currentQuestion);
-        if (currentQuestion.getAnswer().equalsIgnoreCase(ansString) ||
-                currentQuestion.getAnswer().equalsIgnoreCase(shortenedAns)) {
-            buttonSubmit.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.lightGreen));
-            //TODO: when on last question and success, the success dialog does not show
-            disableButton();
 
-        }
-    }
-    //This method will make button color white again since our one button color was turned green
     public void resetColor() {
         buttonA.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.white));
         buttonA.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.grey));
@@ -388,27 +409,11 @@ public class MultipleAnswerFragment extends Fragment {
         buttonC.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.grey));
         buttonD.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.white));
         buttonD.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.grey));
-    }
-
-    //This method will disable all the option button
-    public void disableButton() {
-        buttonA.setEnabled(false);
-        buttonB.setEnabled(false);
-        buttonC.setEnabled(false);
-        buttonD.setEnabled(false);
-        if (numChoices > 4) buttonE.setEnabled(false);
-        if (numChoices > 5) buttonF.setEnabled(false);
-        if (numChoices > 6) buttonG.setEnabled(false);
-    }
-
-    //This method will all enable the option buttons
-    public void enableButton() {
-        buttonA.setEnabled(true);
-        buttonB.setEnabled(true);
-        buttonC.setEnabled(true);
-        buttonD.setEnabled(true);
-        if (numChoices > 4) buttonE.setEnabled(true);
-        if (numChoices > 5) buttonF.setEnabled(true);
-        if (numChoices > 6) buttonG.setEnabled(true);
+        buttonE.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.white));
+        buttonE.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.grey));
+        buttonF.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.white));
+        buttonF.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.grey));
+        buttonG.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.white));
+        buttonG.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(),R.color.grey));
     }
 }

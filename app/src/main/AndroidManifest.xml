@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-  
+
     <application
 
         android:name="com.innovator.solve.InnovatorApplication"
@@ -52,18 +52,48 @@
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".Question">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.DEFAULT" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <!--        <activity android:name=".Question">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.DEFAULT" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
         <activity android:name="com.innovator.solve.TopicSelectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
 
+        <activity android:name="com.innovator.solve.MultipleAnswerQuestionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.innovator.solve.ShortAnswerQuestionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.innovator.solve.DragAndDropQuestion">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="com.innovator.solve.TestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.innovator.solve.CongratsPage">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.innovator.solve.PastProblemsTwo">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>

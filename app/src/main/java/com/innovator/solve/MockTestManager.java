@@ -117,12 +117,16 @@ public class MockTestManager {
                             int picNum = Math.toIntExact((Long) q.get("MediaID"));
                             int exPicNum = Math.toIntExact((Long) q.get("ExMediaID"));
 
+
+
                             TreeMap<Character, String> choices = new TreeMap<>();
                             Map choiceMap = (Map) q.get("Choices");
                             for (Object key: (choiceMap).keySet()) {
                                 Character k = ((String) key).charAt(0);
                                 choices.put(k, (String) choiceMap.get(key));
                             }
+
+
                             Question qObj = new Question(true, type, statement, choices, answer, explanation, category, picNum, exPicNum);
                             questionList.add(qObj);
                         }
