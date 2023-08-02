@@ -8,8 +8,6 @@
     tools:context="com.innovator.solve.TopicSelectFragment">
 
     <!--app:fontFamily="@font/Karla-Regular"-->
-
-    <!--app:fontFamily="@font/Karla-Regular"-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

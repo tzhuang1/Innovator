@@ -13,18 +13,13 @@
 
     <item
             android:id="@+id/navigation_mock"
-            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:icon="@drawable/mock_select"
             android:title="@string/full_tests"/>
 
     <item
             android:id="@+id/navigation_notifications"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/title_settings"/>
-
-<!--    <item-->
-<!--            android:id="@+id/navigation_account"-->
-<!--            android:icon="@drawable/ic_person_black_24dp"-->
-<!--            android:title="@string/title_account" />-->
 
     <item
             android:id="@+id/navigation_progress"
