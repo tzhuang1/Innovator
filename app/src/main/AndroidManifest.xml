@@ -3,8 +3,6 @@
     package="com.innovator.solve">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
 
@@ -14,6 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.innovator.solve.ProgressBarActivity">
             <intent-filter>
@@ -52,11 +51,6 @@
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--        <activity android:name=".Question">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.DEFAULT" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
         <activity android:name="com.innovator.solve.TopicSelectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />

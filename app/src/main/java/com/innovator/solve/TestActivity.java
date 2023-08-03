@@ -17,13 +17,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.security.Key;
+import java.security.PrivateKey;
+import java.security.Signature;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javax.crypto.SecretKey;
 
 public class TestActivity extends AppCompatActivity implements
         DragAndDropFragment.OnAnswerSelected,
@@ -41,6 +50,7 @@ public class TestActivity extends AppCompatActivity implements
     int page = 0;
     int[] qIds;
     boolean saveState = true;
+    ImageView questionPic;
     ArrayList<AnswerFormatManager> answers = new ArrayList<>();
 
     ArrayList<Question> qs;
@@ -54,6 +64,7 @@ public class TestActivity extends AppCompatActivity implements
         leftButton = findViewById(R.id.leftButton);
         rightButton = findViewById(R.id.rightButton);
         leftButton.setVisibility(View.GONE);
+        questionPic = findViewById(R.id.question_picture);
         testID = getIntent().getExtras().getString("TestID");
         MockTestManager.MockTest m = MockTestManager.getTestByID(testID);
         qs = m.questionList;
@@ -114,9 +125,12 @@ public class TestActivity extends AppCompatActivity implements
     }
 
     public void updateImage() {
+        //Glide.get(findViewById(R.id.question_picture).getContext()).clearDiskCache();
+        //questionPic.setImageDrawable(null);
         Question q = qs.get(page);
         if (q.getPicNumber() > -1) {
             findViewById(R.id.viewPicButton).setVisibility(View.VISIBLE);
+            loadQuestionPic(q.getPicNumber());
         }
         else
             findViewById(R.id.viewPicButton).setVisibility(View.GONE);
@@ -238,19 +252,17 @@ public class TestActivity extends AppCompatActivity implements
     }
 
     public void viewImage(View view) {
-        //findViewById(R.id.constraintLayout4).setVisibility(View.GONE);
-        findViewById(R.id.imageView3).setVisibility(View.VISIBLE);
-        findViewById(R.id.imageView3).bringToFront();
-        //findViewById(R.id.picture_layout).setVisibility(View.VISIBLE);
-        loadQuestionPic(qs.get(page).getPicNumber());
-        findViewById(R.id.question_picture).setVisibility(View.VISIBLE);
-        findViewById(R.id.question_picture).bringToFront();
-        //findViewById(R.id.question_picture).bringToFront();
+        goToFormulaSheet(view);
     }
 
     public void returnToHome(View view) {
         prevPage = page;
         finish();
+    }
+
+    public void showTutorial(View view) {
+        findViewById(R.id.tutorial_layout).setVisibility(View.VISIBLE);
+        getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.tutorial_fragment, TutorialFragment.class, null).commit();
     }
 
     public void promptHome(View view) {
@@ -268,12 +280,18 @@ public class TestActivity extends AppCompatActivity implements
         //findViewById(R.id.constraintLayout4).setVisibility(View.GONE);
     }
 
+    public void goToFormulaSheet2(View view) {
+        findViewById(R.id.formula_sheet2).setVisibility(View.VISIBLE);
+        findViewById(R.id.formula_sheet2).bringToFront();
+        //findViewById(R.id.constraintLayout4).setVisibility(View.GONE);
+    }
+
     public void returnToTestPage(View view) {
         findViewById(R.id.formula_sheet).setVisibility(View.GONE);
+        findViewById(R.id.formula_sheet2).setVisibility(View.GONE);
         findViewById(R.id.dark_screen).setVisibility(View.GONE);
         findViewById(R.id.leave_prompt).setVisibility(View.GONE);
         findViewById(R.id.submit_prompt).setVisibility(View.GONE);
-        findViewById(R.id.question_picture).setVisibility(View.GONE);
         findViewById(R.id.picture_layout).setVisibility(View.GONE);
         findViewById(R.id.constraintLayout4).setVisibility(View.VISIBLE);
     }
@@ -282,10 +300,7 @@ public class TestActivity extends AppCompatActivity implements
         findViewById(R.id.calculator_layout).setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.calculator_fragment, CalculatorFragment.class, null).commit();
     }
-    public void showTutorial(View view) {
-        findViewById(R.id.tutorial_layout).setVisibility(View.VISIBLE);
-        getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.tutorial_fragment, TutorialFragment.class, null).commit();
-    }
+
     public void submitTest(View view) {
         findViewById(R.id.dark_screen).setVisibility(View.VISIBLE);
         findViewById(R.id.submit_prompt).setVisibility(View.VISIBLE);
@@ -337,10 +352,13 @@ public class TestActivity extends AppCompatActivity implements
             public void onComplete(@NonNull Task<Uri> task) {
                 if(task.isSuccessful())
                 {
-                    Glide.with(TestActivity.this)
+                    Glide.with(questionPic.getContext())
                             .load(task.getResult())
-                            .into((ImageView) findViewById(R.id.question_picture));
-                    Log.d("IDK", ""+questionPicID);
+                            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                            .apply(RequestOptions.skipMemoryCacheOf(true))
+                            .signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
+                            .into(questionPic);
+                    Log.d("idk", ""+qImageRef.getPath());
                 }
                 else {
 
@@ -348,5 +366,4 @@ public class TestActivity extends AppCompatActivity implements
             }
         });
     }
-
 }

@@ -152,12 +152,16 @@ public class MultipleAnswerFragment extends Fragment {
             }
         });
         buttonD = (FButton) view.findViewById(R.id.buttonD);
-        buttonD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonD(true);
-            }
-        });
+        if (numChoices > 3) {
+            buttonD.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    buttonD(true);
+                }
+            });
+        }
+        else
+            view.findViewById(R.id.buttonD).setVisibility(View.GONE);
         buttonE = (FButton) view.findViewById(R.id.buttonE);
         if (numChoices > 4) {
             view.findViewById(R.id.buttonE).setVisibility(View.VISIBLE);
@@ -246,34 +250,6 @@ public class MultipleAnswerFragment extends Fragment {
         buttonB.setText(currentQuestion.getOptB());
         buttonC.setText(currentQuestion.getOptC());
         buttonD.setText(currentQuestion.getOptD());
-        Log.d("YAS2", ""+currentQuestion.getPicNumber());
-        if (currentQuestion.getPicNumber() > -1) {
-            loadQuestionPic(currentQuestion.getPicNumber());
-        }
-    }
-
-    private void loadQuestionPic(int questionPicID){
-        Log.d("YAS", ""+questionPicID);
-        if(questionPicID < 0)return;
-        StorageReference qImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
-                .child(TopicManager.getPicRootFolderName())
-                .child("Question_Pics")
-                .child(TopicManager.getPicNamePrefix()+"_q_"+questionPicID+".PNG");
-
-        qImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if(task.isSuccessful())
-                {
-                    Glide.with(getActivity())
-                            .load(task.getResult())
-                            .into(questionPic);
-                }
-                else {
-
-                }
-            }
-        });
     }
 
     public void setAnswer(int i) {
@@ -309,15 +285,15 @@ public class MultipleAnswerFragment extends Fragment {
             updateChoices();
         buttonA.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[0] == 1)?R.color.blue:R.color.white));
         buttonB.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[1] == 1)?R.color.blue:R.color.white));
-        buttonC.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[2] == 1)?R.color.blue:R.color.white));
-        buttonD.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.blue:R.color.white));
+        if (numChoices > 2) buttonC.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[2] == 1)?R.color.blue:R.color.white));
+        if (numChoices > 3) buttonD.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.blue:R.color.white));
         if (numChoices > 4) buttonE.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[4] == 1)?R.color.blue:R.color.white));
         if (numChoices > 5) buttonF.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[5] == 1)?R.color.blue:R.color.white));
         if (numChoices > 6) buttonG.setButtonColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[6] == 1)?R.color.blue:R.color.white));
         buttonA.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[0] == 1)?R.color.white:R.color.grey));
         buttonB.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[1] == 1)?R.color.white:R.color.grey));
-        buttonC.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[2] == 1)?R.color.white:R.color.grey));
-        buttonD.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.white:R.color.grey));
+        if (numChoices > 2) buttonC.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[2] == 1)?R.color.white:R.color.grey));
+        if (numChoices > 3) buttonD.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[3] == 1)?R.color.white:R.color.grey));
         if (numChoices > 4) buttonE.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[4] == 1)?R.color.white:R.color.grey));
         if (numChoices > 5) buttonF.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[5] == 1)?R.color.white:R.color.grey));
         if (numChoices > 6) buttonG.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), (buttonClicked[6] == 1)?R.color.white:R.color.grey));

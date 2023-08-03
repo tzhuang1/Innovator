@@ -71,7 +71,7 @@ public class MainMenuController extends AppCompatActivity {
     }
 
     public void dailyChallenge(View view){
-        startActivity(new Intent(this, Review.class));
+        startActivity(new Intent(this, DailyChallenge.class));
     }
 
     @Override

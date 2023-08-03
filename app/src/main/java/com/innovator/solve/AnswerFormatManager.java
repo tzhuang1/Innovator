@@ -63,9 +63,13 @@ public class AnswerFormatManager {
     }
 
     public int evalMcq(Question q) {
-        Log.d("YAS", mcqAnswer.toString() + " " + q.getAnswer());
-        if (mcqAnswer.size() != q.getAnswer().split(" ").length)
-            return 0;
+        try {
+            if (mcqAnswer.size() != q.getAnswer().split(" ").length)
+                return 0;
+        } catch (Exception e) {
+            Log.d("idk", e.toString());
+            Log.d("idk", q.getQuestion());
+        }
         for (String s: q.getAnswer().split(" ")) {
             if (!mcqAnswer.contains((int)(s.charAt(0))-65))
                 return 0;
@@ -78,7 +82,37 @@ public class AnswerFormatManager {
     }
 
     public int evalFrq(Question q) {
-        return 1;
+        if (q.getAnswer().equalsIgnoreCase(frqAnswer))
+            return 1;
+        return 0;
+    }
+
+    public String toString() {
+        if (id == 0)
+            return mcqToString();
+        if (id == 1)
+            return dndToString();
+        if (id == 2)
+            return frqToString();
+        return "NO ANSWER";
+    }
+
+    public String mcqToString() {
+        String s = "";
+        for (int i: mcqAnswer) {
+            s += "Option " + (char)(i + 65) + " ";
+        }
+        if (s.equals("")) return "NO ANSWER";
+        return s;
+    }
+
+    public String dndToString() {
+        return dndAnswer.toString();
+    }
+
+    public String frqToString() {
+        if (frqAnswer.equals("")) return "NO ANSWER";
+        return frqAnswer;
     }
 
     public Bundle bundleUp(Bundle b) {

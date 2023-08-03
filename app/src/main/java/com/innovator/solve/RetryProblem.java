@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,8 @@ public class RetryProblem extends AppCompatActivity {
     public Button choiceA, choiceB, choiceC, choiceD;
 
     public Map<String, Button> buttonDict;
+
+    private LinearLayout popup;
 
     private boolean answerSelected;
 
@@ -64,6 +67,9 @@ public class RetryProblem extends AppCompatActivity {
     }
 
     public void initiateValues(){
+        popup = findViewById(R.id.popup);
+        popup.setVisibility(View.GONE);
+
         questionText.setText("Question: "+retryQuestion.getQuestion());
         choiceA.setText(retryQuestion.getOptA());
         choiceB.setText(retryQuestion.getOptB());
@@ -74,7 +80,16 @@ public class RetryProblem extends AppCompatActivity {
     }
 
     private void verifyAnswer(String choice){
-        explanationText.setText("Explanation: "+retryQuestion.getExplanation());
+        popup.setVisibility(View.VISIBLE);
+        TextView txt = (TextView) findViewById(R.id.textView2);
+        txt.setText("Explanation: "+retryQuestion.getExplanation());
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.setVisibility(View.GONE);
+            }
+        });
 
         buttonDict.get(choice).setBackgroundColor(Color.RED);
         buttonDict.get(choice).setTextColor(Color.WHITE);

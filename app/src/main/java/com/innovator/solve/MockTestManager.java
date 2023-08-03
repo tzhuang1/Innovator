@@ -23,6 +23,7 @@ public class MockTestManager {
     private static ArrayList<MockTest> allTests;
     public static boolean loaded = false;
     public static void init() {
+        Log.d("IDK", "smth smth");
         DatabaseReference tref = FirebaseDatabase.getInstance().getReference().child("Mocks");
         allTests = new ArrayList<>();
         //Log.d("Database", tref.toString());
@@ -95,48 +96,51 @@ public class MockTestManager {
             //goes to template
 
             tref.addListenerForSingleValueEvent(
-                new ValueEventListener() {
+                    new ValueEventListener() {
 
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Log.d("Output", dataSnapshot.getValue().toString());
-                        collectTests((Map<String,Object>) dataSnapshot.getValue());
-                    }
-
-                    private void collectTests(Map<String,Object>questions) {
-                        Log.d("Output2", questions.get("Questions").toString()); //questions.get("Questions") gets forced into an ARrayList
-                        ArrayList<Object> list = (ArrayList<Object>) questions.get("Questions");
-                        for (Object o:list) {
-//                            Log.d("Database", o.toString());
-                            Map<String, Object> q = (Map) o;
-                            String answer = (String) q.get("Answer");
-                            String type = (String) q.get("Type");
-                            String category = (String) q.get("Category");
-                            String statement = (String) q.get("Question");
-                            String explanation = (String) q.get("Explanation");
-                            int picNum = Math.toIntExact((Long) q.get("MediaID"));
-                            int exPicNum = Math.toIntExact((Long) q.get("ExMediaID"));
-
-
-
-                            TreeMap<Character, String> choices = new TreeMap<>();
-                            Map choiceMap = (Map) q.get("Choices");
-                            for (Object key: (choiceMap).keySet()) {
-                                Character k = ((String) key).charAt(0);
-                                choices.put(k, (String) choiceMap.get(key));
-                            }
-
-
-                            Question qObj = new Question(true, type, statement, choices, answer, explanation, category, picNum, exPicNum);
-                            questionList.add(qObj);
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // Log.d("Output", dataSnapshot.getValue().toString());
+                            collectTests((Map<String,Object>) dataSnapshot.getValue());
                         }
-                        populated = true;
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("DATABASE ERROR", databaseError.toString());
-                    }
-                });
+
+                        private void collectTests(Map<String,Object>questions) {
+                            Log.d("Output2", questions.get("Questions").toString()); //questions.get("Questions") gets forced into an ARrayList
+                            ArrayList<Object> list = (ArrayList<Object>) questions.get("Questions");
+                            for (Object o:list) {
+//                            Log.d("Database", o.toString());
+                                Map<String, Object> q = (Map) o;
+                                String answer = (String) q.get("Answer");
+                                if (answer == null)
+                                    answer = (String) q.get("ANSWER");
+                                String type = (String) q.get("Type");
+                                String category = (String) q.get("Category");
+                                String statement = (String) q.get("Question");
+                                String explanation = (String) q.get("Explanation");
+                                int picNum = Math.toIntExact((Long) q.get("QuestionPicNumber"));
+                                int exPicNum = Math.toIntExact((Long) q.get("ExMediaID"));
+
+
+                                TreeMap<Character, String> choices = new TreeMap<>();
+                                if (type.charAt(0) != 'S') {
+                                    Map choiceMap = (Map) q.get("Choices");
+                                    for (Object key: (choiceMap).keySet()) {
+                                        Character k = ((String) key).charAt(0);
+                                        choices.put(k, (String) choiceMap.get(key));
+                                    }
+                                }
+
+
+                                Question qObj = new Question(true, type, statement, choices, answer, explanation, category, picNum, exPicNum);
+                                questionList.add(qObj);
+                            }
+                            populated = true;
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.d("DATABASE ERROR", databaseError.toString());
+                        }
+                    });
         }
         public String getSubject() {
             return this.subject;

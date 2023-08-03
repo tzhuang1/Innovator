@@ -43,7 +43,10 @@ public class CongratsPage extends AppCompatActivity {
         startActivity(new Intent(this, MainMenuController.class));
     }
     public void goToReviewPage(View v){
-        startActivity(new Intent(this, PastProblemsTwo.class));
+        Intent i = new Intent(this, PastProblemsTwo.class);
+        i.putExtra("ANSWERS", getIntent().getExtras().getString("ANSWERS"));
+        i.putExtra("TestID", getIntent().getExtras().getString("TestID"));
+        startActivity(i);
     }
 
 }
