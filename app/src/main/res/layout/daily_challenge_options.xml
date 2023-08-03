@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
-        android:layout_width="424dp"
+        android:layout_width="match_parent"
         android:layout_height="53dp"
         android:background="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,17 +27,24 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/constraintLayout3"
+        >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ReadingOptions"
-            android:layout_width="211dp"
+            android:layout_width="0dp"
             android:layout_height="685dp"
-            android:layout_marginTop="40dp">
+            android:layout_weight="0.5"
+            >
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="168dp"
+                android:layout_width="wrap_content"
                 android:layout_height="51dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="Reading"
                 android:textSize="25dp"
@@ -48,9 +55,9 @@
 
             <Button
                 android:id="@+id/Reading3"
-                android:layout_width="175dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
                 android:text="Grade 3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,9 +66,9 @@
 
             <Button
                 android:id="@+id/Reading4"
-                android:layout_width="175dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
                 android:text="Grade 4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,9 +77,9 @@
 
             <Button
                 android:id="@+id/Reading5"
-                android:layout_width="175dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
                 android:text="Grade 5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,9 +88,9 @@
 
             <Button
                 android:id="@+id/Reading6"
-                android:layout_width="175dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
                 android:text="Grade 6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,9 +99,9 @@
 
             <Button
                 android:id="@+id/Reading7"
-                android:layout_width="175dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
                 android:text="Grade 7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -103,9 +110,9 @@
 
             <Button
                 android:id="@+id/Reading8"
-                android:layout_width="175dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
                 android:text="grade 8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -115,99 +122,95 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/MathOptions"
-            android:layout_width="198dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/ReadingOptions"
-            android:layout_marginTop="40dp">
+            android:layout_toRightOf="@+id/ReadingOptions">
 
-
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="140dp"
-                    android:layout_height="49dp"
-                    android:layout_marginTop="24dp"
-                    android:gravity="center"
-                    android:text="Math"
-                    android:textSize="25dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/Math3"
-                    android:layout_width="165dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="24dp"
-                    android:text="grade 3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3"
-                    android:onClick="onChallengeClick"/>
-
-                <Button
-                    android:id="@+id/Math4"
-                    android:layout_width="165dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Grade 4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Math3"
-                    android:onClick="onChallengeClick"/>
-
-                <Button
-                    android:id="@+id/Math5"
-                    android:layout_width="165dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="16dp"
-                    android:text="grade 5"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Math4"
-                    android:onClick="onChallengeClick"/>
-
-                <Button
-                    android:id="@+id/Math6"
-                    android:layout_width="165dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="16dp"
-                    android:text="grade 6"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Math5"
-                    android:onClick="onChallengeClick"/>
-
-                <Button
-                    android:id="@+id/Math7"
-                    android:layout_width="165dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="16dp"
-                    android:text="grade 7"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Math6"
-                    android:onClick="onChallengeClick"/>
-
-                <Button
-                    android:layout_width="165dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="16dp"
-                    android:text="grade 8"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Math7"
-                    android:id="@+id/Math8"
-                    android:onClick="onChallengeClick"/>
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Math"
+                android:textSize="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:layout_width="165dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="16dp"
+                android:id="@+id/Math3"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:text="grade 3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                android:onClick="onChallengeClick"/>
+
+            <Button
+                android:id="@+id/Math4"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:text="Grade 4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Math3"
+                android:onClick="onChallengeClick"/>
+
+            <Button
+                android:id="@+id/Math5"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:text="grade 5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Math4"
+                android:onClick="onChallengeClick"/>
+
+            <Button
+                android:id="@+id/Math6"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:text="grade 6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Math5"
+                android:onClick="onChallengeClick"/>
+
+            <Button
+                android:id="@+id/Math7"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:text="grade 7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Math6"
+                android:onClick="onChallengeClick"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:text="grade 8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Math7"
+                android:id="@+id/Math8"
+                android:onClick="onChallengeClick"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Math8"
@@ -215,6 +218,14 @@
                 android:id="@+id/Math9"
                 android:onClick="onChallengeClick"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
 
 
 </RelativeLayout>

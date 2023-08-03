@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click on the calculator button to open calculator. Click on formula sheet button to open formula sheet. Click on the forwards arrow to go to the next question, and the back arrow to go to the previous question."
+        android:text="To open up available tools, click the 'tools' button.\n\nThe tools 'calculator' and/or 'formulas' might be available. Click on either to access them.\n\nUse the forward and back arrow to progress through the test. A submit button will appear when you reach the end.\n\nPress the house icon to exit the test."
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"

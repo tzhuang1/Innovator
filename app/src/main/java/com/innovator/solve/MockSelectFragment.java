@@ -57,7 +57,7 @@ public class MockSelectFragment extends Fragment {
     private String[] subjects = {"Math", "Reading", "Science", "Social Studies"};
     private int testCounts[] = {8, 6, 3, 2};
 
-
+    private View mainView, loadingView;
     private final int NUM_SUBJECTS = subjects.length;
 
     @Override
@@ -71,8 +71,12 @@ public class MockSelectFragment extends Fragment {
 
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         MockTestManager.init();
-
         //------------------------------find views---------------------------
+        mainView = view.findViewById(R.id.main);
+        loadingView = view.findViewById(R.id.loading);
+        mainView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
+
         leftButton = view.findViewById(R.id.topic_left_ImageButton);
         rightButton = view.findViewById(R.id.topic_right_ImageButton);
 
@@ -126,13 +130,19 @@ public class MockSelectFragment extends Fragment {
             //another render request was sent
             return;
         }
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 if (MockTestManager.loaded) {
-                    renderCarousel();
-                    cutWait = false;
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            renderCarousel();
+                            mainView.setVisibility(View.VISIBLE);
+                            loadingView.setVisibility(View.GONE);
+                            cutWait = false;
+                        }
+                    }, 25);
                 }
                 else {
                     awaitLoad(depth+1);
@@ -162,7 +172,7 @@ public class MockSelectFragment extends Fragment {
                 MockTestManager.MockTest m = mocks.get(i);
 
                 ((TextView) tst.getChildAt(0)).setText("Grade " + (m.getGrade()));
-                ((TextView) tst.getChildAt(2)).setText((m.getQuestionCount()) + " Questions");
+                ((TextView) tst.getChildAt(1)).setText((m.getQuestionCount()) + " Questions");
                 tests[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

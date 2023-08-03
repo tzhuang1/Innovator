@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
-        android:layout_width="424dp"
+        android:layout_width="match_parent"
         android:layout_height="53dp"
         android:background="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:layout_width="375dp"
+        android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"
@@ -43,16 +43,16 @@
         android:layout_below="@+id/constraintLayout3"/>
 
     <ScrollView
-        android:layout_height="200dp"
-        android:layout_width="360dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:layout_below="@+id/dailyChallengeText"
         android:layout_centerHorizontal="true"
         android:id="@+id/topScroll">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id = "@+id/questioning">
 
             <TextView
@@ -73,7 +73,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/questionDisplay"
                 android:layout_marginTop="20dp"
                 android:id="@+id/questionPic"
@@ -93,11 +93,11 @@
     </ScrollView>
 
     <RelativeLayout
-        android:layout_width="360dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/topScroll"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_margin="10dp"
         >
 
         <Button
@@ -134,9 +134,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id = "@+id/popup"
-        android:background="@drawable/border"
-        android:layout_below="@id/topScroll"
-        android:orientation="vertical">
+        android:background="@drawable/layout_bg3"
+        android:layout_below="@+id/dailyChallengeText"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
 
         <TextView
             android:id="@+id/textView2"
@@ -163,5 +164,6 @@
 
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>
+
+
