@@ -105,23 +105,42 @@ public class TestActivity extends AppCompatActivity implements
         prevPage = page;
         chooseFormat(qs.get(page), qIds[page], R.anim.no_slide, R.anim.no_slide);
 
+        //reset toolbar
+
+
+        if (showTools()) {
+            findViewById(R.id.tools).setVisibility(View.VISIBLE);
+        }
+        else {
+            findViewById(R.id.tools).setVisibility(View.GONE);
+        }
+        findViewById(R.id.tutorial).setVisibility(View.VISIBLE);
+        findViewById(R.id.calcButton).setVisibility(View.GONE);
+        findViewById(R.id.FormulaSheetButton).setVisibility(View.GONE);
+        findViewById(R.id.toolsBack).setVisibility(View.GONE);
+    }
+
+    public boolean showTools() {
         //activate/deactivate calculator/formula sheet
         View view = getWindow().getDecorView().getRootView();
         View calcBtn =  view.findViewById(R.id.calcButton);
         View formulaBtn = view.findViewById(R.id.FormulaSheetButton);
+        int tally = 0;
         if (qs.get(page).isCalcActive()) {
             calcBtn.setVisibility(View.VISIBLE);
+            tally++;
         }
         else {
             calcBtn.setVisibility(View.GONE);
         }
         if (qs.get(page).isFormulaActive()) {
             formulaBtn.setVisibility(View.VISIBLE);
+            tally++;
         }
         else {
             formulaBtn.setVisibility(View.GONE);
         }
-
+        return (tally > 0);
     }
 
     public void updateImage() {
@@ -192,16 +211,6 @@ public class TestActivity extends AppCompatActivity implements
         bundle = answers.get(qNo).bundleUp(bundle);
         getSupportFragmentManager().beginTransaction().setCustomAnimations(slidein, slideout).setReorderingAllowed(true).replace(R.id.question_fragment, ShortAnswerFragment.class, bundle).commit();
 
-    }
-
-    private Question testQuestion() {
-        Question q = new Question();
-        q.setQuestion("What is 5+5?\nAHHHH\nAHHHH\nAHHHH\nAHHHH\nAHHHH\nAHHHH\nAHHHH\nAHHHH\nAHHHH\nAHHHH\nAHHHH");
-        q.setOptA("34");
-        q.setOptB("e");
-        q.setOptC("3.14");
-        q.setOptD("10");
-        return q;
     }
 
     public void pageLeft(View view) {
@@ -284,6 +293,23 @@ public class TestActivity extends AppCompatActivity implements
         findViewById(R.id.formula_sheet2).setVisibility(View.VISIBLE);
         findViewById(R.id.formula_sheet2).bringToFront();
         //findViewById(R.id.constraintLayout4).setVisibility(View.GONE);
+    }
+
+    public void viewTools(View view) {
+        showTools();
+        findViewById(R.id.toolsBack).setVisibility(View.VISIBLE);
+        findViewById(R.id.tools).setVisibility(View.GONE);
+        findViewById(R.id.tutorial).setVisibility(View.GONE);
+        findViewById(R.id.viewPicButton).setVisibility(View.GONE);
+    }
+
+    public void backFromTools(View view) {
+        findViewById(R.id.calcButton).setVisibility(View.GONE);
+        findViewById(R.id.FormulaSheetButton).setVisibility(View.GONE);
+        findViewById(R.id.toolsBack).setVisibility(View.GONE);
+        findViewById(R.id.tools).setVisibility(View.VISIBLE);
+        findViewById(R.id.tutorial).setVisibility(View.VISIBLE);
+        findViewById(R.id.viewPicButton).setVisibility(View.VISIBLE);
     }
 
     public void returnToTestPage(View view) {

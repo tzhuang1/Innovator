@@ -30,7 +30,7 @@
 
             <TextView
                 android:id="@+id/practice_title"
-                android:layout_width="338dp"
+                android:layout_width="wrap_content"
                 android:layout_height="65dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
@@ -57,7 +57,7 @@
                     android:id="@+id/topic_left_ImageButton"
                     android:layout_width="50dp"
                     android:layout_height="100dp"
-                    android:layout_marginRight="27dp"
+                    android:layout_marginRight="0dp"
                     android:contentDescription="Left Button"
                     android:src="@drawable/ic_topicselect_imagebutton_left"
                     app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
@@ -68,7 +68,7 @@
                     android:id="@+id/topic_right_ImageButton"
                     android:layout_width="50dp"
                     android:layout_height="100dp"
-                    android:layout_marginLeft="27dp"
+                    android:layout_marginLeft="0dp"
                     android:contentDescription="Right Button"
                     android:src="@drawable/ic_topicselect_imagebutton_right"
                     app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
@@ -77,9 +77,9 @@
 
                 <ImageView
                     android:id="@+id/left_practice_ImageView"
-                    android:layout_width="190dp"
-                    android:layout_height="150dp"
-                    android:layout_marginRight="50dp"
+                    android:layout_width="170dp"
+                    android:layout_height="130dp"
+                    android:layout_marginRight="30dp"
                     android:contentDescription="Left ImageView"
                     app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
                     app:layout_constraintRight_toLeftOf="@id/current_practice_ImageView"
@@ -87,9 +87,9 @@
 
                 <ImageView
                     android:id="@+id/right_practice_ImageView"
-                    android:layout_width="190dp"
-                    android:layout_height="150dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_width="170dp"
+                    android:layout_height="130dp"
+                    android:layout_marginLeft="30dp"
                     android:contentDescription="Right ImageView"
                     app:layout_constraintBottom_toBottomOf="@id/current_practice_ImageView"
                     app:layout_constraintLeft_toRightOf="@id/current_practice_ImageView"
@@ -97,8 +97,12 @@
 
                 <ImageView
                     android:id="@+id/current_practice_ImageView"
-                    android:layout_width="250dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginRight="110dp"
+                    android:layout_marginLeft="110dp"
+                    android:layout_height="230dp"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
                     android:contentDescription="Current ImageView"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
