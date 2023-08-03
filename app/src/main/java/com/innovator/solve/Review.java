@@ -44,19 +44,19 @@ public class Review extends AppCompatActivity {
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT, 1.0f
             ));
-            Button fuckme = new Button(context);
-            fuckme.setText(String.valueOf(item.first));
-            fuckme.setTextSize(40);
-            fuckme.setOnClickListener(new View.OnClickListener() {
+            Button btn = new Button(context);
+            btn.setText(String.valueOf(item.first));
+            btn.setTextSize(40);
+            btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     System.out.println("sexy");
                 }
             });
-            fuckme.setBackgroundResource(R.drawable.bordercolor);
-            row.addView(fuckme);
+            btn.setBackgroundResource(R.drawable.bordercolor);
+            row.addView(btn);
 
-            System.out.println(fuckme.getText());
+            System.out.println(btn.getText());
 
             TextView textView2 = new TextView(context);
             textView2.setText(item.second);

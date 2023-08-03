@@ -260,6 +260,11 @@ public class TestActivity extends AppCompatActivity implements
         finish();
     }
 
+    public void showTutorial(View view) {
+        findViewById(R.id.tutorial_layout).setVisibility(View.VISIBLE);
+        getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.tutorial_fragment, TutorialFragment.class, null).commit();
+    }
+
     public void promptHome(View view) {
         findViewById(R.id.dark_screen).setVisibility(View.VISIBLE);
         findViewById(R.id.leave_prompt).setVisibility(View.VISIBLE);
