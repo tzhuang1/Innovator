@@ -3,16 +3,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +44,7 @@ public class TestActivity extends AppCompatActivity implements
     ArrayList<AnswerFormatManager> answers = new ArrayList<>();
 
     ArrayList<Question> qs;
+    String testID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +54,7 @@ public class TestActivity extends AppCompatActivity implements
         leftButton = findViewById(R.id.leftButton);
         rightButton = findViewById(R.id.rightButton);
         leftButton.setVisibility(View.GONE);
-        String testID = getIntent().getExtras().getString("TestID");
+        testID = getIntent().getExtras().getString("TestID");
         MockTestManager.MockTest m = MockTestManager.getTestByID(testID);
         qs = m.questionList;
         lastPageNo = getIntent().getExtras().getInt("NUMQUESTIONS");
@@ -104,7 +113,14 @@ public class TestActivity extends AppCompatActivity implements
 
     }
 
-
+    public void updateImage() {
+        Question q = qs.get(page);
+        if (q.getPicNumber() > -1) {
+            findViewById(R.id.viewPicButton).setVisibility(View.VISIBLE);
+        }
+        else
+            findViewById(R.id.viewPicButton).setVisibility(View.GONE);
+    }
     public void onDndAnswerSelect(int[][] boxAndButtons) {
         for (int[] pair: boxAndButtons)
             answers.get(page).addDndAnswer(pair[0], pair[1]);
@@ -185,6 +201,7 @@ public class TestActivity extends AppCompatActivity implements
     }
 
     public void buttonGen() {
+        updateImage();
         if (page == 0) leftButton.setVisibility(View.GONE);
         else leftButton.setVisibility(View.VISIBLE);
         if (page == lastPageNo-1) {
@@ -220,6 +237,17 @@ public class TestActivity extends AppCompatActivity implements
         super.onDestroy();
     }
 
+    public void viewImage(View view) {
+        //findViewById(R.id.constraintLayout4).setVisibility(View.GONE);
+        findViewById(R.id.imageView3).setVisibility(View.VISIBLE);
+        findViewById(R.id.imageView3).bringToFront();
+        //findViewById(R.id.picture_layout).setVisibility(View.VISIBLE);
+        loadQuestionPic(qs.get(page).getPicNumber());
+        findViewById(R.id.question_picture).setVisibility(View.VISIBLE);
+        findViewById(R.id.question_picture).bringToFront();
+        //findViewById(R.id.question_picture).bringToFront();
+    }
+
     public void returnToHome(View view) {
         prevPage = page;
         finish();
@@ -245,13 +273,19 @@ public class TestActivity extends AppCompatActivity implements
         findViewById(R.id.dark_screen).setVisibility(View.GONE);
         findViewById(R.id.leave_prompt).setVisibility(View.GONE);
         findViewById(R.id.submit_prompt).setVisibility(View.GONE);
+        findViewById(R.id.question_picture).setVisibility(View.GONE);
+        findViewById(R.id.picture_layout).setVisibility(View.GONE);
+        findViewById(R.id.constraintLayout4).setVisibility(View.VISIBLE);
     }
 
     public void displayCalculator(View view) {
         findViewById(R.id.calculator_layout).setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.calculator_fragment, CalculatorFragment.class, null).commit();
     }
-
+    public void showTutorial(View view) {
+        findViewById(R.id.tutorial_layout).setVisibility(View.VISIBLE);
+        getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.tutorial_fragment, TutorialFragment.class, null).commit();
+    }
     public void submitTest(View view) {
         findViewById(R.id.dark_screen).setVisibility(View.VISIBLE);
         findViewById(R.id.submit_prompt).setVisibility(View.VISIBLE);
@@ -267,11 +301,18 @@ public class TestActivity extends AppCompatActivity implements
         editor.clear();
         editor.commit();
         saveState = false;
-        finish();
         ScoreOfMockTest.numSections = numSections;
         ScoreOfMockTest.section1 = gradeTest();
         ScoreOfMockTest.section1total = lastPageNo;
-        startActivity(new Intent(this, CongratsPage.class));
+        Intent i = new Intent(this, CongratsPage.class);
+        String ans = "";
+        for (AnswerFormatManager afm: answers) {
+            ans += afm.toString() + "\n";
+        }
+        i.putExtra("ANSWERS", ans.substring(0, ans.length()-1));
+        i.putExtra("TestID", getIntent().getExtras().getString("TestID"));
+        startActivity(i);
+        finish();
     }
 
     public int gradeTest() {
@@ -281,4 +322,31 @@ public class TestActivity extends AppCompatActivity implements
         }
         return total;
     }
+
+    private void loadQuestionPic(int questionPicID){
+        if(questionPicID < 0)return;
+        //FirebaseAuth.getInstance().signInAnonymously();
+        StorageReference qImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
+                .child("Mocks")
+                .child(testID)
+                .child("Question_Pics")
+                .child(questionPicID+".png");
+
+        qImageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful())
+                {
+                    Glide.with(TestActivity.this)
+                            .load(task.getResult())
+                            .into((ImageView) findViewById(R.id.question_picture));
+                    Log.d("IDK", ""+questionPicID);
+                }
+                else {
+
+                }
+            }
+        });
+    }
+
 }
