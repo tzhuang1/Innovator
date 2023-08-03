@@ -45,10 +45,14 @@ public class PastProblems extends AppCompatActivity{
         pastProblemsLayout = (LinearLayout)findViewById(R.id.past_problems_linear_layout);
 
         populateLayout();
+
     }
+
+    private LinearLayout popup;
 
     private void getPastProblems(){
         String currentUserID=InnovatorApplication.getUser().getId();
+
         questionLocation.collection("User_"+currentUserID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -72,6 +76,8 @@ public class PastProblems extends AppCompatActivity{
                             @Override
                             public void onClick(View view) {
                                 setContentView(R.layout.single_past_problem);
+                                popup = findViewById(R.id.popup);
+                                popup.setVisibility(View.GONE);
 
                                 long questionPicNumber=-1;
                                 if(questionData.get("picNumber")!=null){
@@ -90,13 +96,11 @@ public class PastProblems extends AppCompatActivity{
                                     Button choiceD=findViewById(R.id.pastAnswerD);
 
                                     TextView questionText=findViewById(R.id.questionDisplay);
-                                    TextView explanationText=findViewById(R.id.explanation);
-
                                     Map<String, Button> references = new HashMap<String, Button>(){{
-                                       put("Option A", choiceA);
-                                       put("Option B", choiceB);
-                                       put("Option C", choiceC);
-                                       put("Option D", choiceD);
+                                        put("Option A", choiceA);
+                                        put("Option B", choiceB);
+                                        put("Option C", choiceC);
+                                        put("Option D", choiceD);
                                     }};
 
                                     choiceA.setText(questionData.get("optA").toString());
@@ -105,8 +109,17 @@ public class PastProblems extends AppCompatActivity{
                                     choiceD.setText(questionData.get("optD").toString());
 
                                     questionText.setText("Question: "+questionData.get("question").toString());
-                                    explanationText.setText("Explanation: "+questionData.get("explanation").toString());
 
+                                    popup.setVisibility(View.VISIBLE);
+                                    TextView txt = (TextView) findViewById(R.id.textView2);
+                                    txt.setText("Explanation: "+questionData.get("explanation").toString());
+                                    Button button = (Button) findViewById(R.id.button);
+                                    button.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            popup.setVisibility(View.GONE);
+                                        }
+                                    });
                                     references.get("Option "+correctAnswer).setBackgroundColor(Color.GREEN);
                                     references.get("Option "+correctAnswer).setTextColor(Color.WHITE);
 
@@ -183,5 +196,5 @@ public class PastProblems extends AppCompatActivity{
     public void retryCurrentQuestion(View view){
         startActivity(new Intent(this, RetryProblem.class));
     }
-    
+
 }

@@ -1,20 +1,28 @@
 package com.innovator.solve;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.collection.CircularArray;
 
 import com.bumptech.glide.Glide;
+import com.google.api.Distribution;
 import com.innovator.solve.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -58,6 +67,8 @@ public class DailyChallenge extends AppCompatActivity{
 
     private String currentDate;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
@@ -71,7 +82,9 @@ public class DailyChallenge extends AppCompatActivity{
         currentDate=formatter.format(date).substring(0,10).replace('/','-');
 
         selectCategory();
+
     }
+
 
     public void selectCategory(){
         SharedPreferences pastCategories=getSharedPreferences("PastCategories", Context.MODE_PRIVATE);
@@ -152,6 +165,9 @@ public class DailyChallenge extends AppCompatActivity{
         Button choiceD=findViewById(R.id.answerD);
 
         currentQuestionData=DailyChallengeManager.getCurrentQuestionData();
+
+        popup = findViewById(R.id.popup);
+        popup.setVisibility(View.GONE);
 
         questionDisplay.setText("Question: "+(String)currentQuestionData.get("question"));
         choiceA.setText("A. "+currentQuestionData.get("optA"));
@@ -250,9 +266,7 @@ public class DailyChallenge extends AppCompatActivity{
     }
 
     private void verifyAnswer(String choice){
-        TextView explanationText = findViewById(R.id.explanation);
-
-        explanationText.setText("Explanation: "+currentQuestionData.get("explanation"));
+        popup();
     }
 
     private boolean retrieveDataPoints(Map<String, Object> databaseStorage){
@@ -305,4 +319,18 @@ public class DailyChallenge extends AppCompatActivity{
         });
     }
 
+    private LinearLayout popup;
+
+    private void popup() {
+        popup.setVisibility(View.VISIBLE);
+        TextView txt = (TextView) findViewById(R.id.textView2);
+        txt.setText("Explanation: "+currentQuestionData.get("explanation"));
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.setVisibility(View.GONE);
+            }
+        });
+    }
 }

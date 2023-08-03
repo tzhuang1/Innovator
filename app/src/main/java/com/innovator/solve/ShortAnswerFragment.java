@@ -2,6 +2,8 @@ package com.innovator.solve;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 
 import androidx.annotation.NonNull;
@@ -58,6 +60,7 @@ public class ShortAnswerFragment extends Fragment {
 
     public interface OnAnswerSelected {
         public void onFrqAnswerSelect(String s);
+        public void clearChoices();
     }
     OnAnswerSelected mCallback;
     Typeface tb;
@@ -109,10 +112,26 @@ public class ShortAnswerFragment extends Fragment {
         setQuestion(QuestionManager.decompileData(requireArguments()));
         displayQuestion(currentQuestion);
         mCallback = (OnAnswerSelected)getActivity();
+        textAnswer.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                mCallback.clearChoices();
+                mCallback.onFrqAnswerSelect(s.toString());
+            }
+        });
     }
 
     public void onDestroy() {
-        mCallback.onFrqAnswerSelect(textAnswer.getText().toString());
         super.onDestroy();
     }
 

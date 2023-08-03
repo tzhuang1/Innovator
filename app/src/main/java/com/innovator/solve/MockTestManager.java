@@ -114,17 +114,18 @@ public class MockTestManager {
                             String category = (String) q.get("Category");
                             String statement = (String) q.get("Question");
                             String explanation = (String) q.get("Explanation");
-                            int picNum = Math.toIntExact((Long) q.get("MediaID"));
+                            int picNum = Math.toIntExact((Long) q.get("QuestionPicNumber"));
                             int exPicNum = Math.toIntExact((Long) q.get("ExMediaID"));
 
-
-
                             TreeMap<Character, String> choices = new TreeMap<>();
-                            Map choiceMap = (Map) q.get("Choices");
-                            for (Object key: (choiceMap).keySet()) {
-                                Character k = ((String) key).charAt(0);
-                                choices.put(k, (String) choiceMap.get(key));
+                            if (type.charAt(0) != 'S') {
+                                Map choiceMap = (Map) q.get("Choices");
+                                for (Object key: (choiceMap).keySet()) {
+                                    Character k = ((String) key).charAt(0);
+                                    choices.put(k, (String) choiceMap.get(key));
+                                }
                             }
+
 
 
                             Question qObj = new Question(true, type, statement, choices, answer, explanation, category, picNum, exPicNum);
