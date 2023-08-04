@@ -49,7 +49,7 @@ public class Question {
         this.answer = answer;
         this.explanation = explanation;
         this.category = category;
-        this.questionPicNumber = 6;
+        this.questionPicNumber = picNumber;
         this.explanationPicNumber = exPicNumber;
 
         this.choices = choices;
