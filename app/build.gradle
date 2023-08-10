@@ -5,15 +5,20 @@ apply plugin: 'com.google.gms.google-services'
 
 
 android {
-    compileSdkVersion 30
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\Chi\\SOLveKey.jks')
+        }
+    }
+    compileSdkVersion 31
     buildToolsVersion '30.0.3'
     defaultConfig {
         // applicationId needs to be changed(?)
         applicationId "com.innovator.solve"
         minSdkVersion 17
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 31
+        versionCode 3
+        versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
