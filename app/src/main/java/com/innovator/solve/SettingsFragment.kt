@@ -118,10 +118,18 @@ class SettingsFragment : Fragment() {
 
                 sp = this.getActivity()?.getSharedPreferences("pref", Context.MODE_PRIVATE);
                 val editor = sp!!.edit()
-                editor.putString("grade", gradeStr)
+
                 editor.putString("activitiesPerDay", actPerDayStr)
                 editor.putBoolean("notifsChecked", notifsBool!!)
                 editor.putString("notifsTime", notifsTime)
+
+                if (Integer.parseInt(gradeStr) < 3 || Integer.parseInt(gradeStr) > 9) {
+                    Toast.makeText(this.requireActivity(), "Grade must be between grades 3-9 inclusive.", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    editor.putString("grade", gradeStr)
+                }
+
                 editor.commit()
 
                 //Notifications

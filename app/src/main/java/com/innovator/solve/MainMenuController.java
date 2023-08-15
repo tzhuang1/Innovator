@@ -45,6 +45,7 @@ public class MainMenuController extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.angela_activity_main);
 
+        InnovatorApplication.setSP(getApplicationContext());
 
         auth=FirebaseAuth.getInstance();
         userDatabase=FirebaseDatabase.getInstance().getReference();
@@ -91,7 +92,6 @@ public class MainMenuController extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, HomeController.class, null).commit();
                 }
                 if(selectedItemID==R.id.navigation_mock){
-                    Log.d("MainMenu", "Boop!");
                     getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, MockSelectFragment.class, null).commit();
                 }
                 if(selectedItemID==R.id.navigation_dashboard){

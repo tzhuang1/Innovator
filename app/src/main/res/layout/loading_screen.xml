@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:ignore="ExtraText"
     android:padding="16dp"
-    android:background="@drawable/branchoutlogoexample"
     tools:context="com.innovator.solve.ProgressBarActivity">
 
     <TextView

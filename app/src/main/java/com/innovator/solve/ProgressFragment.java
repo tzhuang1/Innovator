@@ -1,6 +1,7 @@
 package com.innovator.solve;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ private int questionsCompletedToday;
     }
 
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         //UIs initialization
         firestoreDB=FirebaseFirestore.getInstance();
 
@@ -142,11 +144,12 @@ private int questionsCompletedToday;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String dateStr=formatter.format(date).substring(0,10).replace('/','-');
-
+        Log.d("User", InnovatorApplication.getUser().getId());
         if(InnovatorApplication.getUser()!=null){
             firestoreDB.collection("User_"+InnovatorApplication.getUser().getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     if(queryDocumentSnapshots.isEmpty()){
+                        //Log.d("Emptying", "YES");
                         setValuesToNone();
                     }
                     if(!queryDocumentSnapshots.isEmpty()){
@@ -169,6 +172,8 @@ private int questionsCompletedToday;
                             }
                         }
                         setDataValues();
+                        //Log.d("Completed", String.valueOf(completedToday));
+
                     }
                 }
             });
