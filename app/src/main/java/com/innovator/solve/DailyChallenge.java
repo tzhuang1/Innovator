@@ -1,13 +1,18 @@
 package com.innovator.solve;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -42,6 +47,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import info.hoang8f.widget.FButton;
+
 public class DailyChallenge extends AppCompatActivity{
 
     private int minMathQuestionsCount=80;
@@ -67,6 +74,10 @@ public class DailyChallenge extends AppCompatActivity{
 
     private String currentDate;
 
+    private String correctChoice;
+
+    private Typeface tb;
+
 
 
     @Override
@@ -80,6 +91,8 @@ public class DailyChallenge extends AppCompatActivity{
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         currentDate=formatter.format(date).substring(0,10).replace('/','-');
+
+        tb = Typeface.createFromAsset(getAssets(), "fonts/karla.ttf");
 
         selectCategory();
 
@@ -175,6 +188,8 @@ public class DailyChallenge extends AppCompatActivity{
         choiceC.setText("C. "+currentQuestionData.get("optC"));
         choiceD.setText("D. "+currentQuestionData.get("optD"));
 
+        correctChoice = (String) currentQuestionData.get("answer");
+
         if(category.equals("Reading")){
             if(DailyChallengeManager.getCurrentQuestionData().get("passage")!=null){
                 TextView passageText=findViewById(R.id.passageText);
@@ -266,7 +281,13 @@ public class DailyChallenge extends AppCompatActivity{
     }
 
     private void verifyAnswer(String choice){
-        popup();
+        Log.d(choice, correctChoice);
+        if (choice.equals(correctChoice)) {
+            correctDialog();
+        }
+        else {
+            popup();
+        }
     }
 
     private boolean retrieveDataPoints(Map<String, Object> databaseStorage){
@@ -296,7 +317,7 @@ public class DailyChallenge extends AppCompatActivity{
             return;
         }
 
-        ImageView questionPic =findViewById(R.id.questionPic);
+        ImageView questionPic = findViewById(R.id.questionPic);
 
         StorageReference qImageRef = FirebaseStorage.getInstance().getReference()   //but what if it doesn't exist?
                 .child(TopicManager.getPicRootFolderName())
@@ -330,6 +351,39 @@ public class DailyChallenge extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 popup.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void correctDialog() {
+        final Dialog dialogCorrect = new Dialog(DailyChallenge.this);
+        dialogCorrect.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (dialogCorrect.getWindow() != null) {
+            ColorDrawable colorDrawable = new ColorDrawable(Color.TRANSPARENT);
+            dialogCorrect.getWindow().setBackgroundDrawable(colorDrawable);
+        }
+        dialogCorrect.setContentView(R.layout.dialog_correct);
+        dialogCorrect.setCancelable(false);
+        dialogCorrect.show();
+
+        //Since the dialog is show to user just pause the timer in background
+        onPause();
+
+        TextView correctText = (TextView) dialogCorrect.findViewById(R.id.correctText);
+        FButton buttonNext = (FButton) dialogCorrect.findViewById(R.id.dialogNext);
+
+        buttonNext.setText("Back");
+
+        //Setting type faces
+        correctText.setTypeface(tb);
+        buttonNext.setTypeface(tb);
+
+        //OnCLick listener to go next que
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //This will dismiss the dialog
+                dialogCorrect.dismiss();
             }
         });
     }

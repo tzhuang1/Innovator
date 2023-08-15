@@ -5,15 +5,18 @@ apply plugin: 'com.google.gms.google-services'
 
 
 android {
-    compileSdkVersion 30
+    signingConfigs {
+
+    }
+    compileSdkVersion 31
     buildToolsVersion '30.0.3'
     defaultConfig {
         // applicationId needs to be changed(?)
         applicationId "com.innovator.solve"
         minSdkVersion 17
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 31
+        versionCode 5
+        versionName "2.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -43,6 +46,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-database:20.0.0'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
+
+
     implementation 'com.firebaseui:firebase-ui-storage:6.0.2'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'

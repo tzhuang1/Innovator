@@ -9,90 +9,105 @@
         android:name="com.innovator.solve.InnovatorApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="SOLve"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.innovator.solve.ProgressBarActivity">
+        <activity android:name="com.innovator.solve.ProgressBarActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="com.innovator.solve.ReadingQuestions"></activity>
-        <activity android:name="com.innovator.solve.MainMenuController">
+        <activity android:name="com.innovator.solve.MainMenuController"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.innovator.solve.DailyChallenge">
+        <activity android:name="com.innovator.solve.DailyChallenge"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.innovator.solve.PastProblems">
+        <activity android:name="com.innovator.solve.PastProblems"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.innovator.solve.RetryProblem">
+        <activity android:name="com.innovator.solve.RetryProblem"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.innovator.solve.QuestionMainActivity">
+        <activity android:name="com.innovator.solve.QuestionMainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.innovator.solve.SetupMainActivity">
+        <activity android:name="com.innovator.solve.SetupMainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.innovator.solve.TopicSelectActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name="com.innovator.solve.MultipleAnswerQuestionActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name="com.innovator.solve.ShortAnswerQuestionActivity">
+        <activity android:name="com.innovator.solve.TopicSelectActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.innovator.solve.DragAndDropQuestion">
+        <activity android:name="com.innovator.solve.MultipleAnswerQuestionActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.innovator.solve.TestActivity">
+        <activity android:name="com.innovator.solve.ShortAnswerQuestionActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.innovator.solve.CongratsPage">
+        <activity android:name="com.innovator.solve.DragAndDropQuestion"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.innovator.solve.PastProblemsTwo">
+        <activity android:name="com.innovator.solve.TestActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.innovator.solve.Review">
+
+        <activity android:name="com.innovator.solve.CongratsPage"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.innovator.solve.PastProblemsTwo"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.innovator.solve.Review"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
@@ -100,7 +115,8 @@
 
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+            android:resource="@array/preloaded_fonts"
+            />
 
         <receiver android:name="com.innovator.solve.ReminderBroadcast"/>
 
